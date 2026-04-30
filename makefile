@@ -1,4 +1,4 @@
-TARGET = joguinho
+TARGET = As_Lendas_Observam
 CC = gcc
 CFLAGS   = -Wall -Wextra -O2 -I include
 LDFLAGS  = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
