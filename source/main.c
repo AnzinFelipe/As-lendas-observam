@@ -4,26 +4,38 @@
 
 int main() {
 
-    SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE);
+    SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_MAXIMIZED);
     InitWindow(1600, 900, "As Lendas Observam");
     SetTargetFPS(60);
 
     InitAudioDevice();
     Music pink = LoadMusicStream("assets/musics/Pink.mp3");
     Texture2D teste = LoadTexture("assets/images/teste.png");
+    Texture2D marco_zero = LoadTexture("assets/images/marco_zero.png");
     PlayMusicStream(pink);
+    Arvore_mapa *mapa = NULL;
+    inserir_local(&mapa, 50, "Marco Zero", marco_zero, NULL);
+    inserir_local(&mapa, 48, "Prédio que eu não sei o nome", teste, NULL);
+    Arvore_mapa *local_atual = NULL;
+    int chave_atual = 50;
+    local_atual = buscar_local(mapa, chave_atual);
 
     while(!WindowShouldClose()) {
 
         UpdateMusicStream(pink);
 
+        mudar_local(local_atual, &chave_atual);
+        local_atual = buscar_local(mapa, chave_atual);
+
         BeginDrawing();
 
         ClearBackground(BLACK);
-        DrawTextureEx(teste, (Vector2){200, 50}, 0.0, 0.7, WHITE);
+        desenhar_local(local_atual);
 
         EndDrawing();
     }
+
+    liberar_arvore(&mapa);
 
     UnloadTexture(teste);
     UnloadMusicStream(pink);
