@@ -48,6 +48,7 @@ void liberar_arvore(Arvore_mapa **local) {
 }
 
 void desenhar_local(Arvore_mapa *local) {
+    DrawText(local->nome, 770 - MeasureText(local->nome, 25) / 2, 15, 25, WHITE);
     DrawTextureEx(local->imagem, (Vector2){200, 50}, 0.0, 0.7, WHITE);
 }
 

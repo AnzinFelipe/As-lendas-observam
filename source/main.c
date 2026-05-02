@@ -24,7 +24,8 @@ int main() {
     local_atual = buscar_local(mapa, chave_atual);
 
     Inventario *inventario = NULL;
-    inserir_inventario(&inventario, "Teste", item_teste);
+    inserir_inventario(&inventario, "Teste", "Bla bla bla", item_teste);
+    inserir_inventario(&inventario, "Teste", "Bla bla bla", item_teste);
 
     while(!WindowShouldClose()) {
 
