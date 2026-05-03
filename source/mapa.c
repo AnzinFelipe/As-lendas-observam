@@ -57,17 +57,31 @@ void desenhar_local(Arvore_mapa *local) {
 }
 
 void mudar_local(Arvore_mapa *local, int *chave_atual) {
-    if (IsKeyPressed(KEY_LEFT)) {
-        if (local->esquerda != NULL) {
-            *chave_atual = local->esquerda->chave;
+    if (local->hitbox_esq != NULL) {
+        if (CheckCollisionPointRec(GetMousePosition(), *(local->hitbox_esq))) {
+            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+                if (local->esquerda != NULL) {
+                    *chave_atual = local->esquerda->chave;
+                }
+            }
         }
-    } else if (IsKeyPressed(KEY_RIGHT)) {
-        if (local->direita != NULL) {
-            *chave_atual = local->direita->chave;
+    }
+    if (local->hitbox_dir != NULL) {
+        if (CheckCollisionPointRec(GetMousePosition(), *(local->hitbox_dir))) {
+            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+                if (local->direita != NULL) {
+                    *chave_atual = local->direita->chave;
+                }
+            }
         }
-    } else if (IsKeyPressed(KEY_DOWN)) {
-        if (local->pai != NULL) {
-            *chave_atual = local->pai->chave;
+    }
+    if (local->hitbox_pai != NULL) {
+        if (CheckCollisionPointRec(GetMousePosition(), *(local->hitbox_pai))) {
+            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+                if (local->pai != NULL) {
+                    *chave_atual = local->pai->chave;
+                }
+            }
         }
     }
 }
