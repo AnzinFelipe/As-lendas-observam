@@ -26,17 +26,17 @@ int main() {
     PlayMusicStream(pink);
 
     Arvore_mapa *mapa = NULL;
-    inserir_local(&mapa, 100, "Marco Zero", marco_zero, NULL);
-    inserir_local(&mapa, 150, "Associação Comercial de Pernambuco", comercial, NULL);
-    inserir_local(&mapa, 151, "Avenida Barbosa Lima", barbosa_lima1, NULL);
-    inserir_local(&mapa, 200, "Avenida Barbosa Lima", barbosa_lima2, NULL);
-    inserir_local(&mapa, 201, "Rua do Bom Jesus", bom_jesus1, NULL);
-    inserir_local(&mapa, 202, "Rua do Bom Jesus", bom_jesus2, NULL);
-    inserir_local(&mapa, 230, "Praça do Arsenal", arsenal, NULL);
-    inserir_local(&mapa, 215, "Paço do Frevo", frevo, NULL);
-    inserir_local(&mapa, 220, "Rua Barão Rodrigues Mendes", rodrigues_mendes, NULL);
-    inserir_local(&mapa, 240, "Rua do Bom Jesus", bom_jesus3, NULL);
-    inserir_local(&mapa, 250, "Torre Malakoff", malakoff, NULL);
+    inserir_local(&mapa, 100, "Marco Zero", marco_zero, NULL, &(Rectangle){920, 600, 400, 200}, &(Rectangle){200, 600, 400, 200}, NULL);
+    inserir_local(&mapa, 150, "Associação Comercial de Pernambuco", comercial, NULL, &(Rectangle){200, 450, 200, 300}, &(Rectangle){1120, 450, 200, 300}, &(Rectangle){500, 700, 500, 100});
+    inserir_local(&mapa, 151, "Avenida Barbosa Lima", barbosa_lima1, NULL, NULL, &(Rectangle){550, 400, 350, 250}, &(Rectangle){500, 700, 500, 100});
+    inserir_local(&mapa, 200, "Avenida Barbosa Lima", barbosa_lima2, NULL, &(Rectangle){300, 350, 200, 300}, &(Rectangle){1120, 400, 200, 300}, &(Rectangle){500, 700, 500, 100});
+    inserir_local(&mapa, 201, "Rua do Bom Jesus", bom_jesus1, NULL, NULL, &(Rectangle){570, 350, 350, 250}, &(Rectangle){500, 700, 500, 100});
+    inserir_local(&mapa, 202, "Rua do Bom Jesus", bom_jesus2, NULL, NULL, &(Rectangle){570, 350, 350, 250}, &(Rectangle){500, 700, 500, 100});
+    inserir_local(&mapa, 230, "Praça do Arsenal", arsenal, NULL, &(Rectangle){200, 360, 200, 400}, &(Rectangle){1120, 360, 200, 400}, &(Rectangle){500, 700, 500, 100});
+    inserir_local(&mapa, 215, "Paço do Frevo", frevo, NULL, NULL, &(Rectangle){1120, 300, 200, 400}, &(Rectangle){500, 700, 500, 100});
+    inserir_local(&mapa, 220, "Rua Barão Rodrigues Mendes", rodrigues_mendes, NULL, &(Rectangle){400, 350, 200, 300}, &(Rectangle){1070, 360, 250, 300}, &(Rectangle){500, 700, 500, 100});
+    inserir_local(&mapa, 240, "Rua do Bom Jesus", bom_jesus3, NULL, NULL, &(Rectangle){650, 350, 350, 250}, &(Rectangle){500, 700, 500, 100});
+    inserir_local(&mapa, 250, "Torre Malakoff", malakoff, NULL, NULL, NULL, &(Rectangle){500, 700, 500, 100});
     Arvore_mapa *local_atual = NULL;
     int chave_atual = 100;
     local_atual = buscar_local(mapa, chave_atual);
@@ -56,6 +56,7 @@ int main() {
 
         ClearBackground(BLACK);
         desenhar_local(local_atual);
+        desenhar_hitbox(local_atual);
         desenhar_inventario(inventario);
 
         EndDrawing();

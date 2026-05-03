@@ -3,7 +3,8 @@
 #include "raylib.h"
 #include <string.h>
 
-void inserir_local(Arvore_mapa **local, int chave, char *nome, Texture2D imagem, Arvore_mapa *pai) {
+void inserir_local(Arvore_mapa **local, int chave, char *nome, Texture2D imagem, Arvore_mapa *pai, Rectangle *hitbox_esq,
+Rectangle *hitbox_dir, Rectangle *hitbox_pai) {
     if (*local == NULL) {
         *local = (Arvore_mapa *)malloc(sizeof(Arvore_mapa));
         (*local)->chave = chave;
@@ -13,11 +14,14 @@ void inserir_local(Arvore_mapa **local, int chave, char *nome, Texture2D imagem,
         (*local)->esquerda = NULL;
         (*local)->direita = NULL;
         (*local)->pai = pai;
+        (*local)->hitbox_esq = hitbox_esq;
+        (*local)->hitbox_dir = hitbox_dir;
+        (*local)->hitbox_pai = hitbox_pai;
     } else {
         if (chave < (*local)->chave) {
-            inserir_local(&(*local)->esquerda, chave, nome, imagem, *local);
+            inserir_local(&(*local)->esquerda, chave, nome, imagem, *local, hitbox_esq, hitbox_dir, hitbox_pai);
         } else if (chave > (*local)->chave) {
-            inserir_local(&(*local)->direita, chave, nome, imagem, *local);
+            inserir_local(&(*local)->direita, chave, nome, imagem, *local, hitbox_esq, hitbox_dir, hitbox_pai);
         }
     }
 }
@@ -65,5 +69,17 @@ void mudar_local(Arvore_mapa *local, int *chave_atual) {
         if (local->pai != NULL) {
             *chave_atual = local->pai->chave;
         }
+    }
+}
+
+void desenhar_hitbox(Arvore_mapa *local) {
+    if (local->hitbox_esq != NULL) {
+        DrawRectangleRec(*(local->hitbox_esq), (Color){255, 255, 255, 80});
+    }
+    if (local->hitbox_dir != NULL) {
+        DrawRectangleRec(*(local->hitbox_dir), (Color){255, 255, 255, 80});
+    }
+    if (local->hitbox_pai != NULL) {
+        DrawRectangleRec(*(local->hitbox_pai), (Color){255, 255, 255, 80});
     }
 }
