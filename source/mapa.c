@@ -52,13 +52,13 @@ void liberar_arvore(Arvore_mapa **local) {
 }
 
 void desenhar_local(Arvore_mapa *local) {
-    DrawText(local->nome, 770 - MeasureText(local->nome, 25) / 2, 15, 25, WHITE);
-    DrawTextureEx(local->imagem, (Vector2){200, 50}, 0.0, 0.7, WHITE);
+    DrawText(local->nome, 800 - MeasureText(local->nome, 25) / 2, 15, 25, WHITE);
+    DrawTextureEx(local->imagem, (Vector2){240, 50}, 0.0, 0.7, WHITE);
 }
 
-void mudar_local(Arvore_mapa *local, int *chave_atual) {
+void mudar_local(Arvore_mapa *local, int *chave_atual, Vector2 mouse) {
     if (local->hitbox_esq != NULL) {
-        if (CheckCollisionPointRec(GetMousePosition(), *(local->hitbox_esq))) {
+        if (CheckCollisionPointRec(mouse, *(local->hitbox_esq))) {
             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
                 if (local->esquerda != NULL) {
                     *chave_atual = local->esquerda->chave;
@@ -67,7 +67,7 @@ void mudar_local(Arvore_mapa *local, int *chave_atual) {
         }
     }
     if (local->hitbox_dir != NULL) {
-        if (CheckCollisionPointRec(GetMousePosition(), *(local->hitbox_dir))) {
+        if (CheckCollisionPointRec(mouse, *(local->hitbox_dir))) {
             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
                 if (local->direita != NULL) {
                     *chave_atual = local->direita->chave;
@@ -76,7 +76,7 @@ void mudar_local(Arvore_mapa *local, int *chave_atual) {
         }
     }
     if (local->hitbox_pai != NULL) {
-        if (CheckCollisionPointRec(GetMousePosition(), *(local->hitbox_pai))) {
+        if (CheckCollisionPointRec(mouse, *(local->hitbox_pai))) {
             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
                 if (local->pai != NULL) {
                     *chave_atual = local->pai->chave;

@@ -2,11 +2,17 @@
 #include "mapa.h"
 #include "inventario.h"
 #include "raylib.h"
+#include <math.h>
 
 int main() {
 
     SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_MAXIMIZED);
     InitWindow(1600, 900, "As Lendas Observam");
+    SetWindowMinSize(640, 360);
+
+    RenderTexture2D tela = LoadRenderTexture(1600, 900);
+    SetTextureFilter(tela.texture, TEXTURE_FILTER_BILINEAR);
+
     SetTargetFPS(60);
 
     InitAudioDevice();
@@ -32,23 +38,23 @@ int main() {
     PlayMusicStream(pink);
 
     Arvore_mapa *mapa = NULL;
-    inserir_local(&mapa, 500, "Marco Zero", marco_zero, NULL, &(Rectangle){920, 600, 400, 200}, &(Rectangle){200, 600, 400, 200}, NULL);
-    inserir_local(&mapa, 300, "Associação Comercial de Pernambuco", comercial, NULL, &(Rectangle){200, 450, 200, 300}, &(Rectangle){1120, 450, 200, 300}, &(Rectangle){500, 700, 500, 100});
-    inserir_local(&mapa, 350, "Avenida Barbosa Lima", barbosa_lima1, NULL, NULL, &(Rectangle){550, 400, 350, 250}, &(Rectangle){500, 700, 500, 100});
-    inserir_local(&mapa, 400, "Avenida Barbosa Lima", barbosa_lima2, NULL, &(Rectangle){300, 350, 200, 300}, &(Rectangle){1120, 400, 200, 300}, &(Rectangle){500, 700, 500, 100});
-    inserir_local(&mapa, 401, "Rua do Bom Jesus", bom_jesus1, NULL, NULL, &(Rectangle){570, 350, 350, 250}, &(Rectangle){500, 700, 500, 100});
-    inserir_local(&mapa, 402, "Rua do Bom Jesus", bom_jesus2, NULL, NULL, &(Rectangle){570, 350, 350, 250}, &(Rectangle){500, 700, 500, 100});
-    inserir_local(&mapa, 450, "Praça do Arsenal", arsenal, NULL, &(Rectangle){200, 360, 200, 400}, &(Rectangle){1120, 360, 200, 400}, &(Rectangle){500, 700, 500, 100});
-    inserir_local(&mapa, 420, "Paço do Frevo", frevo, NULL, NULL, &(Rectangle){1120, 300, 200, 400}, &(Rectangle){500, 700, 500, 100});
-    inserir_local(&mapa, 425, "Rua Barão Rodrigues Mendes", rodrigues_mendes, NULL, &(Rectangle){400, 350, 200, 300}, &(Rectangle){1070, 360, 250, 300}, &(Rectangle){500, 700, 500, 100});
-    inserir_local(&mapa, 422, "Parede", parede, NULL, NULL, NULL, &(Rectangle){500, 700, 500, 100});
-    inserir_local(&mapa, 426, "Rua da Guia", guia, NULL, NULL, &(Rectangle){570, 350, 350, 250}, &(Rectangle){500, 700, 500, 100});
-    inserir_local(&mapa, 427, "Rua do Observatório", observatorio1, NULL, NULL, &(Rectangle){550, 350, 350, 250}, &(Rectangle){500, 700, 500, 100});
-    inserir_local(&mapa, 428, "Rua do Observatório", observatorio2, NULL, NULL, &(Rectangle){600, 400, 350, 250}, &(Rectangle){500, 700, 500, 100});
-    inserir_local(&mapa, 429, "Avenida Cais do Apolo", cais_apolo, NULL, NULL, &(Rectangle){570, 350, 350, 250}, &(Rectangle){500, 700, 500, 100});
-    inserir_local(&mapa, 430, "CESAR Brum", cesar_brum, NULL, NULL, NULL, &(Rectangle){500, 700, 500, 100});
-    inserir_local(&mapa, 451, "Rua do Bom Jesus", bom_jesus3, NULL, NULL, &(Rectangle){650, 350, 350, 250}, &(Rectangle){500, 700, 500, 100});
-    inserir_local(&mapa, 452, "Torre Malakoff", malakoff, NULL, NULL, NULL, &(Rectangle){500, 700, 500, 100});
+    inserir_local(&mapa, 500, "Marco Zero", marco_zero, NULL, &(Rectangle){960, 600, 400, 200}, &(Rectangle){240, 600, 400, 200}, NULL);
+    inserir_local(&mapa, 300, "Associação Comercial de Pernambuco", comercial, NULL, &(Rectangle){240, 450, 200, 300}, &(Rectangle){1160, 450, 200, 300}, &(Rectangle){540, 700, 500, 100});
+    inserir_local(&mapa, 350, "Avenida Barbosa Lima", barbosa_lima1, NULL, NULL, &(Rectangle){590, 400, 350, 250}, &(Rectangle){540, 700, 500, 100});
+    inserir_local(&mapa, 400, "Avenida Barbosa Lima", barbosa_lima2, NULL, &(Rectangle){340, 350, 200, 300}, &(Rectangle){1160, 400, 200, 300}, &(Rectangle){540, 700, 500, 100});
+    inserir_local(&mapa, 401, "Rua do Bom Jesus", bom_jesus1, NULL, NULL, &(Rectangle){610, 350, 350, 250}, &(Rectangle){540, 700, 500, 100});
+    inserir_local(&mapa, 402, "Rua do Bom Jesus", bom_jesus2, NULL, NULL, &(Rectangle){610, 350, 350, 250}, &(Rectangle){540, 700, 500, 100});
+    inserir_local(&mapa, 450, "Praça do Arsenal", arsenal, NULL, &(Rectangle){240, 360, 200, 400}, &(Rectangle){1160, 360, 200, 400}, &(Rectangle){540, 700, 500, 100});
+    inserir_local(&mapa, 420, "Paço do Frevo", frevo, NULL, NULL, &(Rectangle){1160, 300, 200, 400}, &(Rectangle){540, 700, 500, 100});
+    inserir_local(&mapa, 425, "Rua Barão Rodrigues Mendes", rodrigues_mendes, NULL, &(Rectangle){440, 350, 200, 300}, &(Rectangle){1110, 360, 250, 300}, &(Rectangle){540, 700, 500, 100});
+    inserir_local(&mapa, 422, "Parede", parede, NULL, NULL, NULL, &(Rectangle){540, 700, 500, 100});
+    inserir_local(&mapa, 426, "Rua da Guia", guia, NULL, NULL, &(Rectangle){610, 350, 350, 250}, &(Rectangle){540, 700, 500, 100});
+    inserir_local(&mapa, 427, "Rua do Observatório", observatorio1, NULL, NULL, &(Rectangle){590, 350, 350, 250}, &(Rectangle){540, 700, 500, 100});
+    inserir_local(&mapa, 428, "Rua do Observatório", observatorio2, NULL, NULL, &(Rectangle){640, 400, 350, 250}, &(Rectangle){540, 700, 500, 100});
+    inserir_local(&mapa, 429, "Avenida Cais do Apolo", cais_apolo, NULL, NULL, &(Rectangle){610, 350, 350, 250}, &(Rectangle){540, 700, 500, 100});
+    inserir_local(&mapa, 430, "CESAR Brum", cesar_brum, NULL, NULL, NULL, &(Rectangle){540, 700, 500, 100});
+    inserir_local(&mapa, 451, "Rua do Bom Jesus", bom_jesus3, NULL, NULL, &(Rectangle){690, 350, 350, 250}, &(Rectangle){540, 700, 500, 100});
+    inserir_local(&mapa, 452, "Torre Malakoff", malakoff, NULL, NULL, NULL, &(Rectangle){540, 700, 500, 100});
     Arvore_mapa *local_atual = NULL;
     int chave_atual = 500;
     local_atual = buscar_local(mapa, chave_atual);
@@ -58,19 +64,39 @@ int main() {
     inserir_inventario(&inventario, "Teste", "Bla bla bla", item_teste);
 
     while(!WindowShouldClose()) {
+        int largura_tela = GetScreenWidth();
+        int altura_tela = GetScreenHeight();
+
+        float escala = fminf((float)largura_tela / 1600, (float)altura_tela / 900);
+
+        Rectangle nova_tela = {
+            (largura_tela - 1600 * escala) / 2.0f,
+            (altura_tela - 900 * escala) / 2.0f,
+            1600 * escala, 900 * escala
+        };
+
+        Vector2 mouse = GetMousePosition();
+        Vector2 mouse_novo = {
+            (mouse.x - nova_tela.x) / escala,
+            (mouse.y - nova_tela.y) / escala
+        };
 
         UpdateMusicStream(pink);
-
-        mudar_local(local_atual, &chave_atual);
+        mudar_local(local_atual, &chave_atual, mouse_novo);
         local_atual = buscar_local(mapa, chave_atual);
-
-        BeginDrawing();
-
+        
+        BeginTextureMode(tela);
+        
         ClearBackground(BLACK);
         desenhar_local(local_atual);
-        //desenhar_hitbox(local_atual);
+        desenhar_hitbox(local_atual);
         desenhar_inventario(inventario);
-
+        
+        EndTextureMode();
+        
+        BeginDrawing();
+        ClearBackground(BLACK);
+        DrawTexturePro(tela.texture, (Rectangle){0, 0, 1600, -900}, nova_tela, (Vector2){0, 0}, 0.0f, WHITE);
         EndDrawing();
     }
 
@@ -102,4 +128,4 @@ int main() {
     CloseWindow();
 
     return 0;
-}
+}   

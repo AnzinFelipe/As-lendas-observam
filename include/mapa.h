@@ -25,7 +25,7 @@ void liberar_arvore(Arvore_mapa **local);
 
 void desenhar_local(Arvore_mapa *local);
 
-void mudar_local(Arvore_mapa *local, int *chave_atual);
+void mudar_local(Arvore_mapa *local, int *chave_atual, Vector2 mouse);
 
 void desenhar_hitbox(Arvore_mapa *local);
 

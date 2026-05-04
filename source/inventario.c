@@ -42,15 +42,11 @@ void desenhar_inventario(Inventario *head) {
     for (int i = 1; i < 6; i++) {
         DrawCircle(100, i * 140, 50.0, DARKGRAY);
     }
-    Vector2 padrao;
     int pos = 100;
     Vector2 posicao;
     if (head != NULL) {
         while (head != NULL) {
             posicao = (Vector2){60, pos};
-            padrao = posicao;
-            head->hitbox = (Rectangle){posicao.x, posicao.y, 80, 80};
-            pegar_item(head, &posicao, padrao);
             head->hitbox = (Rectangle){posicao.x, posicao.y, 80, 80};
             //DrawRectangleRec(head->hitbox, BLUE);
             DrawTextureEx(head->imagem, posicao, 0.0, 0.4, WHITE);
@@ -60,6 +56,7 @@ void desenhar_inventario(Inventario *head) {
     }
 }
 
+/*
 void pegar_item(Inventario *item, Vector2 *posicao, Vector2 padrao) {
     if (CheckCollisionPointRec(GetMousePosition(), item->hitbox)) {
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
@@ -76,3 +73,4 @@ void pegar_item(Inventario *item, Vector2 *posicao, Vector2 padrao) {
         }
     }
 }
+*/
