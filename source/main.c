@@ -4,6 +4,7 @@
 #include "raylib.h"
 #include <math.h>
 #include "item.h"
+#include "iniciar_liberar_jogo.h"
 
 int main() {
 
@@ -11,62 +12,11 @@ int main() {
     InitWindow(1600, 900, "As Lendas Observam");
     SetWindowMinSize(640, 360);
 
-    RenderTexture2D tela = LoadRenderTexture(1600, 900);
-    SetTextureFilter(tela.texture, TEXTURE_FILTER_BILINEAR);
+    Vars_structs_inicio_jogo *novo_jogo = (Vars_structs_inicio_jogo*)malloc(sizeof(Vars_structs_inicio_jogo));
+
+    iniciar_jogo(novo_jogo);
 
     SetTargetFPS(60);
-
-    InitAudioDevice();
-    Music pink = LoadMusicStream("assets/musics/Pink.mp3");
-    Texture2D comercial = LoadTexture("assets/images/locais/comercial.png");
-    Texture2D marco_zero = LoadTexture("assets/images/locais/marco_zero.png");
-    Texture2D barbosa_lima1 = LoadTexture("assets/images/locais/barbosa_lima1.png");
-    Texture2D barbosa_lima2 = LoadTexture("assets/images/locais/barbosa_lima2.png");
-    Texture2D bom_jesus1 = LoadTexture("assets/images/locais/bom_jesus1.png");
-    Texture2D bom_jesus2 = LoadTexture("assets/images/locais/bom_jesus2.png");
-    Texture2D arsenal = LoadTexture("assets/images/locais/arsenal.png");
-    Texture2D frevo = LoadTexture("assets/images/locais/frevo.png");
-    Texture2D rodrigues_mendes = LoadTexture("assets/images/locais/rodrigues_mendes.png");
-    Texture2D parede = LoadTexture("assets/images/locais/parede.png");
-    Texture2D guia = LoadTexture("assets/images/locais/guia.png");
-    Texture2D observatorio1 = LoadTexture("assets/images/locais/observatorio1.png");
-    Texture2D observatorio2 = LoadTexture("assets/images/locais/observatorio2.png");
-    Texture2D cais_apolo = LoadTexture("assets/images/locais/cais_apolo.png");
-    Texture2D cesar_brum = LoadTexture("assets/images/locais/cesar_brum.png");
-    Texture2D bom_jesus3 = LoadTexture("assets/images/locais/bom_jesus3.png");
-    Texture2D malakoff = LoadTexture("assets/images/locais/malakoff.png");
-    Texture2D item_teste = LoadTexture("assets/images/item_teste.jpg");
-    Texture2D honglu= LoadTexture("assets/images/Itens/Honglu.png");
-    Texture2D queenOfHatred = LoadTexture ("assets/images/Itens/QOH.png");
-    PlayMusicStream(pink);
-
-    Arvore_mapa *mapa = NULL;
-    inserir_local(&mapa, 500, "Marco Zero", marco_zero, NULL, &(Rectangle){960, 600, 400, 200}, &(Rectangle){240, 600, 400, 200}, NULL);
-    inserir_local(&mapa, 300, "Associação Comercial de Pernambuco", comercial, NULL, &(Rectangle){240, 450, 200, 300}, &(Rectangle){1160, 450, 200, 300}, &(Rectangle){540, 700, 500, 100});
-    inserir_local(&mapa, 350, "Avenida Barbosa Lima", barbosa_lima1, NULL, NULL, &(Rectangle){590, 400, 350, 250}, &(Rectangle){540, 700, 500, 100});
-    inserir_local(&mapa, 400, "Avenida Barbosa Lima", barbosa_lima2, NULL, &(Rectangle){340, 350, 200, 300}, &(Rectangle){1160, 400, 200, 300}, &(Rectangle){540, 700, 500, 100});
-    inserir_local(&mapa, 401, "Rua do Bom Jesus", bom_jesus1, NULL, NULL, &(Rectangle){610, 350, 350, 250}, &(Rectangle){540, 700, 500, 100});
-    inserir_local(&mapa, 402, "Rua do Bom Jesus", bom_jesus2, NULL, NULL, &(Rectangle){610, 350, 350, 250}, &(Rectangle){540, 700, 500, 100});
-    inserir_local(&mapa, 450, "Praça do Arsenal", arsenal, NULL, &(Rectangle){240, 360, 200, 400}, &(Rectangle){1160, 360, 200, 400}, &(Rectangle){540, 700, 500, 100});
-    inserir_local(&mapa, 420, "Paço do Frevo", frevo, NULL, NULL, &(Rectangle){1160, 300, 200, 400}, &(Rectangle){540, 700, 500, 100});
-    inserir_local(&mapa, 425, "Rua Barão Rodrigues Mendes", rodrigues_mendes, NULL, &(Rectangle){440, 350, 200, 300}, &(Rectangle){1110, 360, 250, 300}, &(Rectangle){540, 700, 500, 100});
-    inserir_local(&mapa, 422, "Parede", parede, NULL, NULL, NULL, &(Rectangle){540, 700, 500, 100});
-    inserir_local(&mapa, 426, "Rua da Guia", guia, NULL, NULL, &(Rectangle){610, 350, 350, 250}, &(Rectangle){540, 700, 500, 100});
-    inserir_local(&mapa, 427, "Rua do Observatório", observatorio1, NULL, NULL, &(Rectangle){590, 350, 350, 250}, &(Rectangle){540, 700, 500, 100});
-    inserir_local(&mapa, 428, "Rua do Observatório", observatorio2, NULL, NULL, &(Rectangle){640, 400, 350, 250}, &(Rectangle){540, 700, 500, 100});
-    inserir_local(&mapa, 429, "Avenida Cais do Apolo", cais_apolo, NULL, NULL, &(Rectangle){610, 350, 350, 250}, &(Rectangle){540, 700, 500, 100});
-    inserir_local(&mapa, 430, "CESAR Brum", cesar_brum, NULL, NULL, NULL, &(Rectangle){540, 700, 500, 100});
-    inserir_local(&mapa, 451, "Rua do Bom Jesus", bom_jesus3, NULL, NULL, &(Rectangle){690, 350, 350, 250}, &(Rectangle){540, 700, 500, 100});
-    inserir_local(&mapa, 452, "Torre Malakoff", malakoff, NULL, NULL, NULL, &(Rectangle){540, 700, 500, 100});
-    Arvore_mapa *local_atual = NULL;
-    int chave_atual = 500;
-    local_atual = buscar_local(mapa, chave_atual);
-
-    Item *itensNaoPegos = NULL;
-    ColocarItemNoMapa(&itensNaoPegos, honglu, "Chibi Lu", (Vector2){100, 200}, "Um chibi Honglu, o que pode acontecer?...", 401);
-    ColocarItemNoMapa(&itensNaoPegos, queenOfHatred, "Arcana Slave!", (Vector2){100, 90}, "Arcna Slave!!!!!!!", 401);
-
-    Inventario *inventario = NULL;
 
     while(!WindowShouldClose()) {
         int largura_tela = GetScreenWidth();
@@ -86,54 +36,54 @@ int main() {
             (mouse.y - nova_tela.y) / escala
         };
 
-        UpdateMusicStream(pink);
-        mudar_local(local_atual, &chave_atual, mouse_novo);
-        local_atual = buscar_local(mapa, chave_atual);
+        UpdateMusicStream(novo_jogo->pink);
+        mudar_local(novo_jogo->local_atual, &novo_jogo->chave_atual, mouse_novo);
+        novo_jogo->local_atual = buscar_local(novo_jogo->mapa, novo_jogo->chave_atual);
         
-        BeginTextureMode(tela);
+        BeginTextureMode(novo_jogo->tela);
         
             ClearBackground(BLACK);
-            desenhar_local(local_atual);
-            desenhar_hitbox(local_atual);
+            desenhar_local(novo_jogo->local_atual);
+            desenhar_hitbox(novo_jogo->local_atual);
 
-            desenhar_inventario(inventario, 90, 140, 140);
+            desenhar_inventario(novo_jogo->inventario, 90, 140, 140);
 
-            ItemAparecerNoCenario(&itensNaoPegos, chave_atual);
-            PegarItemEEntrarInventário(&itensNaoPegos, chave_atual, mouse_novo, &inventario);
+            ItemAparecerNoCenario(&novo_jogo->itensNaoPegos, novo_jogo->chave_atual);
+            PegarItemEEntrarInventário(&novo_jogo->itensNaoPegos, novo_jogo->chave_atual, mouse_novo, &novo_jogo->inventario);
         
         EndTextureMode();
         
         BeginDrawing();
         ClearBackground(BLACK);
-        DrawTexturePro(tela.texture, (Rectangle){0, 0, 1600, -900}, nova_tela, (Vector2){0, 0}, 0.0f, WHITE);
+        DrawTexturePro(novo_jogo->tela.texture, (Rectangle){0, 0, 1600, -900}, nova_tela, (Vector2){0, 0}, 0.0f, WHITE);
         EndDrawing();
     }
 
-    liberar_arvore(&mapa);
-    liberar_inventario(&inventario);
-    LiberarItens_j(&inventario);
-    LiberarItens_i(&itensNaoPegos);
-    UnloadTexture(marco_zero);
-    UnloadTexture(comercial);
-    UnloadTexture(barbosa_lima1);
-    UnloadTexture(barbosa_lima2);
-    UnloadTexture(bom_jesus1);
-    UnloadTexture(bom_jesus2);
-    UnloadTexture(arsenal);
-    UnloadTexture(frevo);
-    UnloadTexture(rodrigues_mendes);
-    UnloadTexture(parede);
-    UnloadTexture(guia);
-    UnloadTexture(observatorio1);
-    UnloadTexture(observatorio2);
-    UnloadTexture(cais_apolo);
-    UnloadTexture(cesar_brum);
-    UnloadTexture(bom_jesus3);
-    UnloadTexture(malakoff);
-    UnloadTexture(honglu);
-    UnloadTexture(queenOfHatred);
-    UnloadMusicStream(pink);
-
+    liberar_arvore(&novo_jogo->mapa);
+    liberar_inventario(&novo_jogo->inventario);
+    LiberarItens_j(&novo_jogo->inventario);
+    LiberarItens_i(&novo_jogo->itensNaoPegos);
+    UnloadTexture(novo_jogo->marco_zero);
+    UnloadTexture(novo_jogo->comercial);
+    UnloadTexture(novo_jogo->barbosa_lima1);
+    UnloadTexture(novo_jogo->barbosa_lima2);
+    UnloadTexture(novo_jogo->bom_jesus1);
+    UnloadTexture(novo_jogo->bom_jesus2);
+    UnloadTexture(novo_jogo->arsenal);
+    UnloadTexture(novo_jogo->frevo);
+    UnloadTexture(novo_jogo->rodrigues_mendes);
+    UnloadTexture(novo_jogo->parede);
+    UnloadTexture(novo_jogo->guia);
+    UnloadTexture(novo_jogo->observatorio1);
+    UnloadTexture(novo_jogo->observatorio2);
+    UnloadTexture(novo_jogo->cais_apolo);
+    UnloadTexture(novo_jogo->cesar_brum);
+    UnloadTexture(novo_jogo->bom_jesus3);
+    UnloadTexture(novo_jogo->malakoff);
+    UnloadTexture(novo_jogo->honglu);
+    UnloadTexture(novo_jogo->queenOfHatred);
+    UnloadMusicStream(novo_jogo->pink);
+    free(novo_jogo);
     CloseAudioDevice();
 
     CloseWindow();

@@ -3,8 +3,8 @@
 #include "raylib.h"
 #include <string.h>
 
-void inserir_local(Arvore_mapa **local, int chave, char *nome, Texture2D imagem, Arvore_mapa *pai, Rectangle *hitbox_esq,
-Rectangle *hitbox_dir, Rectangle *hitbox_pai) {
+void inserir_local(Arvore_mapa **local, int chave, char *nome, Texture2D imagem, Arvore_mapa *pai, Rectangle hitbox_esq,
+Rectangle hitbox_dir, Rectangle hitbox_pai) {
     if (*local == NULL) {
         *local = (Arvore_mapa *)malloc(sizeof(Arvore_mapa));
         (*local)->chave = chave;
@@ -15,8 +15,11 @@ Rectangle *hitbox_dir, Rectangle *hitbox_pai) {
         (*local)->direita = NULL;
         (*local)->pai = pai;
         (*local)->hitbox_esq = hitbox_esq;
+        (*local)->tem_hitbox_esq = (hitbox_esq.width != 0 || hitbox_esq.height != 0 || hitbox_esq.x != 0 || hitbox_esq.y != 0);
         (*local)->hitbox_dir = hitbox_dir;
+        (*local)->tem_hitbox_dir = (hitbox_dir.width != 0 || hitbox_dir.height != 0 || hitbox_dir.x != 0 || hitbox_dir.y != 0);
         (*local)->hitbox_pai = hitbox_pai;
+        (*local)->tem_hitbox_pai = (hitbox_pai.width != 0 || hitbox_pai.height != 0 || hitbox_pai.x != 0 || hitbox_pai.y != 0);
     } else {
         if (chave < (*local)->chave) {
             inserir_local(&(*local)->esquerda, chave, nome, imagem, *local, hitbox_esq, hitbox_dir, hitbox_pai);
@@ -57,8 +60,8 @@ void desenhar_local(Arvore_mapa *local) {
 }
 
 void mudar_local(Arvore_mapa *local, int *chave_atual, Vector2 mouse) {
-    if (local->hitbox_esq != NULL) {
-        if (CheckCollisionPointRec(mouse, *(local->hitbox_esq))) {
+    if (local->tem_hitbox_esq) {
+        if (CheckCollisionPointRec(mouse, local->hitbox_esq)) {
             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
                 if (local->esquerda != NULL) {
                     *chave_atual = local->esquerda->chave;
@@ -66,8 +69,8 @@ void mudar_local(Arvore_mapa *local, int *chave_atual, Vector2 mouse) {
             }
         }
     }
-    if (local->hitbox_dir != NULL) {
-        if (CheckCollisionPointRec(mouse, *(local->hitbox_dir))) {
+    if (local->tem_hitbox_dir) {
+        if (CheckCollisionPointRec(mouse, local->hitbox_dir)) {
             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
                 if (local->direita != NULL) {
                     *chave_atual = local->direita->chave;
@@ -75,8 +78,8 @@ void mudar_local(Arvore_mapa *local, int *chave_atual, Vector2 mouse) {
             }
         }
     }
-    if (local->hitbox_pai != NULL) {
-        if (CheckCollisionPointRec(mouse, *(local->hitbox_pai))) {
+    if (local->tem_hitbox_pai) {
+        if (CheckCollisionPointRec(mouse, local->hitbox_pai)) {
             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
                 if (local->pai != NULL) {
                     *chave_atual = local->pai->chave;
@@ -87,13 +90,13 @@ void mudar_local(Arvore_mapa *local, int *chave_atual, Vector2 mouse) {
 }
 
 void desenhar_hitbox(Arvore_mapa *local) {
-    if (local->hitbox_esq != NULL) {
-        DrawRectangleRec(*(local->hitbox_esq), (Color){255, 255, 255, 80});
+    if (local->tem_hitbox_esq) {
+        DrawRectangleRec(local->hitbox_esq, (Color){255, 255, 255, 80});
     }
-    if (local->hitbox_dir != NULL) {
-        DrawRectangleRec(*(local->hitbox_dir), (Color){255, 255, 255, 80});
+    if (local->tem_hitbox_dir) {
+        DrawRectangleRec(local->hitbox_dir, (Color){255, 255, 255, 80});
     }
-    if (local->hitbox_pai != NULL) {
-        DrawRectangleRec(*(local->hitbox_pai), (Color){255, 255, 255, 80});
+    if (local->tem_hitbox_pai) {
+        DrawRectangleRec(local->hitbox_pai, (Color){255, 255, 255, 80});
     }
 }
