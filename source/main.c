@@ -3,6 +3,7 @@
 #include "inventario.h"
 #include "raylib.h"
 #include <math.h>
+#include "item.h"
 
 int main() {
 
@@ -35,6 +36,8 @@ int main() {
     Texture2D bom_jesus3 = LoadTexture("assets/images/locais/bom_jesus3.png");
     Texture2D malakoff = LoadTexture("assets/images/locais/malakoff.png");
     Texture2D item_teste = LoadTexture("assets/images/item_teste.jpg");
+    Texture2D honglu= LoadTexture("assets/images/Itens/Honglu.png");
+    Texture2D queenOfHatred = LoadTexture ("assets/images/Itens/QOH.png");
     PlayMusicStream(pink);
 
     Arvore_mapa *mapa = NULL;
@@ -59,9 +62,11 @@ int main() {
     int chave_atual = 500;
     local_atual = buscar_local(mapa, chave_atual);
 
+    Item *itensNaoPegos = NULL;
+    ColocarItemNoMapa(&itensNaoPegos, honglu, "Chibi Lu", (Vector2){100, 200}, "Um chibi Honglu, o que pode acontecer?...", 401);
+    ColocarItemNoMapa(&itensNaoPegos, queenOfHatred, "Arcana Slave!", (Vector2){100, 90}, "Arcna Slave!!!!!!!", 401);
+
     Inventario *inventario = NULL;
-    inserir_inventario(&inventario, "Teste", "Bla bla bla", item_teste);
-    inserir_inventario(&inventario, "Teste", "Bla bla bla", item_teste);
 
     while(!WindowShouldClose()) {
         int largura_tela = GetScreenWidth();
@@ -87,10 +92,14 @@ int main() {
         
         BeginTextureMode(tela);
         
-        ClearBackground(BLACK);
-        desenhar_local(local_atual);
-        desenhar_hitbox(local_atual);
-        desenhar_inventario(inventario);
+            ClearBackground(BLACK);
+            desenhar_local(local_atual);
+            desenhar_hitbox(local_atual);
+
+            desenhar_inventario(inventario, 90, 140, 140);
+
+            ItemAparecerNoCenario(&itensNaoPegos, chave_atual);
+            PegarItemEEntrarInventário(&itensNaoPegos, chave_atual, mouse_novo, &inventario);
         
         EndTextureMode();
         
@@ -102,7 +111,8 @@ int main() {
 
     liberar_arvore(&mapa);
     liberar_inventario(&inventario);
-
+    LiberarItens_j(&inventario);
+    LiberarItens_i(&itensNaoPegos);
     UnloadTexture(marco_zero);
     UnloadTexture(comercial);
     UnloadTexture(barbosa_lima1);
@@ -120,7 +130,8 @@ int main() {
     UnloadTexture(cesar_brum);
     UnloadTexture(bom_jesus3);
     UnloadTexture(malakoff);
-    UnloadTexture(item_teste);
+    UnloadTexture(honglu);
+    UnloadTexture(queenOfHatred);
     UnloadMusicStream(pink);
 
     CloseAudioDevice();
