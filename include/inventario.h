@@ -8,6 +8,7 @@ typedef struct Inventario {
     char *nome;
     char *descricao;
     Texture2D imagem;
+    Vector2 localMapa;
     Rectangle hitbox;
     bool pego;
     struct Inventario *prox;
@@ -17,8 +18,8 @@ void inserir_inventario(Inventario **head, char *nome, char *descricao, Texture2
 
 void liberar_inventario(Inventario **head);
 
-void desenhar_inventario(Inventario *head);
+void desenhar_inventario(Inventario *head, int x, int y, int espacamento);
 
-void pegar_item(Inventario *item, Vector2 *posicao, Vector2 padrao);
+void LiberarItens_j(Inventario**head);
 
 #endif

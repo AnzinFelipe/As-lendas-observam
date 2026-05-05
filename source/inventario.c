@@ -38,39 +38,38 @@ void liberar_inventario(Inventario **head) {
     }
 }
 
-void desenhar_inventario(Inventario *head) {
+void desenhar_inventario(Inventario *head, int x, int y, int espacamento) {
     for (int i = 1; i < 6; i++) {
         DrawCircle(100, i * 140, 50.0, DARKGRAY);
     }
-    int pos = 100;
+    int i=0;
     Vector2 posicao;
     if (head != NULL) {
-        while (head != NULL) {
-            posicao = (Vector2){60, pos};
-            head->hitbox = (Rectangle){posicao.x, posicao.y, 80, 80};
-            //DrawRectangleRec(head->hitbox, BLUE);
-            DrawTextureEx(head->imagem, posicao, 0.0, 0.4, WHITE);
-            pos += 140;
+        while (head != NULL && i<5) {
+            float tamanho = 70;
+            posicao = (Vector2){x - tamanho / 2, y + i * espacamento - tamanho / 2};
+            Rectangle original  = { 0, 0, head->imagem.width, head->imagem.height };
+            Rectangle final = { posicao.x, posicao.y, tamanho, tamanho };
+            head->hitbox = final;
+            DrawTexturePro(head->imagem, original, final, (Vector2){0, 0}, 0.0, WHITE);
+            i++;
             head = head->prox;
         }
     }
 }
 
-/*
-void pegar_item(Inventario *item, Vector2 *posicao, Vector2 padrao) {
-    if (CheckCollisionPointRec(GetMousePosition(), item->hitbox)) {
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-            item->pego = true;
-        }
+void LiberarItens_j(Inventario **head) {
+    Inventario *aux = *head;
+    while (aux != NULL) {
+        Inventario *prox = aux->prox;
+        free(aux);
+        aux = prox;
     }
-    if (item->pego == true) {
-        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
-            *posicao = (Vector2){GetMousePosition().x - (item->imagem.width  * 0.4f) / 2,
-            GetMousePosition().y - (item->imagem.height * 0.4f) / 2};
-        } else {
-            item->pego = false;
-            *posicao = padrao;
-        }
-    }
+    *head = NULL;
 }
-*/
+
+
+
+
+
+
