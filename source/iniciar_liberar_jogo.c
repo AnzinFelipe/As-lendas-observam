@@ -45,7 +45,12 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
 
     //Inicializa lendas
 
+    s->comadre1 = LoadTexture("assets/images/lendas/comadre_fulozinha1.png");
     s->comadre2 = LoadTexture("assets/images/lendas/comadre_fulozinha2.png");
+    s->cabra = LoadTexture("assets/images/lendas/cabra_cabriola.png");
+    SetTextureFilter(s->cabra, TEXTURE_FILTER_TRILINEAR);
+    s->ouro2 = LoadTexture("assets/images/lendas/boca_de_ouro2.png");
+    SetTextureFilter(s->ouro2, TEXTURE_FILTER_TRILINEAR);
 
     //Inicializa mapa
 

@@ -65,6 +65,9 @@ int main() {
                         desenhar_local(novo_jogo->local_atual);
                         desenhar_hitbox(novo_jogo->local_atual);
                         //DrawTextureEx(novo_jogo->comadre2, (Vector2){240, 50}, 0.0, 0.7, WHITE); //Teste imagem da comadre
+                        //DrawTextureEx(novo_jogo->comadre1, (Vector2){240, 50}, 0.0, 0.7, WHITE); //Teste imagem da comadre
+                        //DrawTextureEx(novo_jogo->ouro2, (Vector2){240, 50}, 0.0, 0.7, WHITE);
+                        DrawTextureEx(novo_jogo->cabra, (Vector2){240, 50}, 0.0, 0.7, WHITE);
 
                         desenhar_inventario(novo_jogo->inventario, 90, 140, 140);
 
@@ -105,7 +108,10 @@ int main() {
     UnloadTexture(novo_jogo->malakoff);
     UnloadTexture(novo_jogo->honglu);
     UnloadTexture(novo_jogo->queenOfHatred);
+    UnloadTexture(novo_jogo->comadre1);
     UnloadTexture(novo_jogo->comadre2);
+    UnloadTexture(novo_jogo->cabra);
+    UnloadTexture(novo_jogo->ouro2);
     UnloadMusicStream(novo_jogo->pink);
     free(novo_jogo);
     CloseAudioDevice();
