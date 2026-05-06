@@ -8,7 +8,8 @@
 #include <math.h>
 #include "item.h"
 #include <string.h>
-#include "lendas.h"
+#include "lenda_conversa.h"
+#include "lenda_local.h"
 
 typedef struct Vars_structs_inicio_jogo{
     RenderTexture2D tela;
@@ -48,7 +49,10 @@ typedef struct Vars_structs_inicio_jogo{
 
     Inventario *inventario;
 
-    Lendas *lenda;
+    Lendas_local *lenda_atual;
+    Lendas_local *lenda_local;
+    Lendas_conversa *conversa_atual;
+    Lendas_conversa *lenda_conversa;
 } Vars_structs_inicio_jogo;
 
 void iniciar_jogo(Vars_structs_inicio_jogo *s);

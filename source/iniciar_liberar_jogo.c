@@ -92,6 +92,11 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
 
     //Inicializa lendas
 
-    s->lenda = NULL;
-    inserir_lenda(&s->lenda, "Comadre Fulozinha", true, s->comadre2, s->comadre1, (char *[]){"", "", "", "", "", ""});
+    s->lenda_atual = NULL;
+    s->lenda_local = NULL;
+    inserir_lenda_local(&s->lenda_local, "Comadre Fulozinha", true, s->item_teste, (Rectangle){500, 300, 200, 200}, (Vector2){500, 300}, 450);
+
+    s->conversa_atual = NULL;
+    s->lenda_conversa = NULL;
+    inserir_lenda_conversa(&s->lenda_conversa, "Comadre Fulozinha", true, s->comadre2, s->comadre1, (char *[]){"", "", "", "", "", ""});
 }

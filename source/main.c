@@ -6,7 +6,8 @@
 #include "item.h"
 #include "iniciar_liberar_jogo.h"
 #include "telas.h"
-#include "lendas.h"
+#include "lenda_conversa.h"
+#include "lenda_local.h"
 
 int main() {
     SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_MAXIMIZED);
@@ -58,6 +59,8 @@ int main() {
                     UpdateMusicStream(novo_jogo->pink);
                     mudar_local(novo_jogo->local_atual, &novo_jogo->chave_atual, mouse_novo);
                     novo_jogo->local_atual = buscar_local(novo_jogo->mapa, novo_jogo->chave_atual);
+                    novo_jogo->lenda_atual = pegar_lenda_atual(novo_jogo->lenda_local, novo_jogo->chave_atual);
+                    interagir_lenda_local(novo_jogo->lenda_atual, novo_jogo->lenda_conversa, mouse_novo, &novo_jogo->conversa_atual);
                     
                     //Desenhar na textura
                     BeginTextureMode(novo_jogo->tela);
@@ -65,7 +68,8 @@ int main() {
                         ClearBackground(BLACK);
                         desenhar_local(novo_jogo->local_atual);
                         desenhar_hitbox(novo_jogo->local_atual);
-                        desenhar_lenda(&novo_jogo->lenda);
+                        desenhar_lendas_local(novo_jogo->lenda_atual);
+                        desenhar_lenda_conversa(novo_jogo->conversa_atual);
 
                         desenhar_inventario(novo_jogo->inventario, 90, 140, 140);
 
@@ -83,11 +87,12 @@ int main() {
         }             
     }
 
-    excluir_lenda(&novo_jogo->lenda);
+    liberar_lenda_conversa(&novo_jogo->lenda_conversa);
     liberar_arvore(&novo_jogo->mapa);
     liberar_inventario(&novo_jogo->inventario);
     LiberarItens_j(&novo_jogo->inventario);
     LiberarItens_i(&novo_jogo->itensNaoPegos);
+    liberar_lendas_local(&novo_jogo->lenda_local);
     UnloadTexture(novo_jogo->marco_zero);
     UnloadTexture(novo_jogo->comercial);
     UnloadTexture(novo_jogo->barbosa_lima1);
