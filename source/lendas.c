@@ -47,5 +47,6 @@ void desenhar_lenda(Lendas **lenda) {
             (*lenda)->primeiro_encontro = false;
         }
         DrawTextureEx((*lenda)->imagem1, (Vector2){240, 50}, 0.0, 0.7, WHITE);
+        DrawRectangle(260, 530, 1080, 270, (Color){100, 100, 0, 255});
     }
 }

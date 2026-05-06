@@ -83,6 +83,7 @@ int main() {
         }             
     }
 
+    excluir_lenda(&novo_jogo->lenda);
     liberar_arvore(&novo_jogo->mapa);
     liberar_inventario(&novo_jogo->inventario);
     LiberarItens_j(&novo_jogo->inventario);

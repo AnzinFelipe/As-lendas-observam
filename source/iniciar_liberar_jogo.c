@@ -93,4 +93,5 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     //Inicializa lendas
 
     s->lenda = NULL;
+    inserir_lenda(&s->lenda, "Comadre Fulozinha", true, s->comadre2, s->comadre1, (char *[]){"", "", "", "", "", ""});
 }
