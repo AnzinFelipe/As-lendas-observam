@@ -34,6 +34,7 @@ typedef struct Vars_structs_inicio_jogo{
     Texture2D item_teste;
     Texture2D honglu;
     Texture2D queenOfHatred;
+    Texture2D comadre2;
 
     Arvore_mapa *mapa;
     Arvore_mapa *local_atual;

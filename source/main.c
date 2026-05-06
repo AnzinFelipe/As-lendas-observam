@@ -5,7 +5,7 @@
 #include <math.h>
 #include "item.h"
 #include "iniciar_liberar_jogo.h"
-#include "screens.h"
+#include "telas.h"
 
 int main() {
     SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_MAXIMIZED);
@@ -58,11 +58,13 @@ int main() {
                     mudar_local(novo_jogo->local_atual, &novo_jogo->chave_atual, mouse_novo);
                     novo_jogo->local_atual = buscar_local(novo_jogo->mapa, novo_jogo->chave_atual);
                     
+                    //Desenhar na textura
                     BeginTextureMode(novo_jogo->tela);
                     
                         ClearBackground(BLACK);
                         desenhar_local(novo_jogo->local_atual);
                         desenhar_hitbox(novo_jogo->local_atual);
+                        //DrawTextureEx(novo_jogo->comadre2, (Vector2){240, 50}, 0.0, 0.7, WHITE); //Teste imagem da comadre
 
                         desenhar_inventario(novo_jogo->inventario, 90, 140, 140);
 
@@ -71,16 +73,14 @@ int main() {
                     
                     EndTextureMode();
                     
+                    //Desenhar a textura
                     BeginDrawing();
                     ClearBackground(BLACK);
                     DrawTexturePro(novo_jogo->tela.texture, (Rectangle){0, 0, 1600, -900}, nova_tela, (Vector2){0, 0}, 0.0f, WHITE);
                     EndDrawing();
-                        }  
-                    
-                    }
-                    
-                     
-        }
+                }
+        }             
+    }
 
     liberar_arvore(&novo_jogo->mapa);
     liberar_inventario(&novo_jogo->inventario);
@@ -105,6 +105,7 @@ int main() {
     UnloadTexture(novo_jogo->malakoff);
     UnloadTexture(novo_jogo->honglu);
     UnloadTexture(novo_jogo->queenOfHatred);
+    UnloadTexture(novo_jogo->comadre2);
     UnloadMusicStream(novo_jogo->pink);
     free(novo_jogo);
     CloseAudioDevice();

@@ -43,6 +43,10 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     s->honglu = LoadTexture("assets/images/Itens/Honglu.png");
     s->queenOfHatred = LoadTexture ("assets/images/Itens/QOH.png");
 
+    //Inicializa lendas
+
+    s->comadre2 = LoadTexture("assets/images/lendas/comadre_fulozinha2.png");
+
     //Inicializa mapa
 
     s->mapa = NULL;
