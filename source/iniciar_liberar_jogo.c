@@ -79,3 +79,32 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
 
     s->inventario = NULL;
 }
+
+void free_dados_jogo(Vars_structs_inicio_jogo *s){
+    liberar_arvore(&s->mapa);
+    liberar_inventario(&s->inventario);
+    LiberarItens_j(&s->inventario);
+    LiberarItens_i(&s->itensNaoPegos);
+    UnloadTexture(s->marco_zero);
+    UnloadTexture(s->comercial);
+    UnloadTexture(s->barbosa_lima1);
+    UnloadTexture(s->barbosa_lima2);
+    UnloadTexture(s->bom_jesus1);
+    UnloadTexture(s->bom_jesus2);
+    UnloadTexture(s->arsenal);
+    UnloadTexture(s->frevo);
+    UnloadTexture(s->rodrigues_mendes);
+    UnloadTexture(s->parede);
+    UnloadTexture(s->guia);
+    UnloadTexture(s->observatorio1);
+    UnloadTexture(s->observatorio2);
+    UnloadTexture(s->cais_apolo);
+    UnloadTexture(s->cesar_brum);
+    UnloadTexture(s->bom_jesus3);
+    UnloadTexture(s->malakoff);
+    UnloadTexture(s->honglu);
+    UnloadTexture(s->queenOfHatred);
+
+    UnloadMusicStream(s->pink);
+    CloseAudioDevice();
+}
