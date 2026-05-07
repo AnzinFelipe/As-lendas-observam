@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "mapa.h"
 #include "inventario.h"
 #include "raylib.h"
@@ -19,6 +20,7 @@ int main() {
 
     int primeiro = 1;
     Vars_structs_inicio_jogo *novo_jogo = (Vars_structs_inicio_jogo*)malloc(sizeof(Vars_structs_inicio_jogo));
+    memset(novo_jogo, 0, sizeof(Vars_structs_inicio_jogo));
 
     GameState state = EXPLORACAO;
 
@@ -27,9 +29,8 @@ int main() {
     while(!WindowShouldClose()) {
         switch (currentScreen){
             case SAIR:
-                if (IsAudioDeviceReady()) {
-                    CloseAudioDevice();
-                    }
+                free_dados_jogo(novo_jogo);
+                free(novo_jogo);
                 CloseWindow();
                 return 0;
             case MENU:
@@ -122,41 +123,15 @@ int main() {
                     ClearBackground(BLACK);
                     DrawTexturePro(novo_jogo->tela.texture, (Rectangle){0, 0, 1600, -900}, nova_tela, (Vector2){0, 0}, 0.0f, WHITE);
                     EndDrawing();
-                }
-        }             
-    }
-
-    liberar_arvore(&novo_jogo->mapa);
-    liberar_inventario(&novo_jogo->inventario);
-    LiberarItens_j(&novo_jogo->inventario);
-    LiberarItens_i(&novo_jogo->itensNaoPegos);
-    liberar_lendas(&novo_jogo->lenda_local);
-    UnloadTexture(novo_jogo->marco_zero);
-    UnloadTexture(novo_jogo->comercial);
-    UnloadTexture(novo_jogo->barbosa_lima1);
-    UnloadTexture(novo_jogo->barbosa_lima2);
-    UnloadTexture(novo_jogo->bom_jesus1);
-    UnloadTexture(novo_jogo->bom_jesus2);
-    UnloadTexture(novo_jogo->arsenal);
-    UnloadTexture(novo_jogo->frevo);
-    UnloadTexture(novo_jogo->rodrigues_mendes);
-    UnloadTexture(novo_jogo->parede);
-    UnloadTexture(novo_jogo->guia);
-    UnloadTexture(novo_jogo->observatorio1);
-    UnloadTexture(novo_jogo->observatorio2);
-    UnloadTexture(novo_jogo->cais_apolo);
-    UnloadTexture(novo_jogo->cesar_brum);
-    UnloadTexture(novo_jogo->bom_jesus3);
-    UnloadTexture(novo_jogo->malakoff);
-    UnloadTexture(novo_jogo->honglu);
-    UnloadTexture(novo_jogo->queenOfHatred);
-    UnloadTexture(novo_jogo->comadre1);
-    UnloadTexture(novo_jogo->comadre2);
-    UnloadTexture(novo_jogo->cabra);
-    UnloadTexture(novo_jogo->ouro2);
-    UnloadMusicStream(novo_jogo->pink);
+                        }  
+                    
+                    }
+                    
+                     
+        }
+    
+    free_dados_jogo(novo_jogo);
     free(novo_jogo);
-    CloseAudioDevice();
 
     CloseWindow();
 

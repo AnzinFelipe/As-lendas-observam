@@ -57,5 +57,6 @@ typedef struct Vars_structs_inicio_jogo{
 } Vars_structs_inicio_jogo;
 
 void iniciar_jogo(Vars_structs_inicio_jogo *s);
+void free_dados_jogo(Vars_structs_inicio_jogo *s);
 
 #endif
