@@ -5,9 +5,10 @@
 #include <math.h>
 #include "item.h"
 #include "iniciar_liberar_jogo.h"
-#include "telas.h"
-#include "lenda_conversa.h"
-#include "lenda_local.h"
+#include "screens.h"
+#include "lendas.h"
+#include "raydial.h"
+#include "state.h"
 
 int main() {
     SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_MAXIMIZED);
@@ -18,6 +19,8 @@ int main() {
 
     int primeiro = 1;
     Vars_structs_inicio_jogo *novo_jogo = (Vars_structs_inicio_jogo*)malloc(sizeof(Vars_structs_inicio_jogo));
+
+    GameState state = EXPLORACAO;
 
     SetTargetFPS(60);
 
@@ -57,10 +60,41 @@ int main() {
                     };
 
                     UpdateMusicStream(novo_jogo->pink);
-                    mudar_local(novo_jogo->local_atual, &novo_jogo->chave_atual, mouse_novo);
-                    novo_jogo->local_atual = buscar_local(novo_jogo->mapa, novo_jogo->chave_atual);
-                    novo_jogo->lenda_atual = pegar_lenda_atual(novo_jogo->lenda_local, novo_jogo->chave_atual);
-                    interagir_lenda_local(novo_jogo->lenda_atual, novo_jogo->lenda_conversa, mouse_novo, &novo_jogo->conversa_atual);
+
+                    bool dialogo_acabou_esse_frame = false;
+                    if (state == DIALOGO) {
+
+                        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) || IsKeyPressed(KEY_SPACE)) {
+                            AdvanceDialogue(novo_jogo->dialogo);
+                        }
+
+                        UpdateDialogueManager(novo_jogo->dialogo);
+
+                        if (novo_jogo->dialogo && !novo_jogo->dialogo->isActive) {
+                            FreeDialogueManager(novo_jogo->dialogo);
+                            novo_jogo->dialogo = NULL;
+                            state = EXPLORACAO;
+                            dialogo_acabou_esse_frame = true;
+                        }
+                    }
+                    if (state == EXPLORACAO && !dialogo_acabou_esse_frame) {
+                        mudar_local(novo_jogo->local_atual, &novo_jogo->chave_atual, mouse_novo);
+                        novo_jogo->local_atual = buscar_local(novo_jogo->mapa, novo_jogo->chave_atual);
+                        novo_jogo->lenda_atual = pegar_lenda_atual(novo_jogo->lenda_local, novo_jogo->chave_atual);
+                        bool clicada = interagir_lenda(novo_jogo->lenda_atual, mouse_novo);
+
+                        if (clicada == true && novo_jogo->dialogo == NULL && !dialogo_acabou_esse_frame) {
+                            Lendas *conversa = novo_jogo->lenda_atual;
+                            if (conversa->ja_conversou == false) {
+                                novo_jogo->dialogo = CreateDialogueManager(conversa->dialogo_raiz);
+                                conversa->ja_conversou = true;
+                            }
+                            else {
+                                novo_jogo->dialogo = CreateDialogueManager(conversa->dialogo_repetido);
+                            }
+                            state = DIALOGO;    
+                        }
+                    }
                     
                     //Desenhar na textura
                     BeginTextureMode(novo_jogo->tela);
@@ -68,13 +102,16 @@ int main() {
                         ClearBackground(BLACK);
                         desenhar_local(novo_jogo->local_atual);
                         desenhar_hitbox(novo_jogo->local_atual);
-                        desenhar_lendas_local(novo_jogo->lenda_atual);
-                        desenhar_lenda_conversa(novo_jogo->conversa_atual);
+                        desenhar_lendas(novo_jogo->lenda_atual);
 
                         desenhar_inventario(novo_jogo->inventario, 90, 140, 140);
 
                         ItemAparecerNoCenario(&novo_jogo->itensNaoPegos, novo_jogo->chave_atual);
                         PegarItemEEntrarInventário(&novo_jogo->itensNaoPegos, novo_jogo->chave_atual, mouse_novo, &novo_jogo->inventario);
+
+                        if (state == DIALOGO) {
+                            DrawDialogueManager(novo_jogo->dialogo);
+                        }
                     
                     EndTextureMode();
                     
@@ -87,12 +124,11 @@ int main() {
         }             
     }
 
-    liberar_lenda_conversa(&novo_jogo->lenda_conversa);
     liberar_arvore(&novo_jogo->mapa);
     liberar_inventario(&novo_jogo->inventario);
     LiberarItens_j(&novo_jogo->inventario);
     LiberarItens_i(&novo_jogo->itensNaoPegos);
-    liberar_lendas_local(&novo_jogo->lenda_local);
+    liberar_lendas(&novo_jogo->lenda_local);
     UnloadTexture(novo_jogo->marco_zero);
     UnloadTexture(novo_jogo->comercial);
     UnloadTexture(novo_jogo->barbosa_lima1);

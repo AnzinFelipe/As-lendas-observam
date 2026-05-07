@@ -1,12 +1,11 @@
-#include "lenda_local.h"
-#include "lenda_conversa.h"
 #include "raylib.h"
 #include <stdlib.h>
 #include <string.h>
+#include "lendas.h"
 
-void inserir_lenda_local(Lendas_local **head, char *nome, bool primeiro_encontro, Texture2D imagem, Rectangle hitbox, 
+void inserir_lenda(Lendas **head, char *nome, bool primeiro_encontro, Texture2D imagem, Rectangle hitbox, 
     Vector2 posicao, int chave) {
-    Lendas_local *novo = (Lendas_local*)malloc(sizeof(Lendas_local));
+    Lendas *novo = (Lendas*)malloc(sizeof(Lendas));
     if (novo != NULL) {
         novo->nome = malloc(strlen(nome) + 1);
         strcpy(novo->nome, nome);
@@ -16,11 +15,12 @@ void inserir_lenda_local(Lendas_local **head, char *nome, bool primeiro_encontro
         novo->posicao = posicao;
         novo->chave = chave;
         novo->prox = NULL;
+        novo->ja_conversou = false;
 
         if (*head == NULL) {
             *head  = novo;
         } else {
-            Lendas_local *aux = *head;
+            Lendas *aux = *head;
             while (aux->prox != NULL) {
                 aux = aux->prox;
             } 
@@ -29,17 +29,18 @@ void inserir_lenda_local(Lendas_local **head, char *nome, bool primeiro_encontro
     }
 }
 
-void liberar_lendas_local(Lendas_local **head) {
-    Lendas_local *aux = *head;
+void liberar_lendas(Lendas **head) {
+    Lendas *aux = *head;
     while (*head != NULL) {
         aux = *head;
         *head = (*head)->prox;
         free(aux->nome);
         free(aux);
     }
+    *head = NULL;
 }
 
-Lendas_local * pegar_lenda_atual(Lendas_local *head, int chave_atual) {
+Lendas * pegar_lenda_atual(Lendas *head, int chave_atual) {
     while (head != NULL) {
         if (head->chave == chave_atual) {
             return head;
@@ -49,22 +50,22 @@ Lendas_local * pegar_lenda_atual(Lendas_local *head, int chave_atual) {
     return NULL;
 }
 
-void desenhar_lendas_local(Lendas_local *lenda) {
+void desenhar_lendas(Lendas *lenda) {
     if (lenda != NULL) {
         DrawTextureV(lenda->imagem, lenda->posicao, WHITE);
         DrawRectangleRec(lenda->hitbox, (Color){100, 100, 100, 100});
     }
 }
 
-void interagir_lenda_local(Lendas_local *lenda, Lendas_conversa *head, Vector2 mouse, Lendas_conversa **conversa_atual) {
+bool interagir_lenda(Lendas *lenda, Vector2 mouse) {
     if (lenda != NULL) {
         if (CheckCollisionPointRec(mouse, lenda->hitbox)) {
             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-                *conversa_atual = pegar_conversa_atual(head, lenda->nome);
-            }
-            if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
-                *conversa_atual = NULL;
+                return true;
             }
         }
     }
+
+    return false;
 }
+

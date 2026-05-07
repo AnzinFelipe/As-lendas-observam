@@ -92,11 +92,26 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
 
     //Inicializa lendas
 
+    s->dialogo = NULL;
+
     s->lenda_atual = NULL;
     s->lenda_local = NULL;
-    inserir_lenda_local(&s->lenda_local, "Comadre Fulozinha", true, s->item_teste, (Rectangle){500, 300, 200, 200}, (Vector2){500, 300}, 450);
+    inserir_lenda(&s->lenda_local, "Comadre Fulozinha", true, s->item_teste, (Rectangle){500, 300, 200, 200}, (Vector2){500, 300}, 450);
+    Lendas *lenda = s->lenda_local;
 
-    s->conversa_atual = NULL;
-    s->lenda_conversa = NULL;
-    inserir_lenda_conversa(&s->lenda_conversa, "Comadre Fulozinha", true, s->comadre2, s->comadre1, (char *[]){"", "", "", "", "", ""});
+    // Criar nós de diálogo com a imagem da lenda
+    RayDialNode *d1 = CreateDialogueNode("fala1", "");
+    RayDialNode *d2 = CreateDialogueNode("fala2", "");
+    RayDialNode *d3 = CreateDialogueNode("fala3", "");
+
+    // Criar componentes com a textura da lenda  
+    
+    d1->components = criarComp("Comadre Fulozinha", "Oi oi");
+    d2->components = criarComp("Comadre Fulozinha", "Bla bla bla");
+    d3->components = criarComp("Comadre Fulozinha", "AAAAAAAAA");
+
+    AddChoice(d1, d2);
+
+    lenda->dialogo_raiz = d1;
+    lenda->dialogo_repetido = d3;
 }

@@ -1,5 +1,5 @@
 #include "raylib.h"
-#include "telas.h"
+#include "screens.h"
 #include <math.h>
 
 GameScreen RunMenu(void) {
