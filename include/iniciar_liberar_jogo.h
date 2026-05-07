@@ -8,6 +8,9 @@
 #include <math.h>
 #include "item.h"
 #include <string.h>
+#include "lendas.h"
+#include "raydial.h"
+#include "falas.h"
 
 typedef struct Vars_structs_inicio_jogo{
     RenderTexture2D tela;
@@ -34,6 +37,10 @@ typedef struct Vars_structs_inicio_jogo{
     Texture2D item_teste;
     Texture2D honglu;
     Texture2D queenOfHatred;
+    Texture2D comadre1;
+    Texture2D comadre2;
+    Texture2D cabra;
+    Texture2D ouro2;
 
     Arvore_mapa *mapa;
     Arvore_mapa *local_atual;
@@ -42,6 +49,11 @@ typedef struct Vars_structs_inicio_jogo{
     Item *itensNaoPegos;
 
     Inventario *inventario;
+
+    RayDialManager *dialogo;
+
+    Lendas *lenda_atual;
+    Lendas *lenda_local;
 } Vars_structs_inicio_jogo;
 
 void iniciar_jogo(Vars_structs_inicio_jogo *s);

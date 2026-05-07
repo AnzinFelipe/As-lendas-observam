@@ -43,6 +43,17 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     s->honglu = LoadTexture("assets/images/Itens/Honglu.png");
     s->queenOfHatred = LoadTexture ("assets/images/Itens/QOH.png");
 
+    //Inicializa lendas
+
+    s->comadre1 = LoadTexture("assets/images/lendas/comadre_fulozinha1.png");
+    s->comadre2 = LoadTexture("assets/images/lendas/comadre_fulozinha2.png");
+    s->cabra = LoadTexture("assets/images/lendas/cabra_cabriola.png");
+    GenTextureMipmaps(&s->cabra);
+    SetTextureFilter(s->cabra, TEXTURE_FILTER_TRILINEAR);
+    s->ouro2 = LoadTexture("assets/images/lendas/boca_de_ouro2.png");
+    GenTextureMipmaps(&s->ouro2);
+    SetTextureFilter(s->ouro2, TEXTURE_FILTER_TRILINEAR);
+
     //Inicializa mapa
 
     s->mapa = NULL;
@@ -78,6 +89,31 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     //Inicializa inventario
 
     s->inventario = NULL;
+
+    //Inicializa lendas
+
+    s->dialogo = NULL;
+
+    s->lenda_atual = NULL;
+    s->lenda_local = NULL;
+    inserir_lenda(&s->lenda_local, "Comadre Fulozinha", true, s->item_teste, (Rectangle){500, 300, 200, 200}, (Vector2){500, 300}, 450);
+    Lendas *lenda = s->lenda_local;
+
+    // Criar nós de diálogo com a imagem da lenda
+    RayDialNode *d1 = CreateDialogueNode("fala1", "");
+    RayDialNode *d2 = CreateDialogueNode("fala2", "");
+    RayDialNode *d3 = CreateDialogueNode("fala3", "");
+
+    // Criar componentes com a textura da lenda  
+    
+    d1->components = criarComp("Comadre Fulozinha", "Oi oi");
+    d2->components = criarComp("Comadre Fulozinha", "Bla bla bla");
+    d3->components = criarComp("Comadre Fulozinha", "AAAAAAAAA");
+
+    AddChoice(d1, d2);
+
+    lenda->dialogo_raiz = d1;
+    lenda->dialogo_repetido = d3;
 }
 
 void free_dados_jogo(Vars_structs_inicio_jogo *s){
@@ -85,6 +121,7 @@ void free_dados_jogo(Vars_structs_inicio_jogo *s){
     liberar_inventario(&s->inventario);
     LiberarItens_j(&s->inventario);
     LiberarItens_i(&s->itensNaoPegos);
+    liberar_lendas(&s->lenda_local);
     UnloadTexture(s->marco_zero);
     UnloadTexture(s->comercial);
     UnloadTexture(s->barbosa_lima1);
@@ -104,6 +141,10 @@ void free_dados_jogo(Vars_structs_inicio_jogo *s){
     UnloadTexture(s->malakoff);
     UnloadTexture(s->honglu);
     UnloadTexture(s->queenOfHatred);
+    UnloadTexture(s->comadre1);
+    UnloadTexture(s->comadre2);
+    UnloadTexture(s->cabra);
+    UnloadTexture(s->ouro2);
 
     UnloadMusicStream(s->pink);
     CloseAudioDevice();

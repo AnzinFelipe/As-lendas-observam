@@ -6,7 +6,6 @@ GameScreen RunMenu(void) {
     Rectangle Iniciar = (Rectangle){ 800 - MeasureText("INICIAR JOGO", 40) / 2, 250, 285, 40};
     Rectangle Sair = (Rectangle){ 800 - MeasureText("SAIR", 40) / 2, 325, 100, 40 };
 
-
     RenderTexture2D tela_menu = LoadRenderTexture(1600, 900);
     
     Color hover = YELLOW;
