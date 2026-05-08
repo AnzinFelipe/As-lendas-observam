@@ -393,12 +393,12 @@ RayDialComponent* CreatePortraitDialogue(Rectangle bounds, const char* speakerNa
     data->nameTagColor = DARKGRAY;
     data->dialogueBoxColor = (Color){30, 30, 30, 255};
     data->textColor = WHITE;
-    data->nameColor = YELLOW;
-    data->fontSize = 25;
-    data->nameFontSize = 30;
+    data->nameColor = ORANGE;
+    data->fontSize = 30;
+    data->nameFontSize = 35;
     data->wrapText = true;
     data->portraitSize = 0;
-    data->showOnRight = true;
+    data->showOnRight = false;
     
     // Animation properties
     data->animateText = true;

@@ -3,19 +3,19 @@
 
 RayDialComponent *criarComp(const char *titulo, const char *texto) {
     RayDialComponent *comp = CreatePortraitDialogue(
-        (Rectangle){250, 450, 1100, 300},
+        (Rectangle){250, 520, 1100, 270},
         titulo,
         texto,
-        (Color){20, 20, 40, 255}
+        (Color){0, 0, 0, 0}
     );
 
     SetPortraitDialogueBoxStyle(
         comp,
-        (Color){20, 20, 40, 255},
-        (Color){150, 100, 200, 255},
+        (Color){33, 19, 13, 255},
+        (Color){110, 59, 37, 255},
         3,
         40
-    );
+    );  
 
     SetPortraitDialogueCornerRadius(comp, 40);
     SetPortraitDialogueAnimation(comp, true, 30.0f);

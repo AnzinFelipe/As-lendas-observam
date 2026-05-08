@@ -96,24 +96,54 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
 
     s->lenda_atual = NULL;
     s->lenda_local = NULL;
-    inserir_lenda(&s->lenda_local, "Comadre Fulozinha", true, s->item_teste, (Rectangle){500, 300, 200, 200}, (Vector2){500, 300}, 450);
+    inserir_lenda(&s->lenda_local, "Comadre Fulozinha", true, s->item_teste, s->comadre1, s->comadre2, (Rectangle){500, 300, 200, 200}, (Vector2){500, 300}, 450);
     Lendas *lenda = s->lenda_local;
 
-    // Criar nós de diálogo com a imagem da lenda
-    RayDialNode *d1 = CreateDialogueNode("fala1", "");
-    RayDialNode *d2 = CreateDialogueNode("fala2", "");
-    RayDialNode *d3 = CreateDialogueNode("fala3", "");
+    //Criar nós de diálogo
+    RayDialNode *comadre_fala1 = CreateDialogueNode("fala1", "");
+    RayDialNode *comadre_fala2 = CreateDialogueNode("fala2", "");
+    RayDialNode *comadre_fala3 = CreateDialogueNode("fala3", "");
+    RayDialNode *comadre_fala4 = CreateDialogueNode("fala4", "");
 
-    // Criar componentes com a textura da lenda  
-    
-    d1->components = criarComp("Comadre Fulozinha", "Oi oi");
-    d2->components = criarComp("Comadre Fulozinha", "Bla bla bla");
-    d3->components = criarComp("Comadre Fulozinha", "AAAAAAAAA");
+    //Criar componentes
+    comadre_fala1->components = criarComp("Subconsciente", "--Você encontra um vulto escuro, o assobio está muito baixo, mas parece vir dele.--");
+    comadre_fala2->components = criarComp("Subconsciente", "--Ele está observando, parece que não quer falar com Você.--");
+    comadre_fala3->components = criarComp("Subconsciente", "--Talvez ele mude de ideia se você oferecer algum agrado.--");
+    comadre_fala4->components = criarComp("Subconsciente", "--Ele não quer falar com você por enquanto.--");
 
-    AddChoice(d1, d2);
+    AddChoice(comadre_fala1, comadre_fala2);
+    AddChoice(comadre_fala2, comadre_fala3);
 
-    lenda->dialogo_raiz = d1;
-    lenda->dialogo_repetido = d3;
+    lenda->dialogo_raiz = comadre_fala1;
+    lenda->dialogo_repetido = comadre_fala4;
+
+    inserir_lenda(&s->lenda_local, "Cabra", true, s->item_teste, s->cabra, s->cabra, (Rectangle){500, 300, 200, 200}, (Vector2){500, 300}, 422);
+    lenda = lenda->prox;
+
+    RayDialNode *cabra_fala1 = CreateDialogueNode("fala1", "");
+    RayDialNode *cabra_fala2 = CreateDialogueNode("fala2", "");
+    RayDialNode *cabra_fala3 = CreateDialogueNode("fala3", "");
+    RayDialNode *cabra_fala4 = CreateDialogueNode("fala4", "");
+    RayDialNode *cabra_fala5 = CreateDialogueNode("fala5", "");
+    RayDialNode *cabra_fala6 = CreateDialogueNode("fala6", "");
+    RayDialNode *cabra_fala7 = CreateDialogueNode("fala6", "");
+
+    cabra_fala1->components = criarComp("Subconsciente", "--Você se depara com uma cabra muito estranha, ela tem olhos e um bafo de fogo, não parece amigável.--");
+    cabra_fala2->components = criarComp("Cabra Cabriola", "Eu sou a Cabra Cabriola. Que como...");
+    cabra_fala3->components = criarComp("Cabra Cabriola", "...Poxa, um adulto? Pelo visto vou ficar morrendo de fome essa noite.");
+    cabra_fala4->components = criarComp("Cabra Cabriola", "Saia daqui e não me incomode, estou de barriga vazia e sem paciência para falar com um adulto estranho.");
+    cabra_fala5->components = criarComp("Subconsciente", "--Pelo visto, essa cabra precisa comer para falar com você.--");
+    cabra_fala6->components = criarComp("Subconsciente", "--Obviamente você não vai dar o que ela quer. Tente mudar o paladar dela com uma comida apropriada.--");
+    cabra_fala7->components = criarComp("Subconsciente", "--Ache alguma comida, daí então ela vai querer falar com você.--");
+
+    AddChoice(cabra_fala1, cabra_fala2);
+    AddChoice(cabra_fala2, cabra_fala3);
+    AddChoice(cabra_fala3, cabra_fala4);
+    AddChoice(cabra_fala4, cabra_fala5);
+    AddChoice(cabra_fala5, cabra_fala6);
+
+    lenda->dialogo_raiz = cabra_fala1;
+    lenda->dialogo_repetido = cabra_fala7;
 }
 
 void free_dados_jogo(Vars_structs_inicio_jogo *s){

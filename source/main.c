@@ -105,6 +105,8 @@ int main() {
                         desenhar_hitbox(novo_jogo->local_atual);
                         if (state == EXPLORACAO) {
                             desenhar_lendas(novo_jogo->lenda_atual);
+                        } else if (state == DIALOGO) {
+                            desenhar_lendas_conversa(novo_jogo->lenda_atual);
                         }
 
                         desenhar_inventario(novo_jogo->inventario, 90, 140, 140);
