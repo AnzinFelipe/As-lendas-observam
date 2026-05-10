@@ -21,6 +21,9 @@ typedef struct Vars_structs_inicio_jogo{
     Texture2D marco_zero;
     Texture2D barbosa_lima1;
     Texture2D barbosa_lima2;
+    Texture2D barbosa_lima3;
+    Texture2D barbosa_lima4;
+    Texture2D amores;
     Texture2D bom_jesus1;
     Texture2D bom_jesus2;
     Texture2D bom_jesus3;
@@ -40,7 +43,11 @@ typedef struct Vars_structs_inicio_jogo{
     Texture2D comadre1;
     Texture2D comadre2;
     Texture2D cabra;
+    Texture2D ouro1;
     Texture2D ouro2;
+    Texture2D figo;
+    Texture2D moca;
+    Texture2D emparedada1;
 
     Arvore_mapa *mapa;
     Arvore_mapa *local_atual;

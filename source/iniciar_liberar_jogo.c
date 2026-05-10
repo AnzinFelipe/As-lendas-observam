@@ -23,6 +23,9 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     s->marco_zero = LoadTexture("assets/images/locais/marco_zero.png");
     s->barbosa_lima1 = LoadTexture("assets/images/locais/barbosa_lima1.png");
     s->barbosa_lima2 = LoadTexture("assets/images/locais/barbosa_lima2.png");
+    s->barbosa_lima3 = LoadTexture("assets/images/locais/barbosa_lima3.png");
+    s->barbosa_lima4 = LoadTexture("assets/images/locais/barbosa_lima4.png");
+    s->amores = LoadTexture("assets/images/locais/amores.png");
     s->bom_jesus1 = LoadTexture("assets/images/locais/bom_jesus1.png");
     s->bom_jesus2 = LoadTexture("assets/images/locais/bom_jesus2.png");
     s->bom_jesus3 = LoadTexture("assets/images/locais/bom_jesus3.png");
@@ -50,9 +53,19 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     s->cabra = LoadTexture("assets/images/lendas/cabra_cabriola.png");
     GenTextureMipmaps(&s->cabra);
     SetTextureFilter(s->cabra, TEXTURE_FILTER_TRILINEAR);
+    s->ouro1 = LoadTexture("assets/images/lendas/boca_de_ouro1.png");
     s->ouro2 = LoadTexture("assets/images/lendas/boca_de_ouro2.png");
     GenTextureMipmaps(&s->ouro2);
     SetTextureFilter(s->ouro2, TEXTURE_FILTER_TRILINEAR);
+    s->moca = LoadTexture("assets/images/lendas/encanta_moca.png");
+    GenTextureMipmaps(&s->moca);
+    SetTextureFilter(s->moca, TEXTURE_FILTER_TRILINEAR);
+    s->figo = LoadTexture("assets/images/lendas/papa_figo.png");
+    GenTextureMipmaps(&s->figo);
+    SetTextureFilter(s->figo, TEXTURE_FILTER_TRILINEAR);
+    s->emparedada1 = LoadTexture("assets/images/lendas/emparedada1.png");
+    GenTextureMipmaps(&s->emparedada1);
+    SetTextureFilter(s->emparedada1, TEXTURE_FILTER_TRILINEAR);
 
     //Inicializa mapa
 
@@ -62,6 +75,9 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     inserir_local(&s->mapa, 300, "Associação Comercial de Pernambuco", s->comercial, NULL, (Rectangle){240, 450, 200, 300}, (Rectangle){1160, 450, 200, 300}, (Rectangle){540, 700, 500, 100});
     inserir_local(&s->mapa, 350, "Avenida Barbosa Lima", s->barbosa_lima1, NULL, (Rectangle){0}, (Rectangle){590, 400, 350, 250}, (Rectangle){540, 700, 500, 100});
     inserir_local(&s->mapa, 400, "Avenida Barbosa Lima", s->barbosa_lima2, NULL, (Rectangle){340, 350, 200, 300}, (Rectangle){1160, 400, 200, 300}, (Rectangle){540, 700, 500, 100});
+    inserir_local(&s->mapa, 355, "Avenida Barbosa Lima", s->barbosa_lima3, NULL, (Rectangle){0}, (Rectangle){590, 450, 350, 200}, (Rectangle){540, 700, 500, 100});
+    inserir_local(&s->mapa, 356, "Avenida Barbosa Lima", s->barbosa_lima4, NULL, (Rectangle){0}, (Rectangle){800, 400, 350, 250}, (Rectangle){540, 700, 500, 100});
+    inserir_local(&s->mapa, 357, "Rua dos Amores", s->amores, NULL, (Rectangle){0}, (Rectangle){0}, (Rectangle){540, 700, 500, 100});
     inserir_local(&s->mapa, 401, "Rua do Bom Jesus", s->bom_jesus1, NULL, (Rectangle){0}, (Rectangle){610, 350, 350, 250}, (Rectangle){540, 700, 500, 100});
     inserir_local(&s->mapa, 402, "Rua do Bom Jesus", s->bom_jesus2, NULL, (Rectangle){0}, (Rectangle){610, 350, 350, 250}, (Rectangle){540, 700, 500, 100});
     inserir_local(&s->mapa, 450, "Praça do Arsenal", s->arsenal, NULL, (Rectangle){240, 360, 200, 400}, (Rectangle){1160, 360, 200, 400}, (Rectangle){540, 700, 500, 100});
