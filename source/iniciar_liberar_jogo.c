@@ -1,6 +1,7 @@
 #include "iniciar_liberar_jogo.h"
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 void iniciar_jogo(Vars_structs_inicio_jogo *s){
     //Inicializa tela
@@ -39,6 +40,15 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     s->cais_apolo = LoadTexture("assets/images/locais/cais_apolo.png");
     s->cesar_brum = LoadTexture("assets/images/locais/cesar_brum.png");
     s->malakoff = LoadTexture("assets/images/locais/malakoff.png");
+    s->caixa = LoadTexture("assets/images/locais/caixa.png");
+    s->alfredo_lisboa1 = LoadTexture("assets/images/locais/alfredo_lisboa1.png");
+    s->alfredo_lisboa2 = LoadTexture("assets/images/locais/alfredo_lisboa2.png");
+    s->alfredo_lisboa3 = LoadTexture("assets/images/locais/alfredo_lisboa3.png");
+    s->vital_de_oliveira = LoadTexture("assets/images/locais/vital_de_oliveira.png");
+    s->sao_jorge1 = LoadTexture("assets/images/locais/sao_jorge1.png");
+    s->sao_jorge2 = LoadTexture("assets/images/locais/sao_jorge2.png");
+    s->travessa_tiradentes = LoadTexture("assets/images/locais/travessa_tiradentes.png");
+    s->praca_tiradentes = LoadTexture("assets/images/locais/praca_tiradentes.png");
 
     //Inicializa itens
 
@@ -91,6 +101,15 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     inserir_local(&s->mapa, 430, "CESAR Brum", s->cesar_brum, NULL, (Rectangle){0}, (Rectangle){0}, (Rectangle){540, 700, 500, 100});
     inserir_local(&s->mapa, 451, "Rua do Bom Jesus", s->bom_jesus3, NULL, (Rectangle){0}, (Rectangle){690, 350, 350, 250}, (Rectangle){540, 700, 500, 100});
     inserir_local(&s->mapa, 452, "Torre Malakoff", s->malakoff, NULL, (Rectangle){0}, (Rectangle){0}, (Rectangle){540, 700, 500, 100});
+    inserir_local(&s->mapa, 501, "Caixa Cultural", s->caixa, NULL, (Rectangle){0}, (Rectangle){590, 350, 350, 250}, (Rectangle){540, 700, 500, 100});
+    inserir_local(&s->mapa, 502, "Avenida Alfredo Lisboa", s->alfredo_lisboa1, NULL, (Rectangle){0}, (Rectangle){590, 350, 350, 250}, (Rectangle){540, 700, 500, 100});
+    inserir_local(&s->mapa, 503, "Avenida Alfredo Lisboa", s->alfredo_lisboa2, NULL, (Rectangle){0}, (Rectangle){590, 350, 350, 250}, (Rectangle){540, 700, 500, 100});
+    inserir_local(&s->mapa, 504, "Avenida Alfredo Lisboa", s->alfredo_lisboa3, NULL, (Rectangle){0}, (Rectangle){590, 350, 350, 250}, (Rectangle){540, 700, 500, 100});
+    inserir_local(&s->mapa, 505, "Rua Vital de Oliveira", s->vital_de_oliveira, NULL, (Rectangle){0}, (Rectangle){590, 350, 350, 250}, (Rectangle){540, 700, 500, 100});
+    inserir_local(&s->mapa, 506, "Rua de São Jorge", s->sao_jorge1, NULL, (Rectangle){0}, (Rectangle){590, 350, 350, 250}, (Rectangle){540, 700, 500, 100});
+    inserir_local(&s->mapa, 507, "Rua de São Jorge", s->sao_jorge2, NULL, (Rectangle){0}, (Rectangle){590, 350, 350, 250}, (Rectangle){540, 700, 500, 100});
+    inserir_local(&s->mapa, 508, "Travessa Tiradentes", s->travessa_tiradentes, NULL, (Rectangle){0}, (Rectangle){590, 350, 350, 250}, (Rectangle){540, 700, 500, 100});
+    inserir_local(&s->mapa, 510, "Praça Tiradentes", s->praca_tiradentes, NULL, (Rectangle){0}, (Rectangle){0}, (Rectangle){540, 700, 500, 100});
 
     s->local_atual = NULL;
     s->chave_atual = 500;
@@ -113,7 +132,7 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     s->lenda_atual = NULL;
     s->lenda_local = NULL;
     inserir_lenda(&s->lenda_local, "Comadre Fulozinha", true, s->item_teste, s->comadre1, s->comadre2, (Rectangle){500, 300, 200, 200}, (Vector2){500, 300}, 450);
-    Lendas *lenda = s->lenda_local;
+    Lendas *lenda = pegar_lenda_atual(s->lenda_local, 450);
 
     //Criar nós de diálogo
     RayDialNode *comadre_fala1 = CreateDialogueNode("fala1", "");
@@ -133,8 +152,8 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     lenda->dialogo_raiz = comadre_fala1;
     lenda->dialogo_repetido = comadre_fala4;
 
-    inserir_lenda(&s->lenda_local, "Cabra", true, s->item_teste, s->cabra, s->cabra, (Rectangle){500, 300, 200, 200}, (Vector2){500, 300}, 422);
-    lenda = lenda->prox;
+    inserir_lenda(&s->lenda_local, "Cabra Cabriola", true, s->item_teste, s->cabra, s->cabra, (Rectangle){500, 300, 200, 200}, (Vector2){500, 300}, 422);
+    lenda = pegar_lenda_atual(s->lenda_local, 422);
 
     RayDialNode *cabra_fala1 = CreateDialogueNode("fala1", "");
     RayDialNode *cabra_fala2 = CreateDialogueNode("fala2", "");
@@ -142,7 +161,7 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     RayDialNode *cabra_fala4 = CreateDialogueNode("fala4", "");
     RayDialNode *cabra_fala5 = CreateDialogueNode("fala5", "");
     RayDialNode *cabra_fala6 = CreateDialogueNode("fala6", "");
-    RayDialNode *cabra_fala7 = CreateDialogueNode("fala6", "");
+    RayDialNode *cabra_fala7 = CreateDialogueNode("fala7", "");
 
     cabra_fala1->components = criarComp("Subconsciente", "--Você se depara com uma cabra muito estranha, ela tem olhos e um bafo de fogo, não parece amigável.--");
     cabra_fala2->components = criarComp("Cabra Cabriola", "Eu sou a Cabra Cabriola. Que como...");
@@ -160,6 +179,34 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
 
     lenda->dialogo_raiz = cabra_fala1;
     lenda->dialogo_repetido = cabra_fala7;
+
+    inserir_lenda(&s->lenda_local, "Papa-figo", true, s->item_teste, s->figo, s->figo, (Rectangle){700, 450, 200, 200}, (Vector2){700, 450}, 452);
+    lenda = lenda->prox;
+
+    RayDialNode *figo_fala1 = CreateDialogueNode("fala1", "");
+    RayDialNode *figo_fala2 = CreateDialogueNode("fala2", "");
+    RayDialNode *figo_fala3 = CreateDialogueNode("fala3", "");
+    RayDialNode *figo_fala4 = CreateDialogueNode("fala4", "");
+    RayDialNode *figo_fala5 = CreateDialogueNode("fala5", "");
+    RayDialNode *figo_fala6 = CreateDialogueNode("fala6", "");
+    RayDialNode *figo_fala7 = CreateDialogueNode("fala7", "");
+
+    figo_fala1->components = criarComp("Subconsciente", "--Você se encontra com um velho corcunda com uma aparência péssima, parece que está querendo algum favor seu.--");
+    figo_fala2->components = criarComp("Papa-figo", "Boa noite, eu... estava perambulando por essas ruas e acabei me descuidando, perdi uma coisa muuuito importante.");
+    figo_fala3->components = criarComp("Papa-figo", "Meu saco de pano... deixei cair em algum canto aqui no Recife Antigo, se você o achar, poderia trazer para mim?");
+    figo_fala4->components = criarComp("Papa-figo", "Vou ficar muuuito agradecido, sem ele não posso curar minha doença.");
+    figo_fala5->components = criarComp("Subconsciente", "--Você sabe o que ele faz com esse saco de pano. Você não pode simplesmente devolver para ele.--");
+    figo_fala6->components = criarComp("Subconsciente", "--Mas... talvez ele te dê algo em troca, pense numa solução para esse dilema.--");
+    figo_fala7->components = criarComp("Papa-figo", "--Já achou o meu saco de pano? Não devo ter deixado cair tão longe daqui.--");
+
+    AddChoice(figo_fala1, figo_fala2);
+    AddChoice(figo_fala2, figo_fala3);
+    AddChoice(figo_fala3, figo_fala4);
+    AddChoice(figo_fala4, figo_fala5);
+    AddChoice(figo_fala5, figo_fala6);
+
+    lenda->dialogo_raiz = figo_fala1;
+    lenda->dialogo_repetido = figo_fala7;
 }
 
 void free_dados_jogo(Vars_structs_inicio_jogo *s){
@@ -172,6 +219,9 @@ void free_dados_jogo(Vars_structs_inicio_jogo *s){
     UnloadTexture(s->comercial);
     UnloadTexture(s->barbosa_lima1);
     UnloadTexture(s->barbosa_lima2);
+    UnloadTexture(s->barbosa_lima3);
+    UnloadTexture(s->barbosa_lima4);
+    UnloadTexture(s->amores);
     UnloadTexture(s->bom_jesus1);
     UnloadTexture(s->bom_jesus2);
     UnloadTexture(s->arsenal);
@@ -185,12 +235,26 @@ void free_dados_jogo(Vars_structs_inicio_jogo *s){
     UnloadTexture(s->cesar_brum);
     UnloadTexture(s->bom_jesus3);
     UnloadTexture(s->malakoff);
+    UnloadTexture(s->caixa);
+    UnloadTexture(s->alfredo_lisboa1);
+    UnloadTexture(s->alfredo_lisboa2);
+    UnloadTexture(s->alfredo_lisboa3);
+    UnloadTexture(s->vital_de_oliveira);
+    UnloadTexture(s->sao_jorge1);
+    UnloadTexture(s->sao_jorge2);
+    UnloadTexture(s->travessa_tiradentes);
+    UnloadTexture(s->praca_tiradentes);
     UnloadTexture(s->honglu);
     UnloadTexture(s->queenOfHatred);
     UnloadTexture(s->comadre1);
     UnloadTexture(s->comadre2);
     UnloadTexture(s->cabra);
+    UnloadTexture(s->ouro1);
     UnloadTexture(s->ouro2);
+    UnloadTexture(s->emparedada1);
+    UnloadTexture(s->moca);
+    UnloadTexture(s->figo);
+    UnloadTexture(s->item_teste);
 
     UnloadMusicStream(s->pink);
     CloseAudioDevice();

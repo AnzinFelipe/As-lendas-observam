@@ -978,7 +978,6 @@ void AdvanceDialogue(RayDialManager* manager) {
     if (manager->currentNode->choices && manager->currentNode->choiceCount > 0) {
         manager->currentNode = manager->currentNode->choices[0];
 
-        printf("Nó atual: %s\n", manager->currentNode->id);
         if (manager->currentNode->components &&
             manager->currentNode->components->type ==
                 RAYDIAL_PORTRAIT_DIALOGUE)

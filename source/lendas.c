@@ -18,6 +18,8 @@ void inserir_lenda(Lendas **head, char *nome, bool primeiro_encontro, Texture2D 
         novo->chave = chave;
         novo->prox = NULL;
         novo->ja_conversou = false;
+        novo->dialogo_raiz = NULL;  
+        novo->dialogo_repetido = NULL;
 
         if (*head == NULL) {
             *head  = novo;

@@ -37,6 +37,15 @@ typedef struct Vars_structs_inicio_jogo{
     Texture2D cais_apolo;
     Texture2D cesar_brum;
     Texture2D malakoff;
+    Texture2D caixa;
+    Texture2D alfredo_lisboa1;
+    Texture2D alfredo_lisboa2;
+    Texture2D alfredo_lisboa3;
+    Texture2D vital_de_oliveira;
+    Texture2D sao_jorge1;
+    Texture2D sao_jorge2;
+    Texture2D travessa_tiradentes;
+    Texture2D praca_tiradentes;
     Texture2D item_teste;
     Texture2D honglu;
     Texture2D queenOfHatred;
