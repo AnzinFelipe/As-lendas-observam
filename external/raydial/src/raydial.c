@@ -1005,6 +1005,26 @@ void DrawDialogueManager(RayDialManager* manager) {
     }
 }
 
+void FreeDialogueNode(RayDialNode* node) {
+    if (!node) return;
+
+    if (node->components) {
+        FreeComponent(node->components);
+        node->components = NULL;
+    }
+
+    for (int i = 0; i < node->choiceCount; i++) {
+        FreeDialogueNode(node->choices[i]);
+    }
+
+    if (node->choices) {
+        free(node->choices);
+        node->choices = NULL;
+    }
+
+    free(node);
+}
+
 void FreeDialogueManager(RayDialManager* manager) {
     if (!manager) return;
 

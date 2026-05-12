@@ -253,6 +253,20 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
 }
 
 void free_dados_jogo(Vars_structs_inicio_jogo *s){
+    Lendas *lenda = s->lenda_local;
+    while (lenda != NULL) {
+        if (lenda->dialogo_raiz) {
+            FreeDialogueNode(lenda->dialogo_raiz);
+            lenda->dialogo_raiz = NULL;
+        }
+        if (lenda->dialogo_repetido) {
+            FreeDialogueNode(lenda->dialogo_repetido);
+            lenda->dialogo_repetido = NULL;
+        }
+        lenda = lenda->prox;
+    }
+
+    FreeDialogueManager(s->dialogo);
     liberar_arvore(&s->mapa);
     liberar_inventario(&s->inventario);
     LiberarItens_j(&s->inventario);
@@ -260,6 +274,15 @@ void free_dados_jogo(Vars_structs_inicio_jogo *s){
     liberar_lendas(&s->lenda_local);
     UnloadTexture(s->marco_zero);
     UnloadTexture(s->comercial);
+    UnloadTexture(s->rio_branco);
+    UnloadTexture(s->marques_de_olinda1);
+    UnloadTexture(s->marques_de_olinda2);
+    UnloadTexture(s->marques_de_olinda3);
+    UnloadTexture(s->marques_de_olinda4);
+    UnloadTexture(s->cais_alfandega1);
+    UnloadTexture(s->cais_alfandega2);
+    UnloadTexture(s->la_ursa);
+    UnloadTexture(s->caranguejo);
     UnloadTexture(s->barbosa_lima1);
     UnloadTexture(s->barbosa_lima2);
     UnloadTexture(s->barbosa_lima3);

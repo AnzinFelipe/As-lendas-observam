@@ -189,6 +189,7 @@ RayDialManager* CreateDialogueManager(RayDialNode* rootNode);
 void UpdateDialogueManager(RayDialManager* manager);
 void AdvanceDialogue(RayDialManager* manager);
 void DrawDialogueManager(RayDialManager* manager);
+void FreeDialogueNode(RayDialNode* node);
 void FreeDialogueManager(RayDialManager* manager);
 void TransitionToNode(RayDialManager* manager, const char* nodeId);
 
