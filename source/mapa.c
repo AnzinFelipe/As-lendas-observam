@@ -3,7 +3,7 @@
 #include "raylib.h"
 #include <string.h>
 
-void inserir_local(Arvore_mapa **local, int chave, char *nome, Texture2D imagem, Arvore_mapa *pai, Rectangle hitbox_esq,
+void inserir_local(Arvore_mapa **local, int chave, char *nome, Texture2D imagem, Rectangle hitbox_esq,
 Rectangle hitbox_dir, Rectangle hitbox_pai) {
     if (*local == NULL) {
         *local = (Arvore_mapa *)malloc(sizeof(Arvore_mapa));
@@ -13,7 +13,6 @@ Rectangle hitbox_dir, Rectangle hitbox_pai) {
         (*local)->imagem = imagem;
         (*local)->esquerda = NULL;
         (*local)->direita = NULL;
-        (*local)->pai = pai;
         (*local)->hitbox_esq = hitbox_esq;
         (*local)->tem_hitbox_esq = (hitbox_esq.width != 0 || hitbox_esq.height != 0 || hitbox_esq.x != 0 || hitbox_esq.y != 0);
         (*local)->hitbox_dir = hitbox_dir;
@@ -22,9 +21,9 @@ Rectangle hitbox_dir, Rectangle hitbox_pai) {
         (*local)->tem_hitbox_pai = (hitbox_pai.width != 0 || hitbox_pai.height != 0 || hitbox_pai.x != 0 || hitbox_pai.y != 0);
     } else {
         if (chave < (*local)->chave) {
-            inserir_local(&(*local)->esquerda, chave, nome, imagem, *local, hitbox_esq, hitbox_dir, hitbox_pai);
+            inserir_local(&(*local)->esquerda, chave, nome, imagem, hitbox_esq, hitbox_dir, hitbox_pai);
         } else if (chave > (*local)->chave) {
-            inserir_local(&(*local)->direita, chave, nome, imagem, *local, hitbox_esq, hitbox_dir, hitbox_pai);
+            inserir_local(&(*local)->direita, chave, nome, imagem, hitbox_esq, hitbox_dir, hitbox_pai);
         }
     }
 }
@@ -38,6 +37,21 @@ Arvore_mapa * buscar_local(Arvore_mapa *local, int chave) {
         return buscar_local(local->esquerda, chave);
     } else if (chave > local->chave) {
         return buscar_local(local->direita, chave);
+    }
+    return NULL;
+}
+
+Arvore_mapa * buscar_pai(Arvore_mapa *local, int chave) {
+    if (local == NULL) {
+        return NULL;
+    } else if (local->esquerda != NULL && local->esquerda->chave == chave) {
+        return local;
+    } else if (local->direita != NULL && local->direita->chave == chave) {
+        return local;
+    } else if (chave < local->chave) {
+        return buscar_pai(local->esquerda, chave);
+    } else if (chave > local->chave) {
+        return buscar_pai(local->direita, chave);
     }
     return NULL;
 }
@@ -59,7 +73,7 @@ void desenhar_local(Arvore_mapa *local) {
     DrawTextureEx(local->imagem, (Vector2){240, 50}, 0.0, 0.7, WHITE);
 }
 
-void mudar_local(Arvore_mapa *local, int *chave_atual, Vector2 mouse) {
+void mudar_local(Arvore_mapa *local, Arvore_mapa *mapa, int *chave_atual, Vector2 mouse) {
     if (local->tem_hitbox_esq) {
         if (CheckCollisionPointRec(mouse, local->hitbox_esq)) {
             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
@@ -81,8 +95,9 @@ void mudar_local(Arvore_mapa *local, int *chave_atual, Vector2 mouse) {
     if (local->tem_hitbox_pai) {
         if (CheckCollisionPointRec(mouse, local->hitbox_pai)) {
             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-                if (local->pai != NULL) {
-                    *chave_atual = local->pai->chave;
+                Arvore_mapa *pai = buscar_pai(mapa, *chave_atual);
+                if (pai != NULL) {
+                    *chave_atual = pai->chave;
                 }
             }
         }

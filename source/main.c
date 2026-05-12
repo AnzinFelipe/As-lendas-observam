@@ -79,7 +79,7 @@ int main() {
                         }
                     }
                     if (state == EXPLORACAO && !dialogo_acabou_esse_frame) {
-                        mudar_local(novo_jogo->local_atual, &novo_jogo->chave_atual, mouse_novo);
+                        mudar_local(novo_jogo->local_atual, novo_jogo->mapa, &novo_jogo->chave_atual, mouse_novo);
                         novo_jogo->local_atual = buscar_local(novo_jogo->mapa, novo_jogo->chave_atual);
                         novo_jogo->lenda_atual = pegar_lenda_atual(novo_jogo->lenda_local, novo_jogo->chave_atual);
                         bool clicada = interagir_lenda(novo_jogo->lenda_atual, mouse_novo);
