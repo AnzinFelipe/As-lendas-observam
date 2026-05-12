@@ -21,6 +21,11 @@ typedef struct Vars_structs_inicio_jogo{
     Texture2D comercial;
     Texture2D rio_branco;
     Texture2D marques_de_olinda1;
+    Texture2D vigario_tenorio1;
+    Texture2D vigario_tenorio2;
+    Texture2D tomazina;
+    Texture2D madre_de_deus;
+    Texture2D paco_alfandega;
     Texture2D marques_de_olinda2;
     Texture2D marques_de_olinda3;
     Texture2D marques_de_olinda4;

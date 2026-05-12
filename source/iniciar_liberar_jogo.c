@@ -24,6 +24,11 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     s->comercial = LoadTexture("assets/images/locais/comercial.png");
     s->rio_branco = LoadTexture("assets/images/locais/rio_branco.png");
     s->marques_de_olinda1 = LoadTexture("assets/images/locais/marques_de_olinda1.png");
+    s->vigario_tenorio1 = LoadTexture("assets/images/locais/vigario_tenorio1.png");
+    s->vigario_tenorio2 = LoadTexture("assets/images/locais/vigario_tenorio2.png");
+    s->tomazina = LoadTexture("assets/images/locais/tomazina.png");
+    s->madre_de_deus = LoadTexture("assets/images/locais/madre_de_deus.png");
+    s->paco_alfandega = LoadTexture("assets/images/locais/paco_alfandega.png");
     s->marques_de_olinda2 = LoadTexture("assets/images/locais/marques_de_olinda2.png");
     s->marques_de_olinda3 = LoadTexture("assets/images/locais/marques_de_olinda3.png");
     s->marques_de_olinda4 = LoadTexture("assets/images/locais/marques_de_olinda4.png");
@@ -93,7 +98,12 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     inserir_local(&s->mapa, 500, "Marco Zero", s->marco_zero, NULL, (Rectangle){960, 600, 400, 200}, (Rectangle){240, 600, 400, 200}, (Rectangle){0});
     inserir_local(&s->mapa, 300, "Associação Comercial de Pernambuco", s->comercial, NULL, (Rectangle){240, 450, 200, 300}, (Rectangle){1160, 450, 200, 300}, (Rectangle){540, 700, 500, 100});
     inserir_local(&s->mapa, 10, "Avenida Rio Branco", s->rio_branco, NULL, (Rectangle){0}, (Rectangle){590, 400, 350, 250}, (Rectangle){540, 700, 500, 100});
-    inserir_local(&s->mapa, 200, "Avenida Marquês de Olinda", s->marques_de_olinda1, NULL, (Rectangle){0}, (Rectangle){900, 400, 350, 250}, (Rectangle){540, 700, 500, 100});
+    inserir_local(&s->mapa, 200, "Avenida Marquês de Olinda", s->marques_de_olinda1, NULL, (Rectangle){400, 400, 350, 250}, (Rectangle){900, 400, 350, 250}, (Rectangle){540, 700, 500, 100});
+    inserir_local(&s->mapa, 100, "Rua Vigário Tenório", s->vigario_tenorio1, NULL, (Rectangle){0}, (Rectangle){650, 370, 350, 250}, (Rectangle){540, 700, 500, 100});
+    inserir_local(&s->mapa, 101, "Rua Vigário Tenório", s->vigario_tenorio2, NULL, (Rectangle){0}, (Rectangle){700, 300, 350, 300}, (Rectangle){540, 700, 500, 100});
+    inserir_local(&s->mapa, 102, "Rua Tomazina", s->tomazina, NULL, (Rectangle){0}, (Rectangle){650, 400, 350, 250}, (Rectangle){540, 700, 500, 100});
+    inserir_local(&s->mapa, 103, "Rua Madre de Deus", s->madre_de_deus, NULL, (Rectangle){0}, (Rectangle){500, 350, 350, 300}, (Rectangle){540, 700, 500, 100});
+    inserir_local(&s->mapa, 104, "Paço Alfândega", s->paco_alfandega, NULL, (Rectangle){0}, (Rectangle){0}, (Rectangle){540, 700, 500, 100});
     inserir_local(&s->mapa, 201, "Avenida Marquês de Olinda", s->marques_de_olinda2, NULL, (Rectangle){0}, (Rectangle){750, 400, 350, 250}, (Rectangle){540, 700, 500, 100});
     inserir_local(&s->mapa, 202, "Avenida Marquês de Olinda", s->marques_de_olinda3, NULL, (Rectangle){0}, (Rectangle){630, 400, 350, 250}, (Rectangle){540, 700, 500, 100});
     inserir_local(&s->mapa, 203, "Avenida Marquês de Olinda", s->marques_de_olinda4, NULL, (Rectangle){0}, (Rectangle){650, 400, 350, 250}, (Rectangle){540, 700, 500, 100});
@@ -276,6 +286,11 @@ void free_dados_jogo(Vars_structs_inicio_jogo *s){
     UnloadTexture(s->comercial);
     UnloadTexture(s->rio_branco);
     UnloadTexture(s->marques_de_olinda1);
+    UnloadTexture(s->vigario_tenorio1);
+    UnloadTexture(s->vigario_tenorio2);
+    UnloadTexture(s->tomazina);
+    UnloadTexture(s->madre_de_deus);
+    UnloadTexture(s->paco_alfandega);
     UnloadTexture(s->marques_de_olinda2);
     UnloadTexture(s->marques_de_olinda3);
     UnloadTexture(s->marques_de_olinda4);
