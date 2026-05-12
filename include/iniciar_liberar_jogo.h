@@ -17,8 +17,17 @@ typedef struct Vars_structs_inicio_jogo{
     
     Music pink;
 
-    Texture2D comercial;
     Texture2D marco_zero;
+    Texture2D comercial;
+    Texture2D rio_branco;
+    Texture2D marques_de_olinda1;
+    Texture2D marques_de_olinda2;
+    Texture2D marques_de_olinda3;
+    Texture2D marques_de_olinda4;
+    Texture2D cais_alfandega1;
+    Texture2D cais_alfandega2;
+    Texture2D la_ursa;
+    Texture2D caranguejo;
     Texture2D barbosa_lima1;
     Texture2D barbosa_lima2;
     Texture2D barbosa_lima3;
