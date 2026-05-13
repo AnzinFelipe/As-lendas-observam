@@ -393,12 +393,12 @@ RayDialComponent* CreatePortraitDialogue(Rectangle bounds, const char* speakerNa
     data->nameTagColor = DARKGRAY;
     data->dialogueBoxColor = (Color){30, 30, 30, 255};
     data->textColor = WHITE;
-    data->nameColor = YELLOW;
-    data->fontSize = 25;
-    data->nameFontSize = 30;
+    data->nameColor = ORANGE;
+    data->fontSize = 30;
+    data->nameFontSize = 35;
     data->wrapText = true;
     data->portraitSize = 0;
-    data->showOnRight = true;
+    data->showOnRight = false;
     
     // Animation properties
     data->animateText = true;
@@ -978,7 +978,6 @@ void AdvanceDialogue(RayDialManager* manager) {
     if (manager->currentNode->choices && manager->currentNode->choiceCount > 0) {
         manager->currentNode = manager->currentNode->choices[0];
 
-        printf("Nó atual: %s\n", manager->currentNode->id);
         if (manager->currentNode->components &&
             manager->currentNode->components->type ==
                 RAYDIAL_PORTRAIT_DIALOGUE)
@@ -1004,6 +1003,26 @@ void DrawDialogueManager(RayDialManager* manager) {
     if (manager->currentNode->components) {
         DrawComponent(manager->currentNode->components);
     }
+}
+
+void FreeDialogueNode(RayDialNode* node) {
+    if (!node) return;
+
+    if (node->components) {
+        FreeComponent(node->components);
+        node->components = NULL;
+    }
+
+    for (int i = 0; i < node->choiceCount; i++) {
+        FreeDialogueNode(node->choices[i]);
+    }
+
+    if (node->choices) {
+        free(node->choices);
+        node->choices = NULL;
+    }
+
+    free(node);
 }
 
 void FreeDialogueManager(RayDialManager* manager) {

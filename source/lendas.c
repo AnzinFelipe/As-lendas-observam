@@ -3,19 +3,23 @@
 #include <string.h>
 #include "lendas.h"
 
-void inserir_lenda(Lendas **head, char *nome, bool primeiro_encontro, Texture2D imagem, Rectangle hitbox, 
-    Vector2 posicao, int chave) {
+void inserir_lenda(Lendas **head, char *nome, bool primeiro_encontro, Texture2D imagem,  Texture2D img_conversa1,
+    Texture2D img_conversa2, Rectangle hitbox, Vector2 posicao, int chave) {
     Lendas *novo = (Lendas*)malloc(sizeof(Lendas));
     if (novo != NULL) {
         novo->nome = malloc(strlen(nome) + 1);
         strcpy(novo->nome, nome);
         novo->primeiro_encontro = primeiro_encontro;
         novo->imagem = imagem;
+        novo->img_conversa1 = img_conversa1;
+        novo->img_conversa2 = img_conversa2;
         novo->hitbox = hitbox;
         novo->posicao = posicao;
         novo->chave = chave;
         novo->prox = NULL;
         novo->ja_conversou = false;
+        novo->dialogo_raiz = NULL;  
+        novo->dialogo_repetido = NULL;
 
         if (*head == NULL) {
             *head  = novo;
@@ -52,8 +56,14 @@ Lendas * pegar_lenda_atual(Lendas *head, int chave_atual) {
 
 void desenhar_lendas(Lendas *lenda) {
     if (lenda != NULL) {
-        DrawTextureV(lenda->imagem, lenda->posicao, WHITE);
+        DrawTextureEx(lenda->imagem, lenda->posicao, 0.0, 0.4, WHITE);
         DrawRectangleRec(lenda->hitbox, (Color){100, 100, 100, 100});
+    }
+}
+
+void desenhar_lendas_conversa(Lendas *lenda) {
+    if (lenda != NULL) {
+        DrawTextureEx(lenda->img_conversa1, (Vector2){240, 50}, 0.0, 0.7, WHITE);
     }
 }
 
