@@ -69,11 +69,16 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     s->item_teste = LoadTexture("assets/images/item_teste.jpg");
     s->honglu = LoadTexture("assets/images/Itens/Honglu.png");
     s->queenOfHatred = LoadTexture ("assets/images/Itens/QOH.png");
+    s->saco = LoadTexture("assets/images/itens/saco.png");
+    s->cara_la_ursa = LoadTexture("assets/images/itens/cara_la_ursa.png");
+    s->marreta = LoadTexture("assets/images/itens/marreta.png");
 
     //Inicializa lendas
 
+    s->comadre_local = LoadTexture("assets/images/lendas/comadre_local.png");
     s->comadre1 = LoadTexture("assets/images/lendas/comadre_fulozinha1.png");
     s->comadre2 = LoadTexture("assets/images/lendas/comadre_fulozinha2.png");
+    s->cabra_local = LoadTexture("assets/images/lendas/cabra_local.png");
     s->cabra = LoadTexture("assets/images/lendas/cabra_cabriola.png");
     GenTextureMipmaps(&s->cabra);
     SetTextureFilter(s->cabra, TEXTURE_FILTER_TRILINEAR);
@@ -87,9 +92,17 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     s->figo = LoadTexture("assets/images/lendas/papa_figo.png");
     GenTextureMipmaps(&s->figo);
     SetTextureFilter(s->figo, TEXTURE_FILTER_TRILINEAR);
+    s->rachadura1 = LoadTexture("assets/images/lendas/rachadura1.png");
+    s->rachadura2 = LoadTexture("assets/images/lendas/rachadura2.png");
     s->emparedada1 = LoadTexture("assets/images/lendas/emparedada1.png");
     GenTextureMipmaps(&s->emparedada1);
     SetTextureFilter(s->emparedada1, TEXTURE_FILTER_TRILINEAR);
+    s->emparedada2 = LoadTexture("assets/images/lendas/emparedada2.png");
+    GenTextureMipmaps(&s->emparedada2);
+    SetTextureFilter(s->emparedada2, TEXTURE_FILTER_TRILINEAR);
+    s->perna_local = LoadTexture("assets/images/lendas/perna_local.png");
+    s->perna_cabeluda1 = LoadTexture("assets/images/lendas/perna_cabeluda1.png");
+    s->perna_cabeluda2 = LoadTexture("assets/images/lendas/perna_cabeluda2.png");
 
     //Inicializa mapa
 
@@ -159,7 +172,7 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
 
     s->lenda_atual = NULL;
     s->lenda_local = NULL;
-    inserir_lenda(&s->lenda_local, "Comadre Fulozinha", true, s->item_teste, s->comadre1, s->comadre2, (Rectangle){500, 300, 200, 200}, (Vector2){500, 300}, 510);
+    inserir_lenda(&s->lenda_local, "Comadre Fulozinha", true, s->comadre_local, s->comadre1, s->comadre2, (Rectangle){840, 320, 130, 200}, (Vector2){200, 20}, 510);
     Lendas *lenda = pegar_lenda_atual(s->lenda_local, 510);
 
     //Criar nós de diálogo
@@ -180,7 +193,7 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     lenda->dialogo_raiz = comadre_fala1;
     lenda->dialogo_repetido = comadre_fala4;
 
-    inserir_lenda(&s->lenda_local, "Cabra Cabriola", true, s->item_teste, s->cabra, s->cabra, (Rectangle){500, 300, 200, 200}, (Vector2){500, 300}, 422);
+    inserir_lenda(&s->lenda_local, "Cabra Cabriola", true, s->cabra_local, s->cabra, s->cabra, (Rectangle){250, 330, 220, 350}, (Vector2){240, 0}, 422);
     lenda = pegar_lenda_atual(s->lenda_local, 422);
 
     RayDialNode *cabra_fala1 = CreateDialogueNode("fala1", "");
@@ -260,6 +273,30 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
 
     lenda->dialogo_raiz = moca_fala1;
     lenda->dialogo_repetido = moca_fala6;
+
+    inserir_lenda(&s->lenda_local, "Perna Cabeluda", true, s->perna_local, s->perna_cabeluda1, s->perna_cabeluda2, (Rectangle){900, 300, 200, 350}, (Vector2){200, 0}, 357);
+    lenda = pegar_lenda_atual(s->lenda_local, 357);
+
+    RayDialNode *perna_fala1 = CreateDialogueNode("fala1", "");
+    RayDialNode *perna_fala2 = CreateDialogueNode("fala2", "");
+
+    perna_fala1->components = criarComp("Perna Cabeluda", "...");
+    perna_fala2->components = criarComp("Perna Cabeluda", "...");
+
+    lenda->dialogo_raiz = perna_fala1;
+    lenda->dialogo_repetido = perna_fala2;
+
+    inserir_lenda(&s->lenda_local, "Rachadura", true, s->rachadura1, s->rachadura1, s->rachadura1, (Rectangle){580, 150, 320, 420}, (Vector2){200, 20}, 104);
+    lenda = pegar_lenda_atual(s->lenda_local, 104);
+
+    RayDialNode *rachadura_fala1 = CreateDialogueNode("fala1", "");
+    RayDialNode *rachadura_fala2 = CreateDialogueNode("fala2", "");
+
+    rachadura_fala1->components = criarComp("Rachadura na parede", "...");
+    rachadura_fala2->components = criarComp("Rachadura na parede", "...");
+
+    lenda->dialogo_raiz = rachadura_fala1;
+    lenda->dialogo_repetido = rachadura_fala2;
 }
 
 void free_dados_jogo(Vars_structs_inicio_jogo *s){
@@ -327,12 +364,23 @@ void free_dados_jogo(Vars_structs_inicio_jogo *s){
     UnloadTexture(s->praca_tiradentes);
     UnloadTexture(s->honglu);
     UnloadTexture(s->queenOfHatred);
+    UnloadTexture(s->saco);
+    UnloadTexture(s->cara_la_ursa);
+    UnloadTexture(s->marreta);
+    UnloadTexture(s->perna_cabeluda1);
+    UnloadTexture(s->perna_cabeluda2);
+    UnloadTexture(s->perna_local);
+    UnloadTexture(s->comadre_local);
     UnloadTexture(s->comadre1);
     UnloadTexture(s->comadre2);
+    UnloadTexture(s->cabra_local);
     UnloadTexture(s->cabra);
     UnloadTexture(s->ouro1);
     UnloadTexture(s->ouro2);
+    UnloadTexture(s->rachadura1);
+    UnloadTexture(s->rachadura2);
     UnloadTexture(s->emparedada1);
+    UnloadTexture(s->emparedada2);
     UnloadTexture(s->moca);
     UnloadTexture(s->figo);
     UnloadTexture(s->item_teste);

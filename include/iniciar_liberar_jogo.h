@@ -63,14 +63,25 @@ typedef struct Vars_structs_inicio_jogo{
     Texture2D item_teste;
     Texture2D honglu;
     Texture2D queenOfHatred;
+    Texture2D saco;
+    Texture2D marreta;
+    Texture2D cara_la_ursa;
+    Texture2D comadre_local;
     Texture2D comadre1;
     Texture2D comadre2;
+    Texture2D cabra_local;
     Texture2D cabra;
     Texture2D ouro1;
     Texture2D ouro2;
     Texture2D figo;
     Texture2D moca;
+    Texture2D rachadura1;
+    Texture2D rachadura2;
     Texture2D emparedada1;
+    Texture2D emparedada2;
+    Texture2D perna_local;
+    Texture2D perna_cabeluda1;
+    Texture2D perna_cabeluda2;
 
     Arvore_mapa *mapa;
     Arvore_mapa *local_atual;
