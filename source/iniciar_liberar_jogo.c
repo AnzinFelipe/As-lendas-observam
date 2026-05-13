@@ -69,9 +69,9 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     s->item_teste = LoadTexture("assets/images/item_teste.jpg");
     s->honglu = LoadTexture("assets/images/Itens/Honglu.png");
     s->queenOfHatred = LoadTexture ("assets/images/Itens/QOH.png");
-    s->saco = LoadTexture("assets/images/itens/saco.png");
-    s->cara_la_ursa = LoadTexture("assets/images/itens/cara_la_ursa.png");
-    s->marreta = LoadTexture("assets/images/itens/marreta.png");
+    s->saco = LoadTexture("assets/images/Itens/saco.png");
+    s->cara_la_ursa = LoadTexture("assets/images/Itens/cara_la_ursa.png");
+    s->marreta = LoadTexture("assets/images/Itens/marreta.png");
 
     //Inicializa lendas
 
@@ -161,7 +161,10 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     s->itensNaoPegos = NULL;
     ColocarItemNoMapa(&s->itensNaoPegos, s->honglu, "Chibi Lu", (Vector2){100, 200}, "Um chibi Honglu, o que pode acontecer?...", 401);
     ColocarItemNoMapa(&s->itensNaoPegos, s->queenOfHatred, "Arcana Slave!", (Vector2){100, 90}, "Arcna Slave!!!!!!!", 401);
-
+    ColocarItemNoMapa(&s->itensNaoPegos, s->saco, "Saco de pano", (Vector2){200, 200}, "Um saco de pano velho, parece que tem algo dentro...", 401);
+    ColocarItemNoMapa(&s->itensNaoPegos, s->marreta, "Marreta", (Vector2){300, 200}, "Uma marreta de ferro, parece pesada.", 401);
+    ColocarItemNoMapa(&s->itensNaoPegos, s->cara_la_ursa, "Cara de La Ursa", (Vector2){400, 200}, "Uma máscara com a cara da La Ursa, parece que tem um cheiro estranho...", 422);
+    ColocarItemNoMapa(&s->itensNaoPegos, s->item_teste, "Item de teste", (Vector2){500, 200}, "Esse é um item de teste, não tem função nenhuma.", 401);
     //Inicializa inventario
 
     s->inventario = NULL;
