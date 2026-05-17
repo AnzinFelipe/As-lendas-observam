@@ -70,8 +70,35 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     s->honglu = LoadTexture("assets/images/Itens/Honglu.png");
     s->queenOfHatred = LoadTexture ("assets/images/Itens/QOH.png");
     s->saco = LoadTexture("assets/images/Itens/saco.png");
+    GenTextureMipmaps(&s->saco);
+    SetTextureFilter(s->saco, TEXTURE_FILTER_TRILINEAR);
     s->cara_la_ursa = LoadTexture("assets/images/Itens/cara_la_ursa.png");
+    GenTextureMipmaps(&s->cara_la_ursa);
+    SetTextureFilter(s->cara_la_ursa, TEXTURE_FILTER_TRILINEAR);
     s->marreta = LoadTexture("assets/images/Itens/marreta.png");
+    GenTextureMipmaps(&s->marreta);
+    SetTextureFilter(s->marreta, TEXTURE_FILTER_TRILINEAR);
+    s->tesoura = LoadTexture("assets/images/Itens/tesoura.png");
+    GenTextureMipmaps(&s->tesoura);
+    SetTextureFilter(s->tesoura, TEXTURE_FILTER_TRILINEAR);
+    s->bolo = LoadTexture("assets/images/Itens/bolo.png");
+    GenTextureMipmaps(&s->bolo);
+    SetTextureFilter(s->bolo, TEXTURE_FILTER_TRILINEAR);
+    s->mingau = LoadTexture("assets/images/Itens/mingau.png");
+    GenTextureMipmaps(&s->mingau);
+    SetTextureFilter(s->mingau, TEXTURE_FILTER_TRILINEAR);
+    s->bilhete = LoadTexture("assets/images/Itens/bilhete.png");
+    GenTextureMipmaps(&s->bilhete);
+    SetTextureFilter(s->bilhete, TEXTURE_FILTER_TRILINEAR);
+    s->barbeador = LoadTexture("assets/images/Itens/barbeador.png");
+    GenTextureMipmaps(&s->barbeador);
+    SetTextureFilter(s->barbeador, TEXTURE_FILTER_TRILINEAR);
+    s->isqueiro = LoadTexture("assets/images/Itens/isqueiro.png");
+    GenTextureMipmaps(&s->isqueiro);
+    SetTextureFilter(s->isqueiro, TEXTURE_FILTER_TRILINEAR);
+    s->cracha = LoadTexture("assets/images/Itens/cracha.png");
+    GenTextureMipmaps(&s->cracha);
+    SetTextureFilter(s->cracha, TEXTURE_FILTER_TRILINEAR);
 
     //Inicializa lendas
 
@@ -86,9 +113,11 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     s->ouro2 = LoadTexture("assets/images/lendas/boca_de_ouro2.png");
     GenTextureMipmaps(&s->ouro2);
     SetTextureFilter(s->ouro2, TEXTURE_FILTER_TRILINEAR);
+    s->moca_local = LoadTexture("assets/images/lendas/moca_local.png");
     s->moca = LoadTexture("assets/images/lendas/encanta_moca.png");
     GenTextureMipmaps(&s->moca);
     SetTextureFilter(s->moca, TEXTURE_FILTER_TRILINEAR);
+    s->figo_local = LoadTexture("assets/images/lendas/figo_local.png");
     s->figo = LoadTexture("assets/images/lendas/papa_figo.png");
     GenTextureMipmaps(&s->figo);
     SetTextureFilter(s->figo, TEXTURE_FILTER_TRILINEAR);
@@ -224,7 +253,7 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     lenda->dialogo_raiz = cabra_fala1;
     lenda->dialogo_repetido = cabra_fala7;
 
-    inserir_lenda(&s->lenda_local, "Papa-figo", true, s->item_teste, s->figo, s->figo, (Rectangle){700, 450, 200, 200}, (Vector2){700, 450}, 452);
+    inserir_lenda(&s->lenda_local, "Papa-figo", true, s->figo_local, s->figo, s->figo, (Rectangle){730, 500, 150, 130}, (Vector2){200, 0}, 452);
     lenda = pegar_lenda_atual(s->lenda_local, 452);
 
     RayDialNode *figo_fala1 = CreateDialogueNode("fala1", "");
@@ -252,7 +281,7 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     lenda->dialogo_raiz = figo_fala1;
     lenda->dialogo_repetido = figo_fala7;
 
-    inserir_lenda(&s->lenda_local, "Encanta Moça", true, s->item_teste, s->moca, s->moca, (Rectangle){500, 300, 200, 200}, (Vector2){500, 300}, 211);
+    inserir_lenda(&s->lenda_local, "Encanta Moça", true, s->moca_local, s->moca, s->moca, (Rectangle){1000, 420, 150, 200}, (Vector2){200, 0}, 211);
     lenda = pegar_lenda_atual(s->lenda_local, 211);
 
     RayDialNode *moca_fala1 = CreateDialogueNode("fala1", "");
@@ -370,6 +399,13 @@ void free_dados_jogo(Vars_structs_inicio_jogo *s){
     UnloadTexture(s->saco);
     UnloadTexture(s->cara_la_ursa);
     UnloadTexture(s->marreta);
+    UnloadTexture(s->tesoura);
+    UnloadTexture(s->isqueiro);
+    UnloadTexture(s->bolo);
+    UnloadTexture(s->mingau);
+    UnloadTexture(s->bilhete);
+    UnloadTexture(s->barbeador);
+    UnloadTexture(s->cracha);
     UnloadTexture(s->perna_cabeluda1);
     UnloadTexture(s->perna_cabeluda2);
     UnloadTexture(s->perna_local);
@@ -384,7 +420,9 @@ void free_dados_jogo(Vars_structs_inicio_jogo *s){
     UnloadTexture(s->rachadura2);
     UnloadTexture(s->emparedada1);
     UnloadTexture(s->emparedada2);
+    UnloadTexture(s->moca_local);
     UnloadTexture(s->moca);
+    UnloadTexture(s->figo_local);
     UnloadTexture(s->figo);
     UnloadTexture(s->item_teste);
 

@@ -57,7 +57,7 @@ Lendas * pegar_lenda_atual(Lendas *head, int chave_atual) {
 void desenhar_lendas(Lendas *lenda) {
     if (lenda != NULL) {
         DrawTextureEx(lenda->imagem, lenda->posicao, 0.0, 0.4, WHITE);
-        DrawRectangleRec(lenda->hitbox, (Color){100, 100, 100, 100});
+        //DrawRectangleRec(lenda->hitbox, (Color){100, 100, 100, 100});
     }
 }
 
