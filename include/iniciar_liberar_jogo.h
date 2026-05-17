@@ -17,6 +17,9 @@ typedef struct Vars_structs_inicio_jogo{
     
     Music pink;
 
+    bool em_hitbox;
+
+    //Ruas
     Texture2D marco_zero;
     Texture2D comercial;
     Texture2D rio_branco;
@@ -60,12 +63,23 @@ typedef struct Vars_structs_inicio_jogo{
     Texture2D sao_jorge2;
     Texture2D travessa_tiradentes;
     Texture2D praca_tiradentes;
+
+    //Itens
     Texture2D item_teste;
     Texture2D honglu;
     Texture2D queenOfHatred;
     Texture2D saco;
     Texture2D marreta;
     Texture2D cara_la_ursa;
+    Texture2D tesoura;
+    Texture2D mingau;
+    Texture2D isqueiro;
+    Texture2D bolo;
+    Texture2D bilhete;
+    Texture2D barbeador;
+    Texture2D cracha;
+
+    //Lendas
     Texture2D comadre_local;
     Texture2D comadre1;
     Texture2D comadre2;
@@ -73,7 +87,9 @@ typedef struct Vars_structs_inicio_jogo{
     Texture2D cabra;
     Texture2D ouro1;
     Texture2D ouro2;
+    Texture2D figo_local;
     Texture2D figo;
+    Texture2D moca_local;
     Texture2D moca;
     Texture2D rachadura1;
     Texture2D rachadura2;

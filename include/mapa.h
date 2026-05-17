@@ -34,4 +34,6 @@ void mudar_local(Arvore_mapa *local, Arvore_mapa *mapa, int *chave_atual, Vector
 
 void desenhar_hitbox(Arvore_mapa *local);
 
+void mudar_mouse_mapa(Arvore_mapa *local, Vector2 mouse, bool *em_hitbox);
+
 #endif
