@@ -18,6 +18,10 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     s->pink = LoadMusicStream("assets/musics/Pink.mp3");
     PlayMusicStream(s->pink);
 
+    //Para mudar estilo do mouse
+
+    s->em_hitbox = false;
+
     //Inicializa locais do Recife
 
     s->marco_zero = LoadTexture("assets/images/locais/marco_zero.png");
@@ -190,9 +194,9 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     s->itensNaoPegos = NULL;
     ColocarItemNoMapa(&s->itensNaoPegos, s->honglu, "Chibi Lu", (Vector2){100, 200}, "Um chibi Honglu, o que pode acontecer?...", 401);
     ColocarItemNoMapa(&s->itensNaoPegos, s->queenOfHatred, "Arcana Slave!", (Vector2){100, 90}, "Arcna Slave!!!!!!!", 401);
-    ColocarItemNoMapa(&s->itensNaoPegos, s->saco, "Saco de pano", (Vector2){200, 200}, "Um saco de pano velho, parece que tem algo dentro...", 401);
-    ColocarItemNoMapa(&s->itensNaoPegos, s->marreta, "Marreta", (Vector2){300, 200}, "Uma marreta de ferro, parece pesada.", 401);
-    ColocarItemNoMapa(&s->itensNaoPegos, s->cara_la_ursa, "Cara de La Ursa", (Vector2){400, 200}, "Uma máscara com a cara da La Ursa, parece que tem um cheiro estranho...", 422);
+    ColocarItemNoMapa(&s->itensNaoPegos, s->saco, "Saco de pano", (Vector2){200, 200}, "Um saco de pano velho, parece que tem algo dentro...", 357);
+    ColocarItemNoMapa(&s->itensNaoPegos, s->marreta, "Marreta", (Vector2){300, 200}, "Uma marreta de ferro, parece pesada.", 450);
+    ColocarItemNoMapa(&s->itensNaoPegos, s->cara_la_ursa, "Cara de La Ursa", (Vector2){400, 200}, "Uma máscara com a cara da La Ursa, parece que tem um cheiro estranho...", 206);
     ColocarItemNoMapa(&s->itensNaoPegos, s->item_teste, "Item de teste", (Vector2){500, 200}, "Esse é um item de teste, não tem função nenhuma.", 401);
     //Inicializa inventario
 
@@ -204,7 +208,7 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
 
     s->lenda_atual = NULL;
     s->lenda_local = NULL;
-    inserir_lenda(&s->lenda_local, "Comadre Fulozinha", true, s->comadre_local, s->comadre1, s->comadre2, (Rectangle){840, 320, 130, 200}, (Vector2){200, 20}, 510);
+    inserir_lenda(&s->lenda_local, "Comadre Fulozinha", true, s->comadre_local, s->comadre1, s->comadre2, (Rectangle){840, 320, 130, 200}, (Vector2){200, 20}, s->bilhete, 510);
     Lendas *lenda = pegar_lenda_atual(s->lenda_local, 510);
 
     //Criar nós de diálogo
@@ -225,7 +229,7 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     lenda->dialogo_raiz = comadre_fala1;
     lenda->dialogo_repetido = comadre_fala4;
 
-    inserir_lenda(&s->lenda_local, "Cabra Cabriola", true, s->cabra_local, s->cabra, s->cabra, (Rectangle){250, 330, 220, 350}, (Vector2){240, 0}, 422);
+    inserir_lenda(&s->lenda_local, "Cabra Cabriola", true, s->cabra_local, s->cabra, s->cabra, (Rectangle){250, 330, 220, 350}, (Vector2){240, 0}, s->tesoura, 422);
     lenda = pegar_lenda_atual(s->lenda_local, 422);
 
     RayDialNode *cabra_fala1 = CreateDialogueNode("fala1", "");
@@ -253,7 +257,7 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     lenda->dialogo_raiz = cabra_fala1;
     lenda->dialogo_repetido = cabra_fala7;
 
-    inserir_lenda(&s->lenda_local, "Papa-figo", true, s->figo_local, s->figo, s->figo, (Rectangle){730, 500, 150, 130}, (Vector2){200, 0}, 452);
+    inserir_lenda(&s->lenda_local, "Papa-figo", true, s->figo_local, s->figo, s->figo, (Rectangle){730, 500, 150, 130}, (Vector2){200, 0}, s->barbeador, 452);
     lenda = pegar_lenda_atual(s->lenda_local, 452);
 
     RayDialNode *figo_fala1 = CreateDialogueNode("fala1", "");
@@ -281,7 +285,7 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     lenda->dialogo_raiz = figo_fala1;
     lenda->dialogo_repetido = figo_fala7;
 
-    inserir_lenda(&s->lenda_local, "Encanta Moça", true, s->moca_local, s->moca, s->moca, (Rectangle){1000, 420, 150, 200}, (Vector2){200, 0}, 211);
+    inserir_lenda(&s->lenda_local, "Encanta Moça", true, s->moca_local, s->moca, s->moca, (Rectangle){1000, 420, 150, 200}, (Vector2){200, 0}, s->bolo, 211);
     lenda = pegar_lenda_atual(s->lenda_local, 211);
 
     RayDialNode *moca_fala1 = CreateDialogueNode("fala1", "");
@@ -306,7 +310,7 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     lenda->dialogo_raiz = moca_fala1;
     lenda->dialogo_repetido = moca_fala6;
 
-    inserir_lenda(&s->lenda_local, "Perna Cabeluda", true, s->perna_local, s->perna_cabeluda1, s->perna_cabeluda2, (Rectangle){900, 300, 200, 350}, (Vector2){200, 0}, 357);
+    inserir_lenda(&s->lenda_local, "Perna Cabeluda", true, s->perna_local, s->perna_cabeluda1, s->perna_cabeluda2, (Rectangle){900, 300, 200, 350}, (Vector2){200, 0}, s->cracha, 357);
     lenda = pegar_lenda_atual(s->lenda_local, 357);
 
     RayDialNode *perna_fala1 = CreateDialogueNode("fala1", "");
@@ -318,7 +322,7 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     lenda->dialogo_raiz = perna_fala1;
     lenda->dialogo_repetido = perna_fala2;
 
-    inserir_lenda(&s->lenda_local, "Rachadura", true, s->rachadura1, s->rachadura1, s->rachadura1, (Rectangle){580, 150, 320, 420}, (Vector2){200, 20}, 104);
+    inserir_lenda(&s->lenda_local, "Rachadura", true, s->rachadura1, s->rachadura1, s->rachadura1, (Rectangle){580, 150, 320, 420}, (Vector2){200, 20}, s->mingau, 104);
     lenda = pegar_lenda_atual(s->lenda_local, 104);
 
     RayDialNode *rachadura_fala1 = CreateDialogueNode("fala1", "");

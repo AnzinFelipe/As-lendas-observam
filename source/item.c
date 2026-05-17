@@ -26,15 +26,19 @@ void ColocarItemNoMapa(Item **Head, Texture2D imagem, char *nome, Vector2 localS
     }
 }
 
-void PegarItemEEntrarInventário(Item **head, int chave_atual, Vector2 mouse_novo,Inventario **inventario){
+void PegarItemEEntrarInventário(Item **head, int chave_atual, Vector2 mouse_novo,Inventario **inventario, bool *em_hitbox){
     Item *aux=*head;
     while (aux != NULL) {
         if (!aux->pego && aux->chave == chave_atual) {
-            if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(mouse_novo, aux->hitbox)) {
-                aux->pego = true;
-                inserir_inventario(inventario, aux->nome, aux->descricao, aux->imagem);
+            if (CheckCollisionPointRec(mouse_novo, aux->hitbox)) {
+                *em_hitbox = true;
+                SetMouseCursor(4);
+                if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+                    aux->pego = true;
+                    inserir_inventario(inventario, aux->nome, aux->descricao, aux->imagem);
                 }
             }
+        }
         aux = aux->prox;
     }  
 }

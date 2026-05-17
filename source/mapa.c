@@ -115,3 +115,31 @@ void desenhar_hitbox(Arvore_mapa *local) {
         DrawRectangleRec(local->hitbox_pai, (Color){255, 255, 255, 80});
     }
 }
+
+void mudar_mouse_mapa(Arvore_mapa *local, Vector2 mouse, bool *em_hitbox) {
+    if (local->tem_hitbox_dir && local->tem_hitbox_esq) {
+        if (CheckCollisionPointRec(mouse, local->hitbox_esq)) {
+            *em_hitbox = true;
+            SetMouseCursor(7);
+        } else if (CheckCollisionPointRec(mouse, local->hitbox_dir)) {
+            *em_hitbox = true;
+            SetMouseCursor(8);
+        }
+    } else if (local->tem_hitbox_dir){
+        if (CheckCollisionPointRec(mouse, local->hitbox_dir)) {
+            *em_hitbox = true;
+            SetMouseCursor(6);
+        }
+    } else if (local->tem_hitbox_esq) {
+        if (CheckCollisionPointRec(mouse, local->hitbox_esq)) {
+            *em_hitbox = true;
+            SetMouseCursor(6);
+        }
+    }
+    if (local->tem_hitbox_pai) {
+        if (CheckCollisionPointRec(mouse, local->hitbox_pai)) {
+            *em_hitbox = true;
+            SetMouseCursor(9);
+        }
+    }
+}

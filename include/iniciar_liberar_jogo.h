@@ -17,6 +17,8 @@ typedef struct Vars_structs_inicio_jogo{
     
     Music pink;
 
+    bool em_hitbox;
+
     //Ruas
     Texture2D marco_zero;
     Texture2D comercial;

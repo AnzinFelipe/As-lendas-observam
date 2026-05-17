@@ -17,11 +17,13 @@ typedef struct Lendas {
     RayDialNode *dialogo_raiz;
     bool ja_conversou;
     RayDialNode *dialogo_repetido;
+    bool quest_completa;
+    Texture2D item;
     struct Lendas *prox;
 } Lendas;
 
 void inserir_lenda(Lendas **head, char *nome, bool primeiro_encontro, Texture2D imagem, Texture2D img_conversa1,
-    Texture2D img_conversa2, Rectangle hitbox, Vector2 posicao, int chave);
+    Texture2D img_conversa2, Rectangle hitbox, Vector2 posicao, Texture2D item, int chave);
 
 void liberar_lendas(Lendas **head);
 
@@ -31,6 +33,6 @@ void desenhar_lendas(Lendas *lenda);
 
 void desenhar_lendas_conversa(Lendas *lenda);
 
-bool interagir_lenda(Lendas *lenda, Vector2 mouse);
+bool interagir_lenda(Lendas *lenda, Vector2 mouse, bool *em_hitbox);
 
 #endif

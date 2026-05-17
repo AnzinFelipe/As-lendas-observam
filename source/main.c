@@ -61,7 +61,7 @@ int main() {
                     };
 
                     UpdateMusicStream(novo_jogo->pink);
-
+                    
                     bool dialogo_acabou_esse_frame = false;
                     if (state == DIALOGO) {
 
@@ -79,10 +79,13 @@ int main() {
                         }
                     }
                     if (state == EXPLORACAO && !dialogo_acabou_esse_frame) {
+                        novo_jogo->em_hitbox = false;
                         mudar_local(novo_jogo->local_atual, novo_jogo->mapa, &novo_jogo->chave_atual, mouse_novo);
                         novo_jogo->local_atual = buscar_local(novo_jogo->mapa, novo_jogo->chave_atual);
                         novo_jogo->lenda_atual = pegar_lenda_atual(novo_jogo->lenda_local, novo_jogo->chave_atual);
-                        bool clicada = interagir_lenda(novo_jogo->lenda_atual, mouse_novo);
+                        PegarItemEEntrarInventário(&novo_jogo->itensNaoPegos, novo_jogo->chave_atual, mouse_novo, &novo_jogo->inventario, &novo_jogo->em_hitbox);
+                        bool clicada = interagir_lenda(novo_jogo->lenda_atual, mouse_novo, &novo_jogo->em_hitbox);
+                        mudar_mouse_mapa(novo_jogo->local_atual, mouse_novo, &novo_jogo->em_hitbox);
 
                         if (clicada == true && novo_jogo->dialogo == NULL && !dialogo_acabou_esse_frame) {
                             Lendas *conversa = novo_jogo->lenda_atual;
@@ -97,12 +100,16 @@ int main() {
                         }
                     }
                     
+                    if (novo_jogo->em_hitbox == false) {
+                        SetMouseCursor(0);
+                    }
+
                     //Desenhar na textura
                     BeginTextureMode(novo_jogo->tela);
                     
                         ClearBackground(BLACK);
                         desenhar_local(novo_jogo->local_atual);
-                        desenhar_hitbox(novo_jogo->local_atual);
+                        //desenhar_hitbox(novo_jogo->local_atual);
                         if (state == EXPLORACAO) {
                             desenhar_lendas(novo_jogo->lenda_atual);
                         } else if (state == DIALOGO) {
@@ -112,22 +119,25 @@ int main() {
                         desenhar_inventario(novo_jogo->inventario, 90, 140, 140);
 
                         ItemAparecerNoCenario(&novo_jogo->itensNaoPegos, novo_jogo->chave_atual);
-                        PegarItemEEntrarInventário(&novo_jogo->itensNaoPegos, novo_jogo->chave_atual, mouse_novo, &novo_jogo->inventario);
 
                         if (state == DIALOGO) {
                             DrawDialogueManager(novo_jogo->dialogo);
                         }
-                    
+                        
                     EndTextureMode();
                     
                     //Desenhar a textura
                     BeginDrawing();
                     ClearBackground(BLACK);
                     DrawTexturePro(novo_jogo->tela.texture, (Rectangle){0, 0, 1600, -900}, nova_tela, (Vector2){0, 0}, 0.0f, WHITE);
-                    EndDrawing();
-                        }  
-                    
+                    if (novo_jogo->em_hitbox) {
+                        DrawCircleGradient(mouse.x, mouse.y, 40 * escala, (Color){255, 255, 255, 100}, (Color){255, 255, 255, 0});
+                        //DrawCircleLines(mouse.x, mouse.y, 20 * escala, WHITE);
                     }
+                    EndDrawing();
+                }  
+                    
+            }
                     
                      
         }
