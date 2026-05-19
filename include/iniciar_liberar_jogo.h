@@ -107,6 +107,12 @@ typedef struct Vars_structs_inicio_jogo{
 
     Inventario *inventario;
 
+    // Item atualmente sendo arrastado
+    Inventario *itemSelecionado;
+
+    // Diz se o jogador está arrastando algo
+    bool arrastandoItem;
+
     RayDialManager *dialogo;
 
     Lendas *lenda_atual;

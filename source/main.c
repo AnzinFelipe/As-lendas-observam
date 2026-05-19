@@ -116,9 +116,17 @@ int main() {
                             desenhar_lendas_conversa(novo_jogo->lenda_atual);
                         }
 
-                        desenhar_inventario(novo_jogo->inventario, 90, 140, 140);
+                        desenhar_inventario(novo_jogo->inventario, 90, 140, 140, novo_jogo->itemSelecionado);
 
                         ItemAparecerNoCenario(&novo_jogo->itensNaoPegos, novo_jogo->chave_atual);
+
+                        // Atualiza clique e arrasto dos itens do inventário
+                        atualizar_drag_inventario(novo_jogo->inventario, mouse_novo, &novo_jogo->itemSelecionado, &novo_jogo->arrastandoItem);
+                        
+                        // Desenha item sendo arrastado por cima da tela
+                        if (novo_jogo->arrastandoItem){
+                            desenhar_item_arrastando(mouse_novo, novo_jogo->itemSelecionado, novo_jogo->arrastandoItem);
+                        }
 
                         if (state == DIALOGO) {
                             DrawDialogueManager(novo_jogo->dialogo);
