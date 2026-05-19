@@ -4,6 +4,7 @@
 #include "raylib.h"
 #include <stdlib.h>
 #include "raydial.h"
+#include "inventario.h"
 
 typedef struct Lendas {
     char *nome;
@@ -34,5 +35,7 @@ void desenhar_lendas(Lendas *lenda);
 void desenhar_lendas_conversa(Lendas *lenda);
 
 bool interagir_lenda(Lendas *lenda, Vector2 mouse, bool *em_hitbox);
+
+void dar_item(Lendas *lenda, Inventario *item, Vector2 mouse);
 
 #endif

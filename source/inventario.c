@@ -149,6 +149,7 @@ void atualizar_drag_inventario(Inventario *head, Vector2 mouse, Inventario **ite
 
 
     if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+        
         *arrastandoItem = false;
         *itemSelecionado = NULL;
     }

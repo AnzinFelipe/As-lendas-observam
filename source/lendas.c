@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "lendas.h"
+#include "inventario.h"
 
 void inserir_lenda(Lendas **head, char *nome, bool primeiro_encontro, Texture2D imagem,  Texture2D img_conversa1,
     Texture2D img_conversa2, Rectangle hitbox, Vector2 posicao, Texture2D item, int chave) {
@@ -65,7 +66,11 @@ void desenhar_lendas(Lendas *lenda) {
 
 void desenhar_lendas_conversa(Lendas *lenda) {
     if (lenda != NULL) {
-        DrawTextureEx(lenda->img_conversa1, (Vector2){240, 50}, 0.0, 0.7, WHITE);
+        if (lenda->quest_completa) {
+            DrawTextureEx(lenda->img_conversa2, (Vector2){240, 50}, 0.0, 0.7, WHITE);
+        } else {
+            DrawTextureEx(lenda->img_conversa1, (Vector2){240, 50}, 0.0, 0.7, WHITE);
+        }
     }
 }
 
@@ -84,3 +89,10 @@ bool interagir_lenda(Lendas *lenda, Vector2 mouse, bool *em_hitbox) {
     return false;
 }
 
+void dar_item(Lendas *lenda, Inventario *item, Vector2 mouse) {
+    if (lenda != NULL && item != NULL) {
+        if (CheckCollisionPointRec(mouse, lenda->hitbox)) {
+            lenda->quest_completa = true;
+        }
+    }
+}
