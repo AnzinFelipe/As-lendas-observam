@@ -169,6 +169,10 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
 
     s->inventario = NULL;
 
+    // Inicializa sistema de drag do inventário
+    s->itemSelecionado = NULL;
+    s->arrastandoItem = false;
+
     //Inicializa lendas
 
     s->dialogo = NULL;

@@ -18,8 +18,12 @@ void inserir_inventario(Inventario **head, char *nome, char *descricao, Texture2
 
 void liberar_inventario(Inventario **head);
 
-void desenhar_inventario(Inventario *head, int x, int y, int espacamento);
+void desenhar_inventario(Inventario *head, int x, int y, int espacamento, Inventario *itemSelecionado);
 
 void LiberarItens_j(Inventario**head);
+
+void atualizar_drag_inventario(Inventario *head, Vector2 mouse, Inventario **itemSelecionado, bool *arrastandoItem);
+
+void desenhar_item_arrastando(Vector2 mouse, Inventario *itemSelecionado, bool arrastandoItem);
 
 #endif
