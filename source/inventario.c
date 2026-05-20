@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void inserir_inventario(Inventario **head, char *nome, char *descricao, Texture2D imagem) {
+void inserir_inventario(Inventario **head, char *nome, char *descricao, Texture2D imagem, int relevancia) {
     Inventario *novo = (Inventario *)malloc(sizeof(Inventario));
     if (novo != NULL) {
         novo->nome = malloc(strlen(nome) + 1);
@@ -11,6 +11,7 @@ void inserir_inventario(Inventario **head, char *nome, char *descricao, Texture2
         novo->descricao = malloc(strlen(descricao) + 1);
         strcpy(novo->descricao, descricao);
         novo->imagem = imagem;
+        novo->relevancia = relevancia;
         novo->pego = false;
         novo->prox = NULL;
         if (*head == NULL) {
@@ -149,6 +150,7 @@ void atualizar_drag_inventario(Inventario *head, Vector2 mouse, Inventario **ite
 
 
     if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+        
         *arrastandoItem = false;
         *itemSelecionado = NULL;
     }
@@ -171,7 +173,45 @@ void desenhar_item_arrastando(Vector2 mouse, Inventario *itemSelecionado, bool a
     DrawTexturePro(itemSelecionado->imagem, original, destino, (Vector2){0, 0},0.0,WHITE);
 }
 
+void insertion_sort_iventario(Inventario **head) {
+    if (*head == NULL || (*head)->prox == NULL) {
+        return;
+    }
 
+    Inventario *ordenada = NULL;
+    Inventario *atual = *head;
 
+    while (atual != NULL) {
+        Inventario *proximo = atual->prox;
+        if (ordenada == NULL || ordenada->relevancia < atual->relevancia) {
+            atual->prox = ordenada;
+            ordenada = atual;
+        } else {
+            Inventario *aux = ordenada;
+            while (aux->prox != NULL && aux->prox->relevancia >= atual->relevancia) {
+                aux = aux->prox;
+            }
+            atual->prox = aux->prox;
+            aux->prox = atual;
+        }
+        atual = proximo;
+    }
 
+    *head = ordenada;
+}
 
+void excluir_item(Inventario **head, Inventario *item) {
+    if (*head != NULL && item != NULL) {
+        if (*head == item) {
+            *head = (*head)->prox;
+            free(item);
+        } else {
+            Inventario *aux = *head;
+            while (aux->prox != NULL && aux->prox != item) {
+                aux = aux->prox;
+            }
+            aux->prox = aux->prox->prox;
+            free(item);
+        }
+    }
+}

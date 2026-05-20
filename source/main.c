@@ -84,17 +84,43 @@ int main() {
                         novo_jogo->local_atual = buscar_local(novo_jogo->mapa, novo_jogo->chave_atual);
                         novo_jogo->lenda_atual = pegar_lenda_atual(novo_jogo->lenda_local, novo_jogo->chave_atual);
                         PegarItemEEntrarInventário(&novo_jogo->itensNaoPegos, novo_jogo->chave_atual, mouse_novo, &novo_jogo->inventario, &novo_jogo->em_hitbox);
+                        insertion_sort_iventario(&novo_jogo->inventario);
                         bool clicada = interagir_lenda(novo_jogo->lenda_atual, mouse_novo, &novo_jogo->em_hitbox);
                         mudar_mouse_mapa(novo_jogo->local_atual, mouse_novo, &novo_jogo->em_hitbox);
+                        dar_item(&novo_jogo->lenda_local, novo_jogo->lenda_atual, &novo_jogo->itemSelecionado, mouse_novo, &novo_jogo->inventario, novo_jogo);
+                        novo_jogo->lenda_atual = pegar_lenda_atual(novo_jogo->lenda_local, novo_jogo->chave_atual);
 
                         if (clicada == true && novo_jogo->dialogo == NULL && !dialogo_acabou_esse_frame) {
                             Lendas *conversa = novo_jogo->lenda_atual;
-                            if (conversa->ja_conversou == false) {
-                                novo_jogo->dialogo = CreateDialogueManager(conversa->dialogo_raiz);
-                                conversa->ja_conversou = true;
-                            }
-                            else {
-                                novo_jogo->dialogo = CreateDialogueManager(conversa->dialogo_repetido);
+                            if (conversa->quest_completa == false) {
+                                if (conversa->ja_conversou == false) {
+                                    novo_jogo->dialogo = CreateDialogueManager(conversa->dialogo_raiz);
+                                    conversa->ja_conversou = true;
+                                }
+                                else {
+                                    novo_jogo->dialogo = CreateDialogueManager(conversa->dialogo_repetido);
+                                }
+                            } else {
+                                if (conversa->ja_conversou == false) {
+                                    novo_jogo->dialogo = CreateDialogueManager(conversa->dialogo_final);
+                                    conversa->ja_conversou = true;
+                                    if (strcmp(conversa->nome, "Emparedada da Rua Nova") == 0) {
+                                        inserir_inventario(&novo_jogo->inventario, "Mingau", "Um mingau quentinho.", conversa->item, 8);
+                                    } else if (strcmp(conversa->nome, "Comadre Fulozinha") == 0) {
+                                        inserir_inventario(&novo_jogo->inventario, "Bilhete de catamarã", "Um bilhete valendo um passeio de catamaran aqui em Recife.", conversa->item, 7);
+                                    } else if (strcmp(conversa->nome, "Encanta Moça") == 0) {
+                                        inserir_inventario(&novo_jogo->inventario, "Bolo de rolo", "Um bolo de rolo bem gostoso.", conversa->item, 6);
+                                    } else if (strcmp(conversa->nome, "Cabra Cabriola") == 0) {
+                                        inserir_inventario(&novo_jogo->inventario, "Tesoura", "Uma tesoura normal.", conversa->item, 5);
+                                    } else if (strcmp(conversa->nome, "Papa-figo") == 0) {
+                                        inserir_inventario(&novo_jogo->inventario, "Barbeador", "Um barbeador.", conversa->item, 4);
+                                    } else if (strcmp(conversa->nome, "Perna Cabeluda") == 0) {
+                                        inserir_inventario(&novo_jogo->inventario, "Crachá", "Um crachá da CESAR School.", conversa->item, 3);
+                                    }
+                                }
+                                else {
+                                    novo_jogo->dialogo = CreateDialogueManager(conversa->dialogo_final_repetido);
+                                }
                             }
                             state = DIALOGO;    
                         }
@@ -139,7 +165,7 @@ int main() {
                     ClearBackground(BLACK);
                     DrawTexturePro(novo_jogo->tela.texture, (Rectangle){0, 0, 1600, -900}, nova_tela, (Vector2){0, 0}, 0.0f, WHITE);
                     if (novo_jogo->em_hitbox) {
-                        DrawCircleGradient(mouse.x, mouse.y, 40 * escala, (Color){255, 255, 255, 100}, (Color){255, 255, 255, 0});
+                        //DrawCircleGradient((Vector2){mouse.x, mouse.y}, 40 * escala, (Color){255, 255, 255, 100}, (Color){255, 255, 255, 0});
                         //DrawCircleLines(mouse.x, mouse.y, 20 * escala, WHITE);
                     }
                     EndDrawing();
