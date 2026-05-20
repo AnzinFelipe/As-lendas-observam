@@ -72,9 +72,6 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
 
     //Inicializa itens
 
-    s->item_teste = LoadTexture("assets/images/item_teste.jpg");
-    s->honglu = LoadTexture("assets/images/Itens/Honglu.png");
-    s->queenOfHatred = LoadTexture ("assets/images/Itens/QOH.png");
     s->saco = LoadTexture("assets/images/Itens/saco.png");
     GenTextureMipmaps(&s->saco);
     SetTextureFilter(s->saco, TEXTURE_FILTER_TRILINEAR);
@@ -195,8 +192,8 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
 
     s->itensNaoPegos = NULL;
     ColocarItemNoMapa(&s->itensNaoPegos, s->saco, "Saco de pano", (Vector2){200, 200}, "Um saco de pano velho, parece que tem algo dentro...", 357, 1);
-    ColocarItemNoMapa(&s->itensNaoPegos, s->marreta, "Marreta", (Vector2){300, 200}, "Uma marreta de ferro, parece pesada.", 450, 5);
-    ColocarItemNoMapa(&s->itensNaoPegos, s->cara_la_ursa, "Cara de La Ursa", (Vector2){400, 200}, "Uma máscara com a cara da La Ursa, parece que tem um cheiro estranho...", 206, 4);
+    ColocarItemNoMapa(&s->itensNaoPegos, s->marreta, "Marreta", (Vector2){300, 200}, "Uma marreta de ferro, parece pesada.", 450, 10);
+    ColocarItemNoMapa(&s->itensNaoPegos, s->cara_la_ursa, "Cara de La Ursa", (Vector2){400, 200}, "Uma máscara com a cara da La Ursa, parece que tem um cheiro estranho...", 206, 9);
     //Inicializa inventario
 
     s->inventario = NULL;
@@ -219,18 +216,36 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     RayDialNode *comadre_fala2 = CreateDialogueNode("fala2", "");
     RayDialNode *comadre_fala3 = CreateDialogueNode("fala3", "");
     RayDialNode *comadre_fala4 = CreateDialogueNode("fala4", "");
+    RayDialNode *comadre_fala5 = CreateDialogueNode("fala5", "");
+    RayDialNode *comadre_fala6 = CreateDialogueNode("fala6", "");
+    RayDialNode *comadre_fala7 = CreateDialogueNode("fala7", "");
+    RayDialNode *comadre_fala8 = CreateDialogueNode("fala8", "");
+    RayDialNode *comadre_fala9 = CreateDialogueNode("fala9", "");
+    RayDialNode *comadre_fala10 = CreateDialogueNode("fala10", "");
 
     //Criar componentes
     comadre_fala1->components = criarComp("Subconsciente", "--Você encontra um vulto escuro, o assobio está muito baixo, mas parece vir dele.--");
     comadre_fala2->components = criarComp("Subconsciente", "--Ele está observando, parece que não quer falar com Você.--");
     comadre_fala3->components = criarComp("Subconsciente", "--Talvez ele mude de ideia se você oferecer algum agrado.--");
     comadre_fala4->components = criarComp("Subconsciente", "--Ele não quer falar com você por enquanto.--");
+    comadre_fala5->components = criarComp(lenda->nome, "Um mingau!! Muito obrigada!!");
+    comadre_fala6->components = criarComp(lenda->nome, "Tu tá perdido, não é? Como agradecimento por não maltratar a mata desse lugar e me oferecer um mingau, posso te ajudar te dizendo onde passar a noite.");
+    comadre_fala7->components = criarComp(lenda->nome, "Sabe o prédio do CESAR Brum? Não sei o motivo, mas parece que ele tá aberto. Se tu conseguir passar das catracas de algum jeito até conseguiria dormir lá.");
+    comadre_fala8->components = criarComp(lenda->nome, "A única coisa que tenho aqui comigo é um bilhete de passeio de catamarã, pode ficar, talvez te ajude de alguma forma.");
+    comadre_fala9->components = criarComp("Subconsciente", "--Com certeza não vai dar para você sair daqui de catamarã, mas talvez alguém precise disso, vá procurar.--");
+    comadre_fala10->components = criarComp(lenda->nome, "Obrigada pelo mingau, tava muito gostoso.");
 
     AddChoice(comadre_fala1, comadre_fala2);
     AddChoice(comadre_fala2, comadre_fala3);
+    AddChoice(comadre_fala5, comadre_fala6);
+    AddChoice(comadre_fala6, comadre_fala7);
+    AddChoice(comadre_fala7, comadre_fala8);
+    AddChoice(comadre_fala8, comadre_fala9);
 
     lenda->dialogo_raiz = comadre_fala1;
     lenda->dialogo_repetido = comadre_fala4;
+    lenda->dialogo_final = comadre_fala5;
+    lenda->dialogo_final_repetido = comadre_fala10;
 
     inserir_lenda(&s->lenda_local, "Cabra Cabriola", true, s->cabra_local, s->cabra, s->cabra, (Rectangle){250, 330, 220, 350}, (Vector2){240, 0}, s->tesoura, "Bolo de rolo", 422);
     lenda = pegar_lenda_atual(s->lenda_local, 422);
@@ -242,23 +257,38 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     RayDialNode *cabra_fala5 = CreateDialogueNode("fala5", "");
     RayDialNode *cabra_fala6 = CreateDialogueNode("fala6", "");
     RayDialNode *cabra_fala7 = CreateDialogueNode("fala7", "");
+    RayDialNode *cabra_fala8 = CreateDialogueNode("fala8", "");
+    RayDialNode *cabra_fala9 = CreateDialogueNode("fala9", "");
+    RayDialNode *cabra_fala10 = CreateDialogueNode("fala10", "");
+    RayDialNode *cabra_fala11 = CreateDialogueNode("fala11", "");
+    RayDialNode *cabra_fala12 = CreateDialogueNode("fala12", "");
 
     cabra_fala1->components = criarComp("Subconsciente", "--Você se depara com uma cabra muito estranha, ela tem olhos e um bafo de fogo, não parece amigável.--");
-    cabra_fala2->components = criarComp("Cabra Cabriola", "Eu sou a Cabra Cabriola. Que como...");
-    cabra_fala3->components = criarComp("Cabra Cabriola", "...Poxa, um adulto? Pelo visto vou ficar morrendo de fome essa noite.");
-    cabra_fala4->components = criarComp("Cabra Cabriola", "Saia daqui e não me incomode, estou de barriga vazia e sem paciência para falar com um adulto estranho.");
+    cabra_fala2->components = criarComp(lenda->nome, "Eu sou a Cabra Cabriola. Que como...");
+    cabra_fala3->components = criarComp(lenda->nome, "...Poxa, um adulto? Pelo visto vou ficar morrendo de fome essa noite.");
+    cabra_fala4->components = criarComp(lenda->nome, "Saia daqui e não me incomode, estou de barriga vazia e sem paciência para falar com um adulto estranho.");
     cabra_fala5->components = criarComp("Subconsciente", "--Pelo visto, essa cabra precisa comer para falar com você.--");
     cabra_fala6->components = criarComp("Subconsciente", "--Obviamente você não vai dar o que ela quer. Tente mudar o paladar dela com uma comida apropriada.--");
     cabra_fala7->components = criarComp("Subconsciente", "--Ache alguma comida, daí então ela vai querer falar com você.--");
+    cabra_fala8->components = criarComp(lenda->nome, "Hmmmm o que é isso? Até que parece gostoso, acho que posso experimentar...");
+    cabra_fala9->components = criarComp(lenda->nome, "Tá, isso é bem melhor do que aquilo que ando devorando minha vida inteira...");
+    cabra_fala10->components = criarComp(lenda->nome, "Toma isso daqui, uma tesoura. Eu costumava roubar do velho feioso que tá por aqui por perto. Não vou precisar mais, já que você ampliou meu paladar.");
+    cabra_fala11->components = criarComp("Subconsciente", "--É isso! Com essa tesoura você vai poder fazer um furo no saco de pano daquele velho antes de entregá-lo.--");
+    cabra_fala12->components = criarComp(lenda->nome, "Por acaso tu não teria mais daquele bolo aí pra mim, né?");
 
     AddChoice(cabra_fala1, cabra_fala2);
     AddChoice(cabra_fala2, cabra_fala3);
     AddChoice(cabra_fala3, cabra_fala4);
     AddChoice(cabra_fala4, cabra_fala5);
     AddChoice(cabra_fala5, cabra_fala6);
+    AddChoice(cabra_fala8, cabra_fala9);
+    AddChoice(cabra_fala9, cabra_fala10);
+    AddChoice(cabra_fala10, cabra_fala11);
 
     lenda->dialogo_raiz = cabra_fala1;
     lenda->dialogo_repetido = cabra_fala7;
+    lenda->dialogo_final = cabra_fala8;
+    lenda->dialogo_final_repetido = cabra_fala12;
 
     inserir_lenda(&s->lenda_local, "Papa-figo", true, s->figo_local, s->figo, s->figo, (Rectangle){730, 500, 150, 130}, (Vector2){200, 0}, s->barbeador, "Saco de pano", 452);
     lenda = pegar_lenda_atual(s->lenda_local, 452);
@@ -270,25 +300,40 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     RayDialNode *figo_fala5 = CreateDialogueNode("fala5", "");
     RayDialNode *figo_fala6 = CreateDialogueNode("fala6", "");
     RayDialNode *figo_fala7 = CreateDialogueNode("fala7", "");
+    RayDialNode *figo_fala8 = CreateDialogueNode("fala8", "");
+    RayDialNode *figo_fala9 = CreateDialogueNode("fala9", "");
+    RayDialNode *figo_fala10 = CreateDialogueNode("fala10", "");
+    RayDialNode *figo_fala11 = CreateDialogueNode("fala11", "");
+    RayDialNode *figo_fala12 = CreateDialogueNode("fala12", "");
 
     figo_fala1->components = criarComp("Subconsciente", "--Você se encontra com um velho corcunda com uma aparência péssima, parece que está querendo algum favor seu.--");
-    figo_fala2->components = criarComp("Papa-figo", "Boa noite, eu... estava perambulando por essas ruas e acabei me descuidando, perdi uma coisa muuuito importante.");
-    figo_fala3->components = criarComp("Papa-figo", "Meu saco de pano... deixei cair em algum canto aqui no Recife Antigo, se você o achar, poderia trazer para mim?");
-    figo_fala4->components = criarComp("Papa-figo", "Vou ficar muuuito agradecido, sem ele não posso curar minha doença.");
+    figo_fala2->components = criarComp(lenda->nome, "Boa noite, eu... estava perambulando por essas ruas e acabei me descuidando, perdi uma coisa muuuito importante.");
+    figo_fala3->components = criarComp(lenda->nome, "Meu saco de pano... deixei cair em algum canto aqui no Recife Antigo, se você o achar, poderia trazer para mim?");
+    figo_fala4->components = criarComp(lenda->nome, "Vou ficar muuuito agradecido, sem ele não posso curar minha doença.");
     figo_fala5->components = criarComp("Subconsciente", "--Você sabe o que ele faz com esse saco de pano. Você não pode simplesmente devolver para ele.--");
     figo_fala6->components = criarComp("Subconsciente", "--Mas... talvez ele te dê algo em troca, pense numa solução para esse dilema.--");
-    figo_fala7->components = criarComp("Papa-figo", "--Já achou o meu saco de pano? Não devo ter deixado cair tão longe daqui.--");
+    figo_fala7->components = criarComp(lenda->nome, "Já achou o meu saco de pano? Não devo ter deixado cair tão longe daqui.");
+    figo_fala8->components = criarComp(lenda->nome, "E não é que você realmente achou ele? Muuuito obrigado jovem.");
+    figo_fala9->components = criarComp(lenda->nome, "Já estava preocupado com minha doença, se eu não comer fígado uma hora ou outra vou me tornar um lobisomem.");
+    figo_fala10->components = criarComp(lenda->nome, "Isso não vai mais ocorrer graças a você... pode ficar com o meu barbeador.");
+    figo_fala11->components = criarComp("Subconsciente", "--...talvez isso sirva para alguma coisa.--");
+    figo_fala12->components = criarComp("Subconsciente", "--Melhor não falar mais com ele. Na próxima vez, vai saber se ele virou um lobisomem...--");
 
     AddChoice(figo_fala1, figo_fala2);
     AddChoice(figo_fala2, figo_fala3);
     AddChoice(figo_fala3, figo_fala4);
     AddChoice(figo_fala4, figo_fala5);
     AddChoice(figo_fala5, figo_fala6);
+    AddChoice(figo_fala8, figo_fala9);
+    AddChoice(figo_fala9, figo_fala10);
+    AddChoice(figo_fala10, figo_fala11);
 
     lenda->dialogo_raiz = figo_fala1;
     lenda->dialogo_repetido = figo_fala7;
+    lenda->dialogo_final = figo_fala8;
+    lenda->dialogo_final_repetido = figo_fala12;
 
-    inserir_lenda(&s->lenda_local, "Encanta Moça", true, s->moca_local, s->moca, s->moca, (Rectangle){1000, 420, 150, 200}, (Vector2){200, 0}, s->bolo, "Bilhete de catamaran", 211);
+    inserir_lenda(&s->lenda_local, "Encanta Moça", true, s->moca_local, s->moca, s->moca, (Rectangle){1000, 420, 150, 200}, (Vector2){200, 0}, s->bolo, "Bilhete de catamarã", 211);
     lenda = pegar_lenda_atual(s->lenda_local, 211);
 
     RayDialNode *moca_fala1 = CreateDialogueNode("fala1", "");
@@ -297,45 +342,83 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     RayDialNode *moca_fala4 = CreateDialogueNode("fala4", "");
     RayDialNode *moca_fala5 = CreateDialogueNode("fala5", "");
     RayDialNode *moca_fala6 = CreateDialogueNode("fala6", "");
+    RayDialNode *moca_fala7 = CreateDialogueNode("fala7", "");
+    RayDialNode *moca_fala8 = CreateDialogueNode("fala8", "");
+    RayDialNode *moca_fala9 = CreateDialogueNode("fala9", "");
+    RayDialNode *moca_fala10 = CreateDialogueNode("fala10", "");
+    RayDialNode *moca_fala11 = CreateDialogueNode("fala11", "");
 
     moca_fala1->components = criarComp("Subconsciente", "--Você se encontra com uma moça muito encantadora ao lado de um grande caranguejo.--");
     moca_fala2->components = criarComp("Subconsciente", "--Você sente que, em outra circunstância, cairia no encanto dela. Não há dúvidas.--");
-    moca_fala3->components = criarComp("Encanta Moça", "Este caranguejo me lembra o mangue. Meu querido mangue.");
-    moca_fala4->components = criarComp("Encanta Moça", "Não sei o que me fez vir para cá, mas preciso voltar pro lugar de onde vim.");
+    moca_fala3->components = criarComp(lenda->nome, "Este caranguejo me lembra o mangue. Meu querido mangue.");
+    moca_fala4->components = criarComp(lenda->nome, "Não sei o que me fez vir para cá, mas preciso voltar pro lugar de onde vim.");
     moca_fala5->components = criarComp("Subconsciente", "--Talvez você possa ajudá-la a sair daqui, mas como?--");
-    moca_fala6->components = criarComp("Encanta Moça", "Quero voltar pro meu mangue...");
+    moca_fala6->components = criarComp(lenda->nome, "Quero voltar pro meu mangue...");
+    moca_fala7->components = criarComp(lenda->nome, "Um bilhete prum passeio de catamarã? É, acho que com isso vou poder voltar pro mangue do Pina amanhã, talvez.");
+    moca_fala8->components = criarComp(lenda->nome, "Obrigada viu. Eu até te encantaria pra vir comigo... mas vou deixar passar. Não pense que você vai se safar do meu encanto se passar pelo mangue do Pina algum outro dia.");
+    moca_fala9->components = criarComp(lenda->nome, "Mas olha, eu tinha comprado um bolo de rolo mais cedo no café daqui perto. Pode ficar com ele, tinha me esquecido que sou um espectro e não como nada.");
+    moca_fala10->components = criarComp("Subconsciente", "--Mais uma comida hein? Talvez ainda tenha alguém por aí que precise comer esse bolo de rolo.--");
+    moca_fala11->components = criarComp(lenda->nome, "Ainda tá encantado com minha beleza?");
 
     AddChoice(moca_fala1, moca_fala2);
     AddChoice(moca_fala2, moca_fala3);
     AddChoice(moca_fala3, moca_fala4);
     AddChoice(moca_fala4, moca_fala5);
+    AddChoice(moca_fala7, moca_fala8);
+    AddChoice(moca_fala8, moca_fala9);
+    AddChoice(moca_fala9, moca_fala10);
 
     lenda->dialogo_raiz = moca_fala1;
     lenda->dialogo_repetido = moca_fala6;
+    lenda->dialogo_final = moca_fala7;
+    lenda->dialogo_final_repetido = moca_fala11;
 
     inserir_lenda(&s->lenda_local, "Perna Cabeluda", true, s->perna_local, s->perna_cabeluda1, s->perna_cabeluda2, (Rectangle){900, 300, 200, 350}, (Vector2){200, 0}, s->cracha, "Barbeador", 357);
     lenda = pegar_lenda_atual(s->lenda_local, 357);
 
     RayDialNode *perna_fala1 = CreateDialogueNode("fala1", "");
     RayDialNode *perna_fala2 = CreateDialogueNode("fala2", "");
+    RayDialNode *perna_fala3 = CreateDialogueNode("fala3", "");
+    RayDialNode *perna_fala4 = CreateDialogueNode("fala4", "");
+    RayDialNode *perna_fala5 = CreateDialogueNode("fala5", "");
+    RayDialNode *perna_fala6 = CreateDialogueNode("fala6", "");
+    RayDialNode *perna_fala7 = CreateDialogueNode("fala7", "");
 
-    perna_fala1->components = criarComp("Perna Cabeluda", "...");
-    perna_fala2->components = criarComp("Perna Cabeluda", "...");
+    perna_fala1->components = criarComp(lenda->nome, "...");
+    perna_fala2->components = criarComp("Subconsciente", "--Uma perna cabeluda... ela não fala... não da pra saber muito o que ela quer.--");
+    perna_fala3->components = criarComp(lenda->nome, "...");
+    perna_fala4->components = criarComp(lenda->nome, "...!!!");
+    perna_fala5->components = criarComp("Subconsciente", "--Essa perna acabou de te dar um crachá da CESAR?--");
+    perna_fala6->components = criarComp("Subconsciente", "--Que sorte, parece que ela estuda algum curso à noite... mas agora você pode finalmente entrar no prédio do CESAR Brum!!!--");
+    perna_fala7->components = criarComp(lenda->nome, "...");
+
+    AddChoice(perna_fala1, perna_fala2);
+    AddChoice(perna_fala4, perna_fala5);
+    AddChoice(perna_fala5, perna_fala6);
 
     lenda->dialogo_raiz = perna_fala1;
-    lenda->dialogo_repetido = perna_fala2;
+    lenda->dialogo_repetido = perna_fala3;
+    lenda->dialogo_final = perna_fala4;
+    lenda->dialogo_final_repetido = perna_fala7;
 
     inserir_lenda(&s->lenda_local, "Rachadura", true, s->rachadura1, s->rachadura1, s->rachadura1, (Rectangle){580, 150, 320, 420}, (Vector2){200, 20}, s->mingau, "Marreta", 104);
     lenda = pegar_lenda_atual(s->lenda_local, 104);
 
     RayDialNode *rachadura_fala1 = CreateDialogueNode("fala1", "");
     RayDialNode *rachadura_fala2 = CreateDialogueNode("fala2", "");
+    RayDialNode *rachadura_fala3 = CreateDialogueNode("fala3", "");
+    RayDialNode *rachadura_fala4 = CreateDialogueNode("fala4", "");
 
-    rachadura_fala1->components = criarComp("Rachadura na parede", "...");
-    rachadura_fala2->components = criarComp("Rachadura na parede", "...");
+    rachadura_fala1->components = criarComp(lenda->nome, "SOCORRO!!!");
+    rachadura_fala2->components = criarComp(lenda->nome, "ALGÚEM PODE ME AJUDAR A SAIR DAQUI?");
+    rachadura_fala3->components = criarComp("Subconsciente", "--Tem alguém dentro daquela parede? Ela tá rachada, talvez você consiga ajudar a pessoa lá dentro se de alguma forma você conseguir quebrá-la.--");
+    rachadura_fala4->components = criarComp(lenda->nome, "SOCORRO!!!");
+
+    AddChoice(rachadura_fala1, rachadura_fala2);
+    AddChoice(rachadura_fala2, rachadura_fala3);
 
     lenda->dialogo_raiz = rachadura_fala1;
-    lenda->dialogo_repetido = rachadura_fala2;
+    lenda->dialogo_repetido = rachadura_fala4;
 }
 
 void free_dados_jogo(Vars_structs_inicio_jogo *s){
@@ -348,6 +431,14 @@ void free_dados_jogo(Vars_structs_inicio_jogo *s){
         if (lenda->dialogo_repetido) {
             FreeDialogueNode(lenda->dialogo_repetido);
             lenda->dialogo_repetido = NULL;
+        }
+        if (lenda->dialogo_final) {
+            FreeDialogueNode(lenda->dialogo_final);
+            lenda->dialogo_final = NULL;
+        }
+        if (lenda->dialogo_final_repetido) {
+            FreeDialogueNode(lenda->dialogo_final_repetido);
+            lenda->dialogo_final_repetido = NULL;
         }
         lenda = lenda->prox;
     }
@@ -401,8 +492,6 @@ void free_dados_jogo(Vars_structs_inicio_jogo *s){
     UnloadTexture(s->sao_jorge2);
     UnloadTexture(s->travessa_tiradentes);
     UnloadTexture(s->praca_tiradentes);
-    UnloadTexture(s->honglu);
-    UnloadTexture(s->queenOfHatred);
     UnloadTexture(s->saco);
     UnloadTexture(s->cara_la_ursa);
     UnloadTexture(s->marreta);
@@ -431,7 +520,6 @@ void free_dados_jogo(Vars_structs_inicio_jogo *s){
     UnloadTexture(s->moca);
     UnloadTexture(s->figo_local);
     UnloadTexture(s->figo);
-    UnloadTexture(s->item_teste);
 
     UnloadMusicStream(s->pink);
     CloseAudioDevice();

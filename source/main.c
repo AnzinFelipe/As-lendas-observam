@@ -92,12 +92,35 @@ int main() {
 
                         if (clicada == true && novo_jogo->dialogo == NULL && !dialogo_acabou_esse_frame) {
                             Lendas *conversa = novo_jogo->lenda_atual;
-                            if (conversa->ja_conversou == false) {
-                                novo_jogo->dialogo = CreateDialogueManager(conversa->dialogo_raiz);
-                                conversa->ja_conversou = true;
-                            }
-                            else {
-                                novo_jogo->dialogo = CreateDialogueManager(conversa->dialogo_repetido);
+                            if (conversa->quest_completa == false) {
+                                if (conversa->ja_conversou == false) {
+                                    novo_jogo->dialogo = CreateDialogueManager(conversa->dialogo_raiz);
+                                    conversa->ja_conversou = true;
+                                }
+                                else {
+                                    novo_jogo->dialogo = CreateDialogueManager(conversa->dialogo_repetido);
+                                }
+                            } else {
+                                if (conversa->ja_conversou == false) {
+                                    novo_jogo->dialogo = CreateDialogueManager(conversa->dialogo_final);
+                                    conversa->ja_conversou = true;
+                                    if (strcmp(conversa->nome, "Emparedada da Rua Nova") == 0) {
+                                        inserir_inventario(&novo_jogo->inventario, "Mingau", "Um mingau quentinho.", conversa->item, 8);
+                                    } else if (strcmp(conversa->nome, "Comadre Fulozinha") == 0) {
+                                        inserir_inventario(&novo_jogo->inventario, "Bilhete de catamarã", "Um bilhete valendo um passeio de catamaran aqui em Recife.", conversa->item, 7);
+                                    } else if (strcmp(conversa->nome, "Encanta Moça") == 0) {
+                                        inserir_inventario(&novo_jogo->inventario, "Bolo de rolo", "Um bolo de rolo bem gostoso.", conversa->item, 6);
+                                    } else if (strcmp(conversa->nome, "Cabra Cabriola") == 0) {
+                                        inserir_inventario(&novo_jogo->inventario, "Tesoura", "Uma tesoura normal.", conversa->item, 5);
+                                    } else if (strcmp(conversa->nome, "Papa-figo") == 0) {
+                                        inserir_inventario(&novo_jogo->inventario, "Barbeador", "Um barbeador.", conversa->item, 4);
+                                    } else if (strcmp(conversa->nome, "Perna Cabeluda") == 0) {
+                                        inserir_inventario(&novo_jogo->inventario, "Crachá", "Um crachá da CESAR School.", conversa->item, 3);
+                                    }
+                                }
+                                else {
+                                    novo_jogo->dialogo = CreateDialogueManager(conversa->dialogo_final_repetido);
+                                }
                             }
                             state = DIALOGO;    
                         }

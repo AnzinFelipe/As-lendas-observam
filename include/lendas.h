@@ -21,6 +21,8 @@ typedef struct Lendas {
     RayDialNode *dialogo_repetido;
     char *item_quest;
     bool quest_completa;
+    RayDialNode *dialogo_final;
+    RayDialNode *dialogo_final_repetido;
     Texture2D item;
     struct Lendas *prox;
 } Lendas;
