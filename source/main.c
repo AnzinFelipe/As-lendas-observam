@@ -84,6 +84,7 @@ int main() {
                         novo_jogo->local_atual = buscar_local(novo_jogo->mapa, novo_jogo->chave_atual);
                         novo_jogo->lenda_atual = pegar_lenda_atual(novo_jogo->lenda_local, novo_jogo->chave_atual);
                         PegarItemEEntrarInventário(&novo_jogo->itensNaoPegos, novo_jogo->chave_atual, mouse_novo, &novo_jogo->inventario, &novo_jogo->em_hitbox);
+                        insertion_sort_iventario(&novo_jogo->inventario);
                         bool clicada = interagir_lenda(novo_jogo->lenda_atual, mouse_novo, &novo_jogo->em_hitbox);
                         mudar_mouse_mapa(novo_jogo->local_atual, mouse_novo, &novo_jogo->em_hitbox);
                         dar_item(novo_jogo->lenda_atual, novo_jogo->itemSelecionado, mouse_novo);

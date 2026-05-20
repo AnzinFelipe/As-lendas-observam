@@ -192,12 +192,9 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     //Inicializa itens no mapa
 
     s->itensNaoPegos = NULL;
-    ColocarItemNoMapa(&s->itensNaoPegos, s->honglu, "Chibi Lu", (Vector2){100, 200}, "Um chibi Honglu, o que pode acontecer?...", 401);
-    ColocarItemNoMapa(&s->itensNaoPegos, s->queenOfHatred, "Arcana Slave!", (Vector2){100, 90}, "Arcna Slave!!!!!!!", 401);
-    ColocarItemNoMapa(&s->itensNaoPegos, s->saco, "Saco de pano", (Vector2){200, 200}, "Um saco de pano velho, parece que tem algo dentro...", 357);
-    ColocarItemNoMapa(&s->itensNaoPegos, s->marreta, "Marreta", (Vector2){300, 200}, "Uma marreta de ferro, parece pesada.", 450);
-    ColocarItemNoMapa(&s->itensNaoPegos, s->cara_la_ursa, "Cara de La Ursa", (Vector2){400, 200}, "Uma máscara com a cara da La Ursa, parece que tem um cheiro estranho...", 206);
-    ColocarItemNoMapa(&s->itensNaoPegos, s->item_teste, "Item de teste", (Vector2){500, 200}, "Esse é um item de teste, não tem função nenhuma.", 401);
+    ColocarItemNoMapa(&s->itensNaoPegos, s->saco, "Saco de pano", (Vector2){200, 200}, "Um saco de pano velho, parece que tem algo dentro...", 357, 1);
+    ColocarItemNoMapa(&s->itensNaoPegos, s->marreta, "Marreta", (Vector2){300, 200}, "Uma marreta de ferro, parece pesada.", 450, 5);
+    ColocarItemNoMapa(&s->itensNaoPegos, s->cara_la_ursa, "Cara de La Ursa", (Vector2){400, 200}, "Uma máscara com a cara da La Ursa, parece que tem um cheiro estranho...", 206, 4);
     //Inicializa inventario
 
     s->inventario = NULL;

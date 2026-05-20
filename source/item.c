@@ -4,7 +4,7 @@
 #include "item.h"
 #include "inventario.h"
 
-void ColocarItemNoMapa(Item **Head, Texture2D imagem, char *nome, Vector2 localSpawn, char *descricao, int chave) {
+void ColocarItemNoMapa(Item **Head, Texture2D imagem, char *nome, Vector2 localSpawn, char *descricao, int chave, int relevancia) {
     Item *novo = (Item*)malloc(sizeof(Item));
     novo->nome       = nome;
     novo->descricao  = descricao;
@@ -12,6 +12,7 @@ void ColocarItemNoMapa(Item **Head, Texture2D imagem, char *nome, Vector2 localS
     novo->LocalSpawn = localSpawn;
     novo->hitbox     = (Rectangle){ localSpawn.x, localSpawn.y, imagem.width, imagem.height };
     novo->pego       = false;
+    novo->relevancia  = relevancia;
     novo->prox       = NULL;
     novo->chave=chave;
 
@@ -35,7 +36,7 @@ void PegarItemEEntrarInventário(Item **head, int chave_atual, Vector2 mouse_nov
                 SetMouseCursor(4);
                 if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
                     aux->pego = true;
-                    inserir_inventario(inventario, aux->nome, aux->descricao, aux->imagem);
+                    inserir_inventario(inventario, aux->nome, aux->descricao, aux->imagem, aux->relevancia);
                 }
             }
         }
