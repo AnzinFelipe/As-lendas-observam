@@ -29,4 +29,6 @@ void desenhar_item_arrastando(Vector2 mouse, Inventario *itemSelecionado, bool a
 
 void insertion_sort_iventario(Inventario **head);
 
+void excluir_item(Inventario **head, Inventario *item);
+
 #endif

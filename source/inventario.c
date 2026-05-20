@@ -199,3 +199,19 @@ void insertion_sort_iventario(Inventario **head) {
 
     *head = ordenada;
 }
+
+void excluir_item(Inventario **head, Inventario *item) {
+    if (*head != NULL && item != NULL) {
+        if (*head == item) {
+            *head = (*head)->prox;
+            free(item);
+        } else {
+            Inventario *aux = *head;
+            while (aux->prox != NULL && aux->prox != item) {
+                aux = aux->prox;
+            }
+            aux->prox = aux->prox->prox;
+            free(item);
+        }
+    }
+}

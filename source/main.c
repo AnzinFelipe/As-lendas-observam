@@ -87,7 +87,8 @@ int main() {
                         insertion_sort_iventario(&novo_jogo->inventario);
                         bool clicada = interagir_lenda(novo_jogo->lenda_atual, mouse_novo, &novo_jogo->em_hitbox);
                         mudar_mouse_mapa(novo_jogo->local_atual, mouse_novo, &novo_jogo->em_hitbox);
-                        dar_item(novo_jogo->lenda_atual, novo_jogo->itemSelecionado, mouse_novo);
+                        dar_item(&novo_jogo->lenda_local, novo_jogo->lenda_atual, &novo_jogo->itemSelecionado, mouse_novo, &novo_jogo->inventario, novo_jogo);
+                        novo_jogo->lenda_atual = pegar_lenda_atual(novo_jogo->lenda_local, novo_jogo->chave_atual);
 
                         if (clicada == true && novo_jogo->dialogo == NULL && !dialogo_acabou_esse_frame) {
                             Lendas *conversa = novo_jogo->lenda_atual;
@@ -141,7 +142,7 @@ int main() {
                     ClearBackground(BLACK);
                     DrawTexturePro(novo_jogo->tela.texture, (Rectangle){0, 0, 1600, -900}, nova_tela, (Vector2){0, 0}, 0.0f, WHITE);
                     if (novo_jogo->em_hitbox) {
-                        DrawCircleGradient((Vector2){mouse.x, mouse.y}, 40 * escala, (Color){255, 255, 255, 100}, (Color){255, 255, 255, 0});
+                        //DrawCircleGradient((Vector2){mouse.x, mouse.y}, 40 * escala, (Color){255, 255, 255, 100}, (Color){255, 255, 255, 0});
                         //DrawCircleLines(mouse.x, mouse.y, 20 * escala, WHITE);
                     }
                     EndDrawing();

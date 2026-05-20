@@ -8,9 +8,9 @@
 #include <math.h>
 #include "item.h"
 #include <string.h>
-#include "lendas.h"
-#include "raydial.h"
 #include "falas.h"
+
+typedef struct Lendas Lendas;
 
 typedef struct Vars_structs_inicio_jogo{
     RenderTexture2D tela;
