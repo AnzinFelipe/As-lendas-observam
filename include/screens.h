@@ -6,9 +6,11 @@
 typedef enum GameScreen {
     MENU,
     JOGO,
-    SAIR
+    SAIR,
+    GAME_OVER
 } GameScreen;
 
 GameScreen RunMenu(void);
+GameScreen RunGameOver(void);
 
 #endif

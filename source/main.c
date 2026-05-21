@@ -24,6 +24,8 @@ int main() {
 
     GameState state = EXPLORACAO;
 
+    double tempo_inicio = 0.0;
+
     SetTargetFPS(60);
 
     while(!WindowShouldClose()) {
@@ -40,7 +42,13 @@ int main() {
                 if (currentScreen == JOGO) {
                     if (primeiro == 1){
                         iniciar_jogo(novo_jogo);
+                        tempo_inicio = GetTime();
                         primeiro = 0;
+                    }
+
+                    if (GetTime() - tempo_inicio >= 10.0) {
+                        currentScreen = GAME_OVER;
+                        break; 
                     }
                     
                     int largura_tela = GetScreenWidth();
@@ -170,7 +178,18 @@ int main() {
                     }
                     EndDrawing();
                 }  
-                    
+                break;
+            case GAME_OVER:
+                currentScreen = RunGameOver();
+                
+                if (currentScreen == MENU) {
+                    free_dados_jogo(novo_jogo);
+                    novo_jogo = (Vars_structs_inicio_jogo*)malloc(sizeof(Vars_structs_inicio_jogo));
+                    memset(novo_jogo, 0, sizeof(Vars_structs_inicio_jogo));
+                    primeiro = 1; 
+                    state = EXPLORACAO;
+                } 
+                break;
             }
                     
                      
