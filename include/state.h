@@ -3,7 +3,11 @@
 
 typedef enum GameState{
     EXPLORACAO,
-    DIALOGO
+    DIALOGO,
+    MINIGAME_AGUARDANDO_IA,
+    MINIGAME_INTRO,
+    MINIGAME_BUSCA,
+    MINIGAME_GAMEOVER
 } GameState;
 
 #endif
