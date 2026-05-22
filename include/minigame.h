@@ -53,6 +53,7 @@ static const int MINIGAME_NOS_SEM_LENDA[MINIGAME_NOS_SEM_LENDA_COUNT] = {
 
 typedef enum MinigameFase{
     MINIGAME_FASE_DIALOGO_INTRO,
+    MINIGAME_FASE_DIALOGO_FINAL,
     MINIGAME_FASE_BUSCA,
     MINIGAME_FASE_GAMEOVER,
     MINIGAME_FASE_SUCESSO
@@ -63,12 +64,15 @@ typedef struct {
 
     RayDialNode  *dialogo_intro;
     RayDialManager *manager_intro;
+    RayDialNode  *dialogo_final;
+    RayDialManager *manager_final;
+    bool ignorar_proximo_clique;
     int chave_isqueiro;
     Rectangle hitbox_isqueiro;
     bool isqueiro_visivel;
     float tempo_restante;
-    Texture2D *img_observadora;
-    Texture2D *img_observadora2;
+    Texture2D *img1;
+    Texture2D *img2;
 
     char texto_ia[512];
     bool dialogo_finalizado;
@@ -76,7 +80,7 @@ typedef struct {
 } MinigameState;
 
 void MinigameIniciar(MinigameState *mg, const char *texto_ia,
-                     Texture2D *img_ouro_local, Texture2D *img_ouro_conversa,
+                     Texture2D *img_ouro_conversa1, Texture2D *img_ouro_conversa2,
                      Texture2D *img_isqueiro);
 
 void MinigameFinalizar(MinigameState *mg);
@@ -85,8 +89,12 @@ bool MinigameUpdateIntro(MinigameState *mg);
 
 bool MinigameUpdateBusca(MinigameState *mg, int chave_atual, Vector2 mouse, float delta);
 
+bool MinigameUpdateDialogoFinal(MinigameState *mg);
+
 void MinigameDesenharIntro(MinigameState *mg);
 
 void MinigameDesenharBusca(MinigameState *mg, int chave_atual, Texture2D *img_isqueiro);
+
+void MinigameDesenharDialogoFinal(MinigameState *mg);
 
 #endif

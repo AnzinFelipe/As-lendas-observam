@@ -17,15 +17,15 @@ static RayDialNode *criar_node_dialogo(const char *speaker, const char *texto) {
 }
 
 void MinigameIniciar(MinigameState *mg, const char *texto_ia,
-                     Texture2D *img_ouro_local, Texture2D *img_ouro_conversa,
+                     Texture2D *img_ouro_conversa1, Texture2D *img_ouro_conversa2,
                      Texture2D *img_isqueiro) {
     (void)img_isqueiro;
 
     memset(mg, 0, sizeof(MinigameState));
     mg->fase             = MINIGAME_FASE_DIALOGO_INTRO;
     mg->tempo_restante   = MINIGAME_TEMPO_TOTAL;
-    mg->img_observadora  = img_ouro_local;
-    mg->img_observadora2 = img_ouro_conversa;
+    mg->img1  = img_ouro_conversa1;
+    mg->img2 = img_ouro_conversa2;
     mg->dialogo_finalizado = false;
     mg->gameover_timer   = 0.0f;
 
@@ -55,6 +55,16 @@ void MinigameIniciar(MinigameState *mg, const char *texto_ia,
     mg->dialogo_intro   = fala1;
     mg->manager_intro   = CreateDialogueManager(fala1);
 
+    RayDialNode *final1 = criar_node_dialogo("Boca de Ouro", "Encontrou o isqueiro... mais esperto do que eu pensava.");
+    RayDialNode *final2 = criar_node_dialogo("Boca de Ouro", "Mas não se engane. As ruas do Recife Antigo têm memória longa... e eu também.");
+    RayDialNode *final3 = criar_node_dialogo("Subconsciente", "--Você sobreviveu desta vez. Guarde bem esse isqueiro.--");
+
+    AddChoice(final1, final2);
+    AddChoice(final2, final3);
+
+    mg->dialogo_final   = final1;
+    mg->manager_final   = NULL;
+
     // Escolhe nó aleatório para o isqueiro
     SetRandomSeed((unsigned int)time(NULL));
     mg->chave_isqueiro = escolher_no_aleatorio();
@@ -67,6 +77,10 @@ void MinigameFinalizar(MinigameState *mg) {
     if (mg->manager_intro) {
         FreeDialogueManager(mg->manager_intro);
         mg->manager_intro = NULL;
+    }
+    if (mg->manager_final) {
+        FreeDialogueManager(mg->manager_final);
+        mg->manager_final = NULL;
     }
     // Os nós são liberados junto com o manager
     mg->dialogo_intro = NULL;
@@ -108,7 +122,9 @@ bool MinigameUpdateBusca(MinigameState *mg, int chave_atual, Vector2 mouse, floa
         if (CheckCollisionPointRec(mouse, mg->hitbox_isqueiro)) {
             SetMouseCursor(4);
             if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-                mg->fase = MINIGAME_FASE_SUCESSO;
+                mg->fase = MINIGAME_FASE_DIALOGO_FINAL;
+                mg->manager_final = CreateDialogueManager(mg->dialogo_final);
+                mg->ignorar_proximo_clique = true;
                 return true;
             }
         }
@@ -117,13 +133,38 @@ bool MinigameUpdateBusca(MinigameState *mg, int chave_atual, Vector2 mouse, floa
     return false;
 }
 
+bool MinigameUpdateDialogoFinal(MinigameState *mg) {
+    if (!mg->manager_final) return true;
+
+    if (mg->ignorar_proximo_clique) {
+        if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+            mg->ignorar_proximo_clique = false;
+        }
+        UpdateDialogueManager(mg->manager_final);
+        return false;
+    }
+
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) || IsKeyPressed(KEY_SPACE)) {
+        AdvanceDialogue(mg->manager_final);
+    }
+    UpdateDialogueManager(mg->manager_final);
+
+    if (!mg->manager_final->isActive) {
+        FreeDialogueManager(mg->manager_final);
+        mg->manager_final = NULL;
+        mg->fase = MINIGAME_FASE_SUCESSO;
+        return true;
+    }
+    return false;
+}
+
 void MinigameDesenharIntro(MinigameState *mg) {
     if (!mg->manager_intro) return;
 
     DrawRectangle(0, 0, 1600, 900, (Color){0, 0, 0, 160});
 
-    if (mg->img_observadora2 && mg->img_observadora2->id != 0) {
-        DrawTextureEx(*mg->img_observadora2, (Vector2){0, 0}, 0.0f, 1.0f, WHITE);
+    if (mg->img1 && mg->img1->id != 0) {
+        DrawTextureEx(*mg->img1, (Vector2){0, 0}, 0.0f, 1.0f, WHITE);
     }
 
     DrawDialogueManager(mg->manager_intro);
@@ -169,4 +210,13 @@ void MinigameDesenharBusca(MinigameState *mg, int chave_atual, Texture2D *img_is
         Rectangle dst = mg->hitbox_isqueiro;
         DrawTexturePro(*img_isqueiro, src, dst, (Vector2){0, 0}, 0.0f, tint);
     }
+}
+
+void MinigameDesenharDialogoFinal(MinigameState *mg) {
+    if (!mg->manager_final) return;
+    DrawRectangle(0, 0, 1600, 900, (Color){0, 0, 0, 160});
+    if (mg->img2 && mg->img2->id != 0) {
+        DrawTextureEx(*mg->img2, (Vector2){0, 0}, 0.0f, 1.0f, WHITE);
+    }
+    DrawDialogueManager(mg->manager_final);
 }

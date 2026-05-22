@@ -89,7 +89,7 @@ int main() {
                                 &novo_jogo->minigame,
                                 texto_ia,
                                 &novo_jogo->ouro1,
-                                &novo_jogo->ouro1,
+                                &novo_jogo->ouro2,
                                 &novo_jogo->isqueiro
                             );
                             state = MINIGAME_INTRO;
@@ -102,7 +102,7 @@ int main() {
                                 &novo_jogo->minigame,
                                 gemini_fallback_text,
                                 &novo_jogo->ouro1,
-                                &novo_jogo->ouro1,
+                                &novo_jogo->ouro2,
                                 &novo_jogo->isqueiro
                             );
                             state = MINIGAME_INTRO;
@@ -130,21 +130,28 @@ int main() {
                         );
     
                         if (terminou) {
-                            if (novo_jogo->minigame.fase == MINIGAME_FASE_SUCESSO) {
-                                inserir_inventario(&novo_jogo->inventario, "Isqueiro",
-                                                "Um isqueiro legal.",
-                                                novo_jogo->isqueiro, 2);
-                                insertion_sort_iventario(&novo_jogo->inventario);
-                                MinigameFinalizar(&novo_jogo->minigame);
-                                memset(&novo_jogo->minigame, 0, sizeof(MinigameState));
-                                state = EXPLORACAO;
-                            } else {
-                                state = EXPLORACAO;
-                                //state = MINIGAME_GAMEOVER;
+                            if (terminou) {
+                                if (novo_jogo->minigame.fase == MINIGAME_FASE_DIALOGO_FINAL) {
+                                    state = MINIGAME_DIALOGO_FINAL; // novo estado
+                                } else if (novo_jogo->minigame.fase == MINIGAME_FASE_GAMEOVER) {
+                                    state = EXPLORACAO;
+                                }
                             }
                         }
+                    } else if (state == MINIGAME_DIALOGO_FINAL) {
+                        bool fim = MinigameUpdateDialogoFinal(&novo_jogo->minigame);
+                        if (fim) {
+                            // MinigameUpdateDialogoFinal já setou fase = MINIGAME_FASE_SUCESSO
+                            inserir_inventario(&novo_jogo->inventario, "Isqueiro",
+                                            "Um isqueiro que quase se apagou.",
+                                            novo_jogo->isqueiro, 2);
+                            insertion_sort_iventario(&novo_jogo->inventario);
+                            MinigameFinalizar(&novo_jogo->minigame);
+                            memset(&novo_jogo->minigame, 0, sizeof(MinigameState));
+                            state = EXPLORACAO;
+                        }
                     } else if (state == MINIGAME_GAMEOVER) {
-                        
+
                     }
 
                     bool dialogo_acabou_esse_frame = false;
@@ -180,16 +187,12 @@ int main() {
                         novo_jogo->lenda_atual = pegar_lenda_atual(novo_jogo->lenda_local, novo_jogo->chave_atual);
 
                         if (state == EXPLORACAO && !novo_jogo->minigame_ja_ocorreu &&
-                            novo_jogo->quests_completas > novo_jogo->quests_no_ultimo_sorteio &&
-                            novo_jogo->lenda_atual == NULL) {
+                            novo_jogo->quests_completas > novo_jogo->quests_no_ultimo_sorteio) {
 
-                            int chance = novo_jogo->quests_completas * 100;
+                            int chance = novo_jogo->quests_completas * 50;
                             if (chance > 90) chance = 90;
 
                             if (GetRandomValue(1, 100) <= chance && gemini_retry_timer <= 0.0f) {
-                                strncpy(novo_jogo->ultima_lenda_nome,
-                                        novo_jogo->lenda_atual ? novo_jogo->lenda_atual->nome : "",
-                                        sizeof(novo_jogo->ultima_lenda_nome) - 1);
                                 if (!gemini_disabled) {
                                     if (GeminiPedirDialogo(
                                         &novo_jogo->gemini,
@@ -231,21 +234,27 @@ int main() {
                                     conversa->ja_conversou = true;
                                     if (strcmp(conversa->nome, "Emparedada da Rua Nova") == 0) {
                                         inserir_inventario(&novo_jogo->inventario, "Mingau", "Um mingau quentinho.", conversa->item, 8);
+                                        strncpy(novo_jogo->ultima_lenda_nome, conversa->nome, sizeof(novo_jogo->ultima_lenda_nome) - 1);
                                         novo_jogo->quests_completas++;
                                     } else if (strcmp(conversa->nome, "Comadre Fulozinha") == 0) {
                                         inserir_inventario(&novo_jogo->inventario, "Bilhete de catamarã", "Um bilhete valendo um passeio de catamaran aqui em Recife.", conversa->item, 7);
+                                        strncpy(novo_jogo->ultima_lenda_nome, conversa->nome, sizeof(novo_jogo->ultima_lenda_nome) - 1);
                                         novo_jogo->quests_completas++;
                                     } else if (strcmp(conversa->nome, "Encanta Moça") == 0) {
                                         inserir_inventario(&novo_jogo->inventario, "Bolo de rolo", "Um bolo de rolo bem gostoso.", conversa->item, 6);
+                                        strncpy(novo_jogo->ultima_lenda_nome, conversa->nome, sizeof(novo_jogo->ultima_lenda_nome) - 1);
                                         novo_jogo->quests_completas++;
                                     } else if (strcmp(conversa->nome, "Cabra Cabriola") == 0) {
                                         inserir_inventario(&novo_jogo->inventario, "Tesoura", "Uma tesoura normal.", conversa->item, 5);
+                                        strncpy(novo_jogo->ultima_lenda_nome, conversa->nome, sizeof(novo_jogo->ultima_lenda_nome) - 1);
                                         novo_jogo->quests_completas++;
                                     } else if (strcmp(conversa->nome, "Papa-figo") == 0) {
                                         inserir_inventario(&novo_jogo->inventario, "Barbeador", "Um barbeador.", conversa->item, 4);
+                                        strncpy(novo_jogo->ultima_lenda_nome, conversa->nome, sizeof(novo_jogo->ultima_lenda_nome) - 1);
                                         novo_jogo->quests_completas++;
                                     } else if (strcmp(conversa->nome, "Perna Cabeluda") == 0) {
                                         inserir_inventario(&novo_jogo->inventario, "Crachá", "Um crachá da CESAR School.", conversa->item, 3);
+                                        strncpy(novo_jogo->ultima_lenda_nome, conversa->nome, sizeof(novo_jogo->ultima_lenda_nome) - 1);
                                         novo_jogo->quests_completas++;
                                     }
                                 }
@@ -291,6 +300,8 @@ int main() {
                             MinigameDesenharIntro(&novo_jogo->minigame);
                         } else if (state == MINIGAME_BUSCA) {
                             MinigameDesenharBusca(&novo_jogo->minigame, novo_jogo->chave_atual, &novo_jogo->isqueiro);
+                        } else if (state == MINIGAME_DIALOGO_FINAL) {
+                            MinigameDesenharDialogoFinal(&novo_jogo->minigame);
                         } else if (state == MINIGAME_GAMEOVER) {
                             MinigameFinalizar(&novo_jogo->minigame);
                             memset(&novo_jogo->minigame, 0, sizeof(MinigameState));
