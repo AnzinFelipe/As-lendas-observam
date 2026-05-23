@@ -11,7 +11,7 @@
 #include "lendas.h"
 #include "raydial.h"
 #include "state.h"
-#include "gemini.h"
+#include "groq.h"
 #include "minigame.h"
 
 int main() {
@@ -26,18 +26,18 @@ int main() {
     memset(novo_jogo, 0, sizeof(Vars_structs_inicio_jogo));
 
     GameState state = EXPLORACAO;
-    char gemini_error_message[256] = "";
-    char gemini_fallback_text[512] = "A sua lenda observa em silêncio, e o vento responde de volta com mistério.";
-    float gemini_error_timer = 0.0f;
-    float gemini_retry_timer = 0.0f;
-    bool gemini_disabled = false;
+    char groq_error_message[256] = "";
+    char groq_fallback_text[512] = "A sua lenda observa em silêncio, e o vento responde de volta com mistério.";
+    float groq_error_timer = 0.0f;
+    float groq_retry_timer = 0.0f;
+    bool groq_disabled = false;
 
     SetTargetFPS(60);
 
     while(!WindowShouldClose()) {
         switch (currentScreen){
             case SAIR:
-                GeminiFree(&novo_jogo->gemini);
+                GroqFree(&novo_jogo->groq);
                 MinigameFinalizar(&novo_jogo->minigame);
                 free_dados_jogo(novo_jogo);
                 free(novo_jogo);
@@ -50,7 +50,7 @@ int main() {
                 if (currentScreen == JOGO) {
                     if (primeiro == 1){
                         iniciar_jogo(novo_jogo);
-                        GeminiInit(&novo_jogo->gemini);
+                        GroqInit(&novo_jogo->groq);
                         primeiro = 0;
                     }
                     
@@ -73,36 +73,36 @@ int main() {
 
                     UpdateMusicStream(novo_jogo->pink);
 
-                    if (gemini_retry_timer > 0.0f) {
-                        gemini_retry_timer -= GetFrameTime();
-                        if (gemini_retry_timer < 0.0f) gemini_retry_timer = 0.0f;
+                    if (groq_retry_timer > 0.0f) {
+                        groq_retry_timer -= GetFrameTime();
+                        if (groq_retry_timer < 0.0f) groq_retry_timer = 0.0f;
                     }
 
                     if (state == MINIGAME_AGUARDANDO_IA) {
-                        GeminiStatus gs = GeminiGetStatus(&novo_jogo->gemini);
+                        GroqStatus gs = GroqGetStatus(&novo_jogo->groq);
 
-                        if (gs == GEMINI_PRONTO) {
+                        if (gs == GROQ_PRONTO) {
                             char texto_ia[512] = "";
-                            GeminiPegarResposta(&novo_jogo->gemini, texto_ia, sizeof(texto_ia));
+                            GroqPegarResposta(&novo_jogo->groq, texto_ia, sizeof(texto_ia));
 
                             MinigameIniciar(
                                 &novo_jogo->minigame,
                                 texto_ia,
                                 &novo_jogo->ouro1,
-                                &novo_jogo->ouro2,
+                                &novo_jogo->ouro1,
                                 &novo_jogo->isqueiro
                             );
                             state = MINIGAME_INTRO;
-                        } else if (gs == GEMINI_ERRO) {
-                            GeminiPegarResposta(&novo_jogo->gemini, gemini_error_message, sizeof(gemini_error_message));
-                            gemini_disabled = true;
-                            gemini_error_timer = 5.0f;
-                            gemini_retry_timer = 10.0f;
+                        } else if (gs == GROQ_ERRO) {
+                            GroqPegarResposta(&novo_jogo->groq, groq_error_message, sizeof(groq_error_message));
+                            groq_disabled = true;
+                            groq_error_timer = 5.0f;
+                            groq_retry_timer = 10.0f;
                             MinigameIniciar(
                                 &novo_jogo->minigame,
-                                gemini_fallback_text,
+                                groq_fallback_text,
                                 &novo_jogo->ouro1,
-                                &novo_jogo->ouro2,
+                                &novo_jogo->ouro1,
                                 &novo_jogo->isqueiro
                             );
                             state = MINIGAME_INTRO;
@@ -130,28 +130,21 @@ int main() {
                         );
     
                         if (terminou) {
-                            if (terminou) {
-                                if (novo_jogo->minigame.fase == MINIGAME_FASE_DIALOGO_FINAL) {
-                                    state = MINIGAME_DIALOGO_FINAL; // novo estado
-                                } else if (novo_jogo->minigame.fase == MINIGAME_FASE_GAMEOVER) {
-                                    state = EXPLORACAO;
-                                }
+                            if (novo_jogo->minigame.fase == MINIGAME_FASE_SUCESSO) {
+                                inserir_inventario(&novo_jogo->inventario, "Isqueiro",
+                                                "Um isqueiro legal.",
+                                                novo_jogo->isqueiro, 2);
+                                insertion_sort_iventario(&novo_jogo->inventario);
+                                MinigameFinalizar(&novo_jogo->minigame);
+                                memset(&novo_jogo->minigame, 0, sizeof(MinigameState));
+                                state = EXPLORACAO;
+                            } else {
+                                state = EXPLORACAO;
+                                //state = MINIGAME_GAMEOVER;
                             }
                         }
-                    } else if (state == MINIGAME_DIALOGO_FINAL) {
-                        bool fim = MinigameUpdateDialogoFinal(&novo_jogo->minigame);
-                        if (fim) {
-                            // MinigameUpdateDialogoFinal já setou fase = MINIGAME_FASE_SUCESSO
-                            inserir_inventario(&novo_jogo->inventario, "Isqueiro",
-                                            "Um isqueiro que quase se apagou.",
-                                            novo_jogo->isqueiro, 2);
-                            insertion_sort_iventario(&novo_jogo->inventario);
-                            MinigameFinalizar(&novo_jogo->minigame);
-                            memset(&novo_jogo->minigame, 0, sizeof(MinigameState));
-                            state = EXPLORACAO;
-                        }
                     } else if (state == MINIGAME_GAMEOVER) {
-
+                        
                     }
 
                     bool dialogo_acabou_esse_frame = false;
@@ -187,15 +180,19 @@ int main() {
                         novo_jogo->lenda_atual = pegar_lenda_atual(novo_jogo->lenda_local, novo_jogo->chave_atual);
 
                         if (state == EXPLORACAO && !novo_jogo->minigame_ja_ocorreu &&
-                            novo_jogo->quests_completas > novo_jogo->quests_no_ultimo_sorteio) {
+                            novo_jogo->quests_completas > novo_jogo->quests_no_ultimo_sorteio &&
+                            novo_jogo->lenda_atual == NULL) {
 
-                            int chance = novo_jogo->quests_completas * 50;
+                            int chance = novo_jogo->quests_completas * 100;
                             if (chance > 90) chance = 90;
 
-                            if (GetRandomValue(1, 100) <= chance && gemini_retry_timer <= 0.0f) {
-                                if (!gemini_disabled) {
-                                    if (GeminiPedirDialogo(
-                                        &novo_jogo->gemini,
+                            if (GetRandomValue(1, 100) <= chance && groq_retry_timer <= 0.0f) {
+                                strncpy(novo_jogo->ultima_lenda_nome,
+                                        novo_jogo->lenda_atual ? novo_jogo->lenda_atual->nome : "",
+                                        sizeof(novo_jogo->ultima_lenda_nome) - 1);
+                                if (!groq_disabled) {
+                                    if (GroqPedirDialogo(
+                                        &novo_jogo->groq,
                                         novo_jogo->quests_completas,
                                         novo_jogo->ultima_lenda_nome
                                     )) {
@@ -206,7 +203,7 @@ int main() {
                                 } else {
                                     MinigameIniciar(
                                         &novo_jogo->minigame,
-                                        gemini_fallback_text,
+                                        groq_fallback_text,
                                         &novo_jogo->ouro1,
                                         &novo_jogo->ouro2,
                                         &novo_jogo->isqueiro
@@ -234,27 +231,21 @@ int main() {
                                     conversa->ja_conversou = true;
                                     if (strcmp(conversa->nome, "Emparedada da Rua Nova") == 0) {
                                         inserir_inventario(&novo_jogo->inventario, "Mingau", "Um mingau quentinho.", conversa->item, 8);
-                                        strncpy(novo_jogo->ultima_lenda_nome, conversa->nome, sizeof(novo_jogo->ultima_lenda_nome) - 1);
                                         novo_jogo->quests_completas++;
                                     } else if (strcmp(conversa->nome, "Comadre Fulozinha") == 0) {
                                         inserir_inventario(&novo_jogo->inventario, "Bilhete de catamarã", "Um bilhete valendo um passeio de catamaran aqui em Recife.", conversa->item, 7);
-                                        strncpy(novo_jogo->ultima_lenda_nome, conversa->nome, sizeof(novo_jogo->ultima_lenda_nome) - 1);
                                         novo_jogo->quests_completas++;
                                     } else if (strcmp(conversa->nome, "Encanta Moça") == 0) {
                                         inserir_inventario(&novo_jogo->inventario, "Bolo de rolo", "Um bolo de rolo bem gostoso.", conversa->item, 6);
-                                        strncpy(novo_jogo->ultima_lenda_nome, conversa->nome, sizeof(novo_jogo->ultima_lenda_nome) - 1);
                                         novo_jogo->quests_completas++;
                                     } else if (strcmp(conversa->nome, "Cabra Cabriola") == 0) {
                                         inserir_inventario(&novo_jogo->inventario, "Tesoura", "Uma tesoura normal.", conversa->item, 5);
-                                        strncpy(novo_jogo->ultima_lenda_nome, conversa->nome, sizeof(novo_jogo->ultima_lenda_nome) - 1);
                                         novo_jogo->quests_completas++;
                                     } else if (strcmp(conversa->nome, "Papa-figo") == 0) {
                                         inserir_inventario(&novo_jogo->inventario, "Barbeador", "Um barbeador.", conversa->item, 4);
-                                        strncpy(novo_jogo->ultima_lenda_nome, conversa->nome, sizeof(novo_jogo->ultima_lenda_nome) - 1);
                                         novo_jogo->quests_completas++;
                                     } else if (strcmp(conversa->nome, "Perna Cabeluda") == 0) {
                                         inserir_inventario(&novo_jogo->inventario, "Crachá", "Um crachá da CESAR School.", conversa->item, 3);
-                                        strncpy(novo_jogo->ultima_lenda_nome, conversa->nome, sizeof(novo_jogo->ultima_lenda_nome) - 1);
                                         novo_jogo->quests_completas++;
                                     }
                                 }
@@ -300,8 +291,6 @@ int main() {
                             MinigameDesenharIntro(&novo_jogo->minigame);
                         } else if (state == MINIGAME_BUSCA) {
                             MinigameDesenharBusca(&novo_jogo->minigame, novo_jogo->chave_atual, &novo_jogo->isqueiro);
-                        } else if (state == MINIGAME_DIALOGO_FINAL) {
-                            MinigameDesenharDialogoFinal(&novo_jogo->minigame);
                         } else if (state == MINIGAME_GAMEOVER) {
                             MinigameFinalizar(&novo_jogo->minigame);
                             memset(&novo_jogo->minigame, 0, sizeof(MinigameState));
@@ -317,14 +306,14 @@ int main() {
                         DrawRectangle(0, 0, 1600, 900, (Color){0, 0, 0, 150});
                         DrawText("Aguardando resposta da IA...", 560, 420, 30, WHITE);
                     }
-                    if (gemini_error_timer > 0.0f) {
-                        DrawText("Gemini indisponível, usando fallback local.", 20, 860, 20, RED);
-                        gemini_error_timer -= GetFrameTime();
-                        if (gemini_error_timer < 0.0f) gemini_error_timer = 0.0f;
+                    if (groq_error_timer > 0.0f) {
+                        DrawText("IA indisponivel, usando fallback local.", 20, 860, 20, RED);
+                        groq_error_timer -= GetFrameTime();
+                        if (groq_error_timer < 0.0f) groq_error_timer = 0.0f;
                     }
-                    if (gemini_retry_timer > 0.0f && state != MINIGAME_AGUARDANDO_IA) {
+                    if (groq_retry_timer > 0.0f && state != MINIGAME_AGUARDANDO_IA) {
                         char retry_message[128];
-                        snprintf(retry_message, sizeof(retry_message), "Gerando localmente enquanto aguarda nova tentativa (%ds)...", (int)ceilf(gemini_retry_timer));
+                        snprintf(retry_message, sizeof(retry_message), "Gerando localmente enquanto aguarda nova tentativa (%ds)...", (int)ceilf(groq_retry_timer));
                         DrawText(retry_message, 20, 830, 20, YELLOW);
                     }
                     if (novo_jogo->em_hitbox) {
@@ -339,7 +328,7 @@ int main() {
                      
         }
     
-    GeminiFree(&novo_jogo->gemini);
+    GroqFree(&novo_jogo->groq);
     MinigameFinalizar(&novo_jogo->minigame);
     free_dados_jogo(novo_jogo);
     free(novo_jogo);
@@ -347,4 +336,4 @@ int main() {
     CloseWindow();
 
     return 0;
-}   
+}

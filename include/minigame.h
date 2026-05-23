@@ -5,7 +5,7 @@
 #include "mapa.h"
 #include "lendas.h"
 #include "falas.h"
-#include "gemini.h"
+#include "groq.h"
 #include <stdbool.h>
 
 #define MINIGAME_TEMPO_TOTAL 40.0f
