@@ -5,7 +5,8 @@
 #include <stdlib.h>
 #include "raydial.h"
 #include "inventario.h"
-#include "iniciar_liberar_jogo.h"
+
+typedef struct Vars_structs_inicio_jogo Vars_structs_inicio_jogo;
 
 typedef struct Lendas {
     char *nome;

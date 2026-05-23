@@ -1,7 +1,7 @@
 TARGET = As_Lendas_Observam
 CC = gcc
 CFLAGS   = -Wall -Wextra -O2 -I include -I external/raydial/include
-LDFLAGS  = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+LDFLAGS  = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11 -lcurl
 
 PASTA_SRC = source
 PASTA_OBJ = objects

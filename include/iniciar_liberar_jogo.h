@@ -9,6 +9,8 @@
 #include "item.h"
 #include <string.h>
 #include "falas.h"
+#include "groq.h"
+#include "minigame.h"
 
 typedef struct Lendas Lendas;
 
@@ -18,6 +20,8 @@ typedef struct Vars_structs_inicio_jogo{
     Music pink;
 
     bool em_hitbox;
+
+    Texture2D enfeite;
 
     //Ruas
     Texture2D marco_zero;
@@ -114,6 +118,14 @@ typedef struct Vars_structs_inicio_jogo{
 
     Lendas *lenda_atual;
     Lendas *lenda_local;
+
+    int quests_completas;
+    int quests_no_ultimo_sorteio;
+    char ultima_lenda_nome[64];
+
+    GroqContext groq;
+    MinigameState minigame;
+    bool minigame_ja_ocorreu;
 } Vars_structs_inicio_jogo;
 
 void iniciar_jogo(Vars_structs_inicio_jogo *s);

@@ -5,4 +5,6 @@
 
 RayDialComponent *criarComp(const char *titulo, const char *texto);
 
+RayDialComponent *criarComp_ouro(const char *titulo, const char *texto);
+
 #endif

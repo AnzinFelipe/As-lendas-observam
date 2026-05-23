@@ -26,6 +26,7 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
 
     //Inicializa locais do Recife
 
+    s->enfeite = LoadTexture("assets/images/enfeite.png");
     s->marco_zero = LoadTexture("assets/images/locais/marco_zero.png");
     s->comercial = LoadTexture("assets/images/locais/comercial.png");
     s->rio_branco = LoadTexture("assets/images/locais/rio_branco.png");
@@ -419,6 +420,10 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
 
     lenda->dialogo_raiz = rachadura_fala1;
     lenda->dialogo_repetido = rachadura_fala4;
+
+    s->quests_completas = 0;
+    s->quests_no_ultimo_sorteio = 0;
+    s->minigame_ja_ocorreu = false;
 }
 
 void free_dados_jogo(Vars_structs_inicio_jogo *s){
