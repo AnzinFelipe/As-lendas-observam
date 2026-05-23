@@ -27,8 +27,7 @@ int main() {
 
     GameState state = EXPLORACAO;
     char groq_error_message[256] = "";
-    char groq_fallback_text[512] = "A sua lenda observa em silêncio, e o vento responde de volta com mistério.";
-    float groq_error_timer = 0.0f;
+    char groq_fallback_text[512] = "Ei... estive te vendo a um tempo... muito tempo na verdade. Já falastes com umas figuras interessantes não? Pois agora é a minha vez de te atormentar.";
     float groq_retry_timer = 0.0f;
     bool groq_disabled = false;
 
@@ -89,20 +88,19 @@ int main() {
                                 &novo_jogo->minigame,
                                 texto_ia,
                                 &novo_jogo->ouro1,
-                                &novo_jogo->ouro1,
+                                &novo_jogo->ouro2,
                                 &novo_jogo->isqueiro
                             );
                             state = MINIGAME_INTRO;
                         } else if (gs == GROQ_ERRO) {
                             GroqPegarResposta(&novo_jogo->groq, groq_error_message, sizeof(groq_error_message));
                             groq_disabled = true;
-                            groq_error_timer = 5.0f;
                             groq_retry_timer = 10.0f;
                             MinigameIniciar(
                                 &novo_jogo->minigame,
                                 groq_fallback_text,
                                 &novo_jogo->ouro1,
-                                &novo_jogo->ouro1,
+                                &novo_jogo->ouro2,
                                 &novo_jogo->isqueiro
                             );
                             state = MINIGAME_INTRO;
@@ -129,19 +127,25 @@ int main() {
                             GetFrameTime()
                         );
     
+                        
                         if (terminou) {
-                            if (novo_jogo->minigame.fase == MINIGAME_FASE_SUCESSO) {
-                                inserir_inventario(&novo_jogo->inventario, "Isqueiro",
-                                                "Um isqueiro legal.",
-                                                novo_jogo->isqueiro, 2);
-                                insertion_sort_iventario(&novo_jogo->inventario);
-                                MinigameFinalizar(&novo_jogo->minigame);
-                                memset(&novo_jogo->minigame, 0, sizeof(MinigameState));
-                                state = EXPLORACAO;
-                            } else {
-                                state = EXPLORACAO;
-                                //state = MINIGAME_GAMEOVER;
+                            if (novo_jogo->minigame.fase == MINIGAME_FASE_DIALOGO_FINAL) {
+                                    state = MINIGAME_DIALOGO_FINAL;
+                            } else if (novo_jogo->minigame.fase == MINIGAME_FASE_GAMEOVER) {
+                                    state = EXPLORACAO;
                             }
+                        }
+                    } else if (state == MINIGAME_DIALOGO_FINAL) {
+                        bool fim = MinigameUpdateDialogoFinal(&novo_jogo->minigame);
+                        if (fim) {
+                            // MinigameUpdateDialogoFinal já setou fase = MINIGAME_FASE_SUCESSO
+                            inserir_inventario(&novo_jogo->inventario, "Isqueiro",
+                                            "Um isqueiro que quase se apagou.",
+                                            novo_jogo->isqueiro, 2);
+                            insertion_sort_iventario(&novo_jogo->inventario);
+                            MinigameFinalizar(&novo_jogo->minigame);
+                            memset(&novo_jogo->minigame, 0, sizeof(MinigameState));
+                            state = EXPLORACAO;
                         }
                     } else if (state == MINIGAME_GAMEOVER) {
                         
@@ -183,17 +187,13 @@ int main() {
                             novo_jogo->quests_completas > novo_jogo->quests_no_ultimo_sorteio &&
                             novo_jogo->lenda_atual == NULL) {
 
-                            int chance = novo_jogo->quests_completas * 100;
+                            int chance = novo_jogo->quests_completas * 15;
                             if (chance > 90) chance = 90;
 
                             if (GetRandomValue(1, 100) <= chance && groq_retry_timer <= 0.0f) {
-                                strncpy(novo_jogo->ultima_lenda_nome,
-                                        novo_jogo->lenda_atual ? novo_jogo->lenda_atual->nome : "",
-                                        sizeof(novo_jogo->ultima_lenda_nome) - 1);
                                 if (!groq_disabled) {
                                     if (GroqPedirDialogo(
                                         &novo_jogo->groq,
-                                        novo_jogo->quests_completas,
                                         novo_jogo->ultima_lenda_nome
                                     )) {
                                         novo_jogo->minigame_ja_ocorreu = true;
@@ -227,6 +227,9 @@ int main() {
                                 }
                             } else {
                                 if (conversa->ja_conversou == false) {
+                                    strncpy(novo_jogo->ultima_lenda_nome,
+                                        novo_jogo->lenda_atual ? novo_jogo->lenda_atual->nome : "",
+                                        sizeof(novo_jogo->ultima_lenda_nome) - 1);
                                     novo_jogo->dialogo = CreateDialogueManager(conversa->dialogo_final);
                                     conversa->ja_conversou = true;
                                     if (strcmp(conversa->nome, "Emparedada da Rua Nova") == 0) {
@@ -294,6 +297,8 @@ int main() {
                         } else if (state == MINIGAME_GAMEOVER) {
                             MinigameFinalizar(&novo_jogo->minigame);
                             memset(&novo_jogo->minigame, 0, sizeof(MinigameState));
+                        } else if (state == MINIGAME_DIALOGO_FINAL) {
+                            MinigameDesenharDialogoFinal(&novo_jogo->minigame);
                         }
                         
                     EndTextureMode();
@@ -302,20 +307,6 @@ int main() {
                     BeginDrawing();
                     ClearBackground(BLACK);
                     DrawTexturePro(novo_jogo->tela.texture, (Rectangle){0, 0, 1600, -900}, nova_tela, (Vector2){0, 0}, 0.0f, WHITE);
-                    if (state == MINIGAME_AGUARDANDO_IA) {
-                        DrawRectangle(0, 0, 1600, 900, (Color){0, 0, 0, 150});
-                        DrawText("Aguardando resposta da IA...", 560, 420, 30, WHITE);
-                    }
-                    if (groq_error_timer > 0.0f) {
-                        DrawText("IA indisponivel, usando fallback local.", 20, 860, 20, RED);
-                        groq_error_timer -= GetFrameTime();
-                        if (groq_error_timer < 0.0f) groq_error_timer = 0.0f;
-                    }
-                    if (groq_retry_timer > 0.0f && state != MINIGAME_AGUARDANDO_IA) {
-                        char retry_message[128];
-                        snprintf(retry_message, sizeof(retry_message), "Gerando localmente enquanto aguarda nova tentativa (%ds)...", (int)ceilf(groq_retry_timer));
-                        DrawText(retry_message, 20, 830, 20, YELLOW);
-                    }
                     if (novo_jogo->em_hitbox) {
                         //DrawCircleGradient((Vector2){mouse.x, mouse.y}, 40 * escala, (Color){255, 255, 255, 100}, (Color){255, 255, 255, 0});
                         //DrawCircleLines(mouse.x, mouse.y, 20 * escala, WHITE);

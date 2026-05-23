@@ -26,7 +26,7 @@ void GroqInit(GroqContext *ctx);
 
 void GroqFree(GroqContext *ctx);
 
-bool GroqPedirDialogo(GroqContext *ctx, int quests_completas, const char *ultima_lenda);
+bool GroqPedirDialogo(GroqContext *ctx, const char *ultima_lenda);
 
 GroqStatus GroqGetStatus(GroqContext *ctx);
 
