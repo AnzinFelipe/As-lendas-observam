@@ -93,7 +93,7 @@ static void *groq_thread_func(void *arg) {
     GroqContext *ctx = args->ctx;
  
     char resposta_local[GROQ_RESPOSTA_MAX] =
-        "Eu vejo tudo o que voce faz nessas ruas... nao vai escapar.";
+        "Ei....";
  
     char api_key[256] = "";
     bool sucesso = false;
@@ -135,8 +135,6 @@ static void *groq_thread_func(void *arg) {
             CURLcode res = curl_easy_perform(curl);
             long http_code = 0;
             curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &http_code);
- 
-            printf("HTTP %ld\nResposta: %s\n", http_code, buf.data ? buf.data : "(vazio)");
  
             if (res == CURLE_OK && http_code == 200 && buf.data) {
                 extrair_texto(buf.data, resposta_local, GROQ_RESPOSTA_MAX);
@@ -183,7 +181,7 @@ void GroqFree(GroqContext *ctx) {
     curl_global_cleanup();
 }
  
-bool GroqPedirDialogo(GroqContext *ctx, int quests_completas, const char *ultima_lenda) {
+bool GroqPedirDialogo(GroqContext *ctx, const char *ultima_lenda) {
     pthread_mutex_lock(&ctx->mutex);
     GroqStatus s = ctx->status;
     pthread_mutex_unlock(&ctx->mutex);
@@ -194,13 +192,13 @@ bool GroqPedirDialogo(GroqContext *ctx, int quests_completas, const char *ultima
  
     args->ctx = ctx;
     snprintf(args->prompt, sizeof(args->prompt),
-        "Voce e Boca de Ouro, uma lenda do Recife Antigo, misteriosa e intimidadora, "
-        "que observa silenciosamente as acoes de um viajante pelas ruas historicas. "
-        "O viajante ja completou %d missoes e a ultima lenda com quem interagiu foi: %s. "
-        "Fale diretamente com ele em 2 frases curtas em portugues do Brasil, "
-        "tom ameacador e misterioso, referenciando o que ele fez recentemente. "
-        "Responda APENAS o dialogo, sem aspas, sem narracao, sem introducao.",
-        quests_completas,
+        "Voce é o Boca de Ouro, uma lenda urbana do Recife Antigo. "
+        "Voce esta observando uma pessoa que esta perdida a um tempo."
+        "Ela encontrou e falou com %s recentemente e você estava vendo de longe."
+        "Fale em 2 frases curtas,"
+        "em portugues do Brasil de forma formal e arcaica,"
+        "tom ameacador e severo, como se voce tivesse seguindo ele desde muito cedo, cite quem ele falou recentemente. "
+        "Responda APENAS o dialogo em si, sem aspas, sem travessao, sem narracao, sem introducao.",
         ultima_lenda && strlen(ultima_lenda) > 0 ? ultima_lenda : "nenhuma ainda");
  
     pthread_mutex_lock(&ctx->mutex);

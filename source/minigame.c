@@ -34,33 +34,36 @@ void MinigameIniciar(MinigameState *mg, const char *texto_ia,
         strncpy(mg->texto_ia, texto_ia, sizeof(mg->texto_ia) - 1);
     } else {
         strncpy(mg->texto_ia,
-                "Eu vejo tudo o que você faz nessas ruas... não vai escapar de mim.",
+                "Ei... estive te vendo a um tempo... muito tempo na verdade. Já falastes com umas figuras interessantes não? Pois agora é a minha vez de te atormentar.",
                 sizeof(mg->texto_ia) - 1);
     }
     mg->texto_ia[sizeof(mg->texto_ia) - 1] = '\0';
 
     RayDialNode *fala1 = criar_node_dialogo(
         "Subconsciente",
-        "--Algo está errado... você sente que alguém te observa.--"
+        "--Um moço pertubador entrou na sua frente... você não consegue desviar o olhar da grande arcada dentária dourada dele.--"
     );
     RayDialNode *fala2 = criar_node_dialogo("Boca de Ouro", mg->texto_ia);
-    RayDialNode *fala3 = criar_node_dialogo(
-        "Subconsciente",
-        "--Ele acendeu algo e jogou seu isqueiro escondido pelo bairro! Você tem 30 segundos para encontrá-lo antes que a chama se apague!--"
-    );
+    RayDialNode *fala3 = criar_node_dialogo("Boca de Ouro", "Peço-te fogo. Se você conseguir achar um isqueiro, esclarecerei algumas coisas.");
+    RayDialNode *fala4 = criar_node_dialogo("Boca de Ouro", "Porém se não achar nada... é melhor correr para bem longe, mas saiba que não importa o quanto corra, eu sempre estarei bem atrás de você...");
 
     AddChoice(fala1, fala2);
     AddChoice(fala2, fala3);
+    AddChoice(fala3, fala4);
 
     mg->dialogo_intro   = fala1;
     mg->manager_intro   = CreateDialogueManager(fala1);
 
-    RayDialNode *final1 = criar_node_dialogo("Boca de Ouro", "Encontrou o isqueiro... mais esperto do que eu pensava.");
-    RayDialNode *final2 = criar_node_dialogo("Boca de Ouro", "Mas não se engane. As ruas do Recife Antigo têm memória longa... e eu também.");
-    RayDialNode *final3 = criar_node_dialogo("Subconsciente", "--Você sobreviveu desta vez. Guarde bem esse isqueiro.--");
+    RayDialNode *final1 = criar_node_dialogo("Boca de Ouro", "Agradecido... sabes porque tantas lendas estão aqui no meu Recife Velho?");
+    RayDialNode *final2 = criar_node_dialogo("Boca de Ouro", "Há um aglomerado de pessoas aqui por perto... o imaginário coletivo nunca esteve tão vívido. Talvez seu destino seja encontrá-los.");
+    RayDialNode *final3 = criar_node_dialogo("Boca de Ouro", "Encontre-se com eles e passe esta noite seguro, se conseguir. Até mais.");
+    RayDialNode *final4 = criar_node_dialogo("Subconsciente", "--Você sobreviveu desta vez. Você ficou com o isqueiro, mas não parece ter nada mais para fazer com ele.--");
+    RayDialNode *final5 = criar_node_dialogo("Subconsciente", "--Tente descobrir onde está esse aglomerado de pessoas.--");
 
     AddChoice(final1, final2);
     AddChoice(final2, final3);
+    AddChoice(final3, final4);
+    AddChoice(final4, final5);
 
     mg->dialogo_final   = final1;
     mg->manager_final   = NULL;
