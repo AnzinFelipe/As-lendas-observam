@@ -131,6 +131,15 @@ void excluir_lenda(Lendas **head, int chave) {
 void dar_item(Lendas **lenda_local, Lendas *lenda, Inventario **item, Vector2 mouse, Inventario **head, Vars_structs_inicio_jogo *s) {
     if (lenda != NULL && *item != NULL) {
         if (CheckCollisionPointRec(mouse, lenda->hitbox)) {
+            if (strcmp(lenda->nome, "Papa-figo") == 0 && strcmp((*item)->nome, "Saco de pano") == 0) {
+                if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
+                    excluir_item(head, *item);
+                    insertion_sort_iventario(head);
+                    *item = NULL;
+                    //gameover
+                    return;
+                }
+            }
             if (strcmp(lenda->item_quest, (*item)->nome) == 0) {
                 if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
                     if (strcmp(lenda->nome, "Rachadura") == 0) {

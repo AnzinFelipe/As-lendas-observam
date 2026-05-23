@@ -181,13 +181,14 @@ int main() {
                         }
                         mudar_mouse_mapa(novo_jogo->local_atual, mouse_novo, &novo_jogo->em_hitbox);
                         dar_item(&novo_jogo->lenda_local, novo_jogo->lenda_atual, &novo_jogo->itemSelecionado, mouse_novo, &novo_jogo->inventario, novo_jogo);
+                        juntar_item(&novo_jogo->inventario, &novo_jogo->itemSelecionado, mouse_novo, novo_jogo);
                         novo_jogo->lenda_atual = pegar_lenda_atual(novo_jogo->lenda_local, novo_jogo->chave_atual);
 
                         if (state == EXPLORACAO && !novo_jogo->minigame_ja_ocorreu &&
                             novo_jogo->quests_completas > novo_jogo->quests_no_ultimo_sorteio &&
                             novo_jogo->lenda_atual == NULL) {
 
-                            int chance = novo_jogo->quests_completas * 15;
+                            int chance = novo_jogo->quests_completas * 0;
                             if (chance > 90) chance = 90;
 
                             if (GetRandomValue(1, 100) <= chance && groq_retry_timer <= 0.0f) {

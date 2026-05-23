@@ -291,7 +291,7 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     lenda->dialogo_final = cabra_fala8;
     lenda->dialogo_final_repetido = cabra_fala12;
 
-    inserir_lenda(&s->lenda_local, "Papa-figo", true, s->figo_local, s->figo, s->figo, (Rectangle){730, 500, 150, 130}, (Vector2){200, 0}, s->barbeador, "Saco de pano", 452);
+    inserir_lenda(&s->lenda_local, "Papa-figo", true, s->figo_local, s->figo, s->figo, (Rectangle){730, 500, 150, 130}, (Vector2){200, 0}, s->barbeador, "Saco de pano furado", 452);
     lenda = pegar_lenda_atual(s->lenda_local, 452);
 
     RayDialNode *figo_fala1 = CreateDialogueNode("fala1", "");
