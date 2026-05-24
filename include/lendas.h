@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "raydial.h"
 #include "inventario.h"
+#include "screens.h"
 
 typedef struct Vars_structs_inicio_jogo Vars_structs_inicio_jogo;
 
@@ -43,6 +44,6 @@ bool interagir_lenda(Lendas *lenda, Vector2 mouse, bool *em_hitbox);
 
 void excluir_lenda(Lendas **head, int chave);
 
-void dar_item(Lendas **lenda_local, Lendas *lenda, Inventario **item, Vector2 mouse, Inventario **head, Vars_structs_inicio_jogo *s);
+void dar_item(Lendas **lenda_local, Lendas *lenda, Inventario **item, Vector2 mouse, Inventario **head, Vars_structs_inicio_jogo *s, GameScreen *currentScreen, int *gameover);
 
 #endif
