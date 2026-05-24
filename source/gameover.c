@@ -4,33 +4,43 @@
 
 GameScreen RunGameOver(int motivo) {
     const char *subtitulo = "base";
+    const char *mensagem = "base";
 
     Texture2D fundo_gameover;
     Color texto;
+    Color fim_de_jogo;
     int offset = 0;
 
     if (motivo == 0) {
         subtitulo = "Horas se passaram mas o dia nunca chegou... voce se encontra preso no Marco Zero";
-        fundo_gameover = LoadTexture("assets/images/telas/marco1.jpg");
-        texto = MAROON;
+        mensagem = "FIM DE JOGO";
+        fundo_gameover = LoadTexture("assets/images/telas/Perdido1.png");
+        fim_de_jogo = DARKBLUE;
+        texto = DARKBLUE;
         offset = 0;
     } 
     else if (motivo == 1){
         subtitulo = "O isqueiro se apagou e seu destino se sela no Recife Antigo para sempre...";
+        mensagem = "FIM DE JOGO";
         fundo_gameover = LoadTexture("assets/images/telas/Gameover2.png");
+        fim_de_jogo = RED;
         texto = YELLOW;
         offset = -400;
     }
     else if (motivo == 2){
         subtitulo = "Voce ajudou o papa figo a atormentar as ruas do Recife";
+        mensagem = "FIM DE JOGO";
         fundo_gameover = LoadTexture("assets/images/telas/Gameover1.5.png");
+        fim_de_jogo = RED;
         texto = MAROON;
         offset = -400;
     }
 
     else if (motivo == 3){
         subtitulo = "Voce encontra abrigo no Cesar e sobrevive essa noite";
-        fundo_gameover = LoadTexture("assets/images/telas/Gameover1.5.png");
+        mensagem = "PARABENS. OBRIGADO POR JOGAR.";
+        fundo_gameover = LoadTexture("assets/images/telas/Brum_dia.png");
+        fim_de_jogo = LIME;
         texto = GREEN;
         offset = 0;
     }
@@ -88,8 +98,8 @@ GameScreen RunGameOver(int motivo) {
             );
 
             
-
-            DrawText("FIM DE JOGO", 800 - MeasureText("FIM DE JOGO", 60) / 2 - offset, 250, 60, RED);
+            
+            DrawText(mensagem, 800 - MeasureText(mensagem, 60) / 2 - offset, 250, 60, fim_de_jogo);
             DrawText(subtitulo, 800 - MeasureText(subtitulo, 20) / 2 - offset, 320, 20, texto);
 
             if (CheckCollisionPointRec(mouse_novo, Menu)) {
