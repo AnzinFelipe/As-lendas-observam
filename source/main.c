@@ -188,7 +188,7 @@ int main() {
                             novo_jogo->quests_completas > novo_jogo->quests_no_ultimo_sorteio &&
                             novo_jogo->lenda_atual == NULL) {
 
-                            int chance = novo_jogo->quests_completas * 0;
+                            int chance = novo_jogo->quests_completas * 15;
                             if (chance > 90) chance = 90;
 
                             if (GetRandomValue(1, 100) <= chance && groq_retry_timer <= 0.0f) {

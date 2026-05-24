@@ -140,6 +140,15 @@ void dar_item(Lendas **lenda_local, Lendas *lenda, Inventario **item, Vector2 mo
                     return;
                 }
             }
+            if (strcmp(lenda->nome, "Cesar") == 0 && strcmp((*item)->nome, "Crachá") == 0) {
+                if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
+                    excluir_lenda(lenda_local, 430);
+                    excluir_item(head, *item);
+                    *item = NULL;
+                    //gamewin
+                    return;
+                }
+            }
             if (strcmp(lenda->item_quest, (*item)->nome) == 0) {
                 if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
                     if (strcmp(lenda->nome, "Rachadura") == 0) {

@@ -70,6 +70,7 @@ typedef struct Vars_structs_inicio_jogo{
 
     //Itens
     Texture2D saco;
+    Texture2D saco_furado;
     Texture2D marreta;
     Texture2D cara_la_ursa;
     Texture2D tesoura;

@@ -76,6 +76,9 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     s->saco = LoadTexture("assets/images/Itens/saco.png");
     GenTextureMipmaps(&s->saco);
     SetTextureFilter(s->saco, TEXTURE_FILTER_TRILINEAR);
+    s->saco_furado = LoadTexture("assets/images/Itens/saco_furado.png");
+    GenTextureMipmaps(&s->saco_furado);
+    SetTextureFilter(s->saco_furado, TEXTURE_FILTER_TRILINEAR);
     s->cara_la_ursa = LoadTexture("assets/images/Itens/cara_la_ursa.png");
     GenTextureMipmaps(&s->cara_la_ursa);
     SetTextureFilter(s->cara_la_ursa, TEXTURE_FILTER_TRILINEAR);
@@ -424,6 +427,16 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     s->quests_completas = 0;
     s->quests_no_ultimo_sorteio = 0;
     s->minigame_ja_ocorreu = false;
+
+    inserir_lenda(&s->lenda_local, "Cesar", true, (Texture2D){0}, (Texture2D){0}, (Texture2D){0}, (Rectangle){450, 450, 320, 200}, (Vector2){200, 20}, (Texture2D){0}, "Cracha", 430);
+    lenda = pegar_lenda_atual(s->lenda_local, 430);
+    RayDialNode *cesar1 = CreateDialogueNode("fala1", "");
+    RayDialNode *cesar2 = CreateDialogueNode("fala2", "");
+
+    cesar1->components = criarComp("Subconsciente", "--O prédio do CESAR Brum, parece que está aberto, mas sem um crachá não é possível entrar lá dentro.--");
+    cesar2->components = criarComp("Subconsciente", "--Talvez o seu destino te leve para cá novamente.--");
+    lenda->dialogo_raiz = cesar1;
+    lenda->dialogo_repetido = cesar2;
 }
 
 void free_dados_jogo(Vars_structs_inicio_jogo *s){
@@ -498,6 +511,7 @@ void free_dados_jogo(Vars_structs_inicio_jogo *s){
     UnloadTexture(s->travessa_tiradentes);
     UnloadTexture(s->praca_tiradentes);
     UnloadTexture(s->saco);
+    UnloadTexture(s->saco_furado);
     UnloadTexture(s->cara_la_ursa);
     UnloadTexture(s->marreta);
     UnloadTexture(s->tesoura);

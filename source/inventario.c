@@ -224,7 +224,7 @@ void juntar_item(Inventario **head, Inventario **item, Vector2 mouse, Vars_struc
             if (CheckCollisionPointRec(mouse, aux->hitbox)) {
                 if ((strcmp((*item)->nome, "Tesoura") == 0 && strcmp(aux->nome, "Saco de pano") == 0) ||
                 (strcmp((*item)->nome, "Saco de pano") == 0 && strcmp(aux->nome, "Tesoura")== 0)) {
-                    inserir_inventario(head, "Saco de pano furado", "Um saco de pano com um furo", s->bilhete, 6);
+                    inserir_inventario(head, "Saco de pano furado", "Um saco de pano com um furo", s->saco_furado, 6);
                     excluir_item(head, *item);
                     excluir_item(head, aux);
                     *item = NULL;
