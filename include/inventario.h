@@ -3,6 +3,7 @@
 
 #include "raylib.h"
 #include <stdlib.h>
+typedef struct Vars_structs_inicio_jogo Vars_structs_inicio_jogo;
 
 typedef struct Inventario {
     char *nome;
@@ -30,5 +31,7 @@ void desenhar_item_arrastando(Vector2 mouse, Inventario *itemSelecionado, bool a
 void insertion_sort_iventario(Inventario **head);
 
 void excluir_item(Inventario **head, Inventario *item);
+
+void juntar_item(Inventario **head, Inventario **item, Vector2 mouse, Vars_structs_inicio_jogo *s);
 
 #endif

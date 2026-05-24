@@ -181,6 +181,7 @@ int main() {
                         }
                         mudar_mouse_mapa(novo_jogo->local_atual, mouse_novo, &novo_jogo->em_hitbox);
                         dar_item(&novo_jogo->lenda_local, novo_jogo->lenda_atual, &novo_jogo->itemSelecionado, mouse_novo, &novo_jogo->inventario, novo_jogo);
+                        juntar_item(&novo_jogo->inventario, &novo_jogo->itemSelecionado, mouse_novo, novo_jogo);
                         novo_jogo->lenda_atual = pegar_lenda_atual(novo_jogo->lenda_local, novo_jogo->chave_atual);
 
                         if (state == EXPLORACAO && !novo_jogo->minigame_ja_ocorreu &&

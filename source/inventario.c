@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include <stdlib.h>
 #include <string.h>
+#include "iniciar_liberar_jogo.h"
 
 void inserir_inventario(Inventario **head, char *nome, char *descricao, Texture2D imagem, int relevancia) {
     Inventario *novo = (Inventario *)malloc(sizeof(Inventario));
@@ -214,4 +215,24 @@ void excluir_item(Inventario **head, Inventario *item) {
             free(item);
         }
     }
+}
+
+void juntar_item(Inventario **head, Inventario **item, Vector2 mouse, Vars_structs_inicio_jogo *s) {
+    if (*item != NULL) {
+        Inventario *aux = *head;
+        while (aux != NULL) {
+            if (CheckCollisionPointRec(mouse, aux->hitbox)) {
+                if ((strcmp((*item)->nome, "Tesoura") == 0 && strcmp(aux->nome, "Saco de pano") == 0) ||
+                (strcmp((*item)->nome, "Saco de pano") == 0 && strcmp(aux->nome, "Tesoura")== 0)) {
+                    inserir_inventario(head, "Saco de pano furado", "Um saco de pano com um furo", s->saco_furado, 6);
+                    excluir_item(head, *item);
+                    excluir_item(head, aux);
+                    *item = NULL;
+                    aux = NULL;
+                    return;
+                }
+            }
+            aux = aux->prox;
+        }
+    }  
 }
