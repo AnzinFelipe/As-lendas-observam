@@ -192,6 +192,7 @@ bool GroqPedirDialogo(GroqContext *ctx, const char *ultima_lenda) {
  
     args->ctx = ctx;
     snprintf(args->prompt, sizeof(args->prompt),
+        "Não seja pejorativo, seja ameaçador e severo. "
         "Voce é o Boca de Ouro, uma lenda urbana do Recife Antigo. "
         "Voce esta observando uma pessoa que esta perdida a um tempo."
         "Ela encontrou e falou com %s recentemente e você estava vendo de longe."

@@ -17,7 +17,7 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
 
     //Inicializa musica
 
-    s->pink = LoadMusicStream("assets/musics/Pink.mp3");
+    s->pink = LoadMusicStream("assets/musics/Ambiente.mp3");
     PlayMusicStream(s->pink);
 
     //Para mudar estilo do mouse
