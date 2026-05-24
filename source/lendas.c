@@ -4,6 +4,7 @@
 #include "lendas.h"
 #include "inventario.h"
 #include "iniciar_liberar_jogo.h"
+#include <screens.h>
 
 void inserir_lenda(Lendas **head, char *nome, bool primeiro_encontro, Texture2D imagem,  Texture2D img_conversa1,
     Texture2D img_conversa2, Rectangle hitbox, Vector2 posicao, Texture2D item, char *item_quest, int chave) {
@@ -128,7 +129,7 @@ void excluir_lenda(Lendas **head, int chave) {
     }
 }
 
-void dar_item(Lendas **lenda_local, Lendas *lenda, Inventario **item, Vector2 mouse, Inventario **head, Vars_structs_inicio_jogo *s) {
+void dar_item(Lendas **lenda_local, Lendas *lenda, Inventario **item, Vector2 mouse, Inventario **head, Vars_structs_inicio_jogo *s, GameScreen *currentScreen, int *gameover) {
     if (lenda != NULL && *item != NULL) {
         if (CheckCollisionPointRec(mouse, lenda->hitbox)) {
             if (strcmp(lenda->nome, "Papa-figo") == 0 && strcmp((*item)->nome, "Saco de pano") == 0) {
@@ -136,7 +137,9 @@ void dar_item(Lendas **lenda_local, Lendas *lenda, Inventario **item, Vector2 mo
                     excluir_item(head, *item);
                     insertion_sort_iventario(head);
                     *item = NULL;
-                    //gameover
+                    
+                    *gameover = 2; 
+                    *currentScreen = GAME_OVER;
                     return;
                 }
             }
@@ -145,7 +148,10 @@ void dar_item(Lendas **lenda_local, Lendas *lenda, Inventario **item, Vector2 mo
                     excluir_lenda(lenda_local, 430);
                     excluir_item(head, *item);
                     *item = NULL;
-                    //gamewin
+                    
+                    
+                    *gameover = 3; 
+                    *currentScreen = GAME_OVER;
                     return;
                 }
             }

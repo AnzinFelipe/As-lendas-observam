@@ -26,6 +26,8 @@ int main() {
     memset(novo_jogo, 0, sizeof(Vars_structs_inicio_jogo));
 
     GameState state = EXPLORACAO;
+    double tempo_inicio = 0.0;
+    int gameover = 0;
     char groq_error_message[256] = "";
     char groq_fallback_text[512] = "Ei... estive te vendo a um tempo... muito tempo na verdade. Já falastes com umas figuras interessantes não? Pois agora é a minha vez de te atormentar.";
     float groq_retry_timer = 0.0f;
@@ -50,7 +52,13 @@ int main() {
                     if (primeiro == 1){
                         iniciar_jogo(novo_jogo);
                         GroqInit(&novo_jogo->groq);
+                        tempo_inicio = GetTime();
                         primeiro = 0;
+                    }
+
+                    if (GetTime() - tempo_inicio >= 1200.0) {
+                        currentScreen = GAME_OVER;
+                        break; 
                     }
                     
                     int largura_tela = GetScreenWidth();
@@ -132,7 +140,7 @@ int main() {
                             if (novo_jogo->minigame.fase == MINIGAME_FASE_DIALOGO_FINAL) {
                                     state = MINIGAME_DIALOGO_FINAL;
                             } else if (novo_jogo->minigame.fase == MINIGAME_FASE_GAMEOVER) {
-                                    state = EXPLORACAO;
+                                    state = MINIGAME_GAMEOVER;
                             }
                         }
                     } else if (state == MINIGAME_DIALOGO_FINAL) {
@@ -148,7 +156,9 @@ int main() {
                             state = EXPLORACAO;
                         }
                     } else if (state == MINIGAME_GAMEOVER) {
-                        
+                        gameover = 1;
+                        currentScreen = GAME_OVER;
+                        break;
                     }
 
                     bool dialogo_acabou_esse_frame = false;
@@ -180,7 +190,7 @@ int main() {
                             clicada = interagir_lenda(novo_jogo->lenda_atual, mouse_novo, &novo_jogo->em_hitbox);
                         }
                         mudar_mouse_mapa(novo_jogo->local_atual, mouse_novo, &novo_jogo->em_hitbox);
-                        dar_item(&novo_jogo->lenda_local, novo_jogo->lenda_atual, &novo_jogo->itemSelecionado, mouse_novo, &novo_jogo->inventario, novo_jogo);
+                        dar_item(&novo_jogo->lenda_local, novo_jogo->lenda_atual, &novo_jogo->itemSelecionado, mouse_novo, &novo_jogo->inventario, novo_jogo, &currentScreen, &gameover);
                         juntar_item(&novo_jogo->inventario, &novo_jogo->itemSelecionado, mouse_novo, novo_jogo);
                         novo_jogo->lenda_atual = pegar_lenda_atual(novo_jogo->lenda_local, novo_jogo->chave_atual);
 
@@ -314,6 +324,18 @@ int main() {
                     }
                     EndDrawing();
                 }  
+                break;
+            case GAME_OVER:
+                currentScreen = RunGameOver(gameover);
+                
+                if (currentScreen == MENU) {
+                    free_dados_jogo(novo_jogo);
+                    novo_jogo = (Vars_structs_inicio_jogo*)malloc(sizeof(Vars_structs_inicio_jogo));
+                    memset(novo_jogo, 0, sizeof(Vars_structs_inicio_jogo));
+                    primeiro = 1; 
+                    state = EXPLORACAO;
+                } 
+                break;
                     
             }
                     
