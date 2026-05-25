@@ -34,7 +34,7 @@ GameScreen RunMenu(void) {
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(mouse_novo, Iniciar)) {
             UnloadRenderTexture(tela_menu);
             SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-            return JOGO;
+            return CUTSCENE;
         }
 
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(mouse_novo, Sair)) {
