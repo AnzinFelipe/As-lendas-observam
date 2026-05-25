@@ -197,7 +197,7 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     s->itensNaoPegos = NULL;
     ColocarItemNoMapa(&s->itensNaoPegos, s->saco, "Saco de pano", (Vector2){200, 200}, "Um saco de pano velho, parece que tem algo dentro...", 357, 1);
     ColocarItemNoMapa(&s->itensNaoPegos, s->marreta, "Marreta", (Vector2){300, 200}, "Uma marreta de ferro, parece pesada.", 450, 10);
-    ColocarItemNoMapa(&s->itensNaoPegos, s->cara_la_ursa, "Cara de La Ursa", (Vector2){400, 200}, "Uma máscara com a cara da La Ursa, parece que tem um cheiro estranho...", 206, 9);
+    ColocarItemNoMapa(&s->itensNaoPegos, s->cara_la_ursa, "Cara de La Ursa", (Vector2){1000, 300}, "Uma máscara com a cara da La Ursa, parece que tem um cheiro estranho...", 206, 9);
     //Inicializa inventario
 
     s->inventario = NULL;
