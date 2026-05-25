@@ -47,6 +47,9 @@ int main() {
             case MENU:
                 currentScreen = RunMenu();
                 break; 
+            case CUTSCENE:
+                    currentScreen = RunCutscene();
+                    break;
             case JOGO:
                 if (currentScreen == JOGO) {
                     if (primeiro == 1){
