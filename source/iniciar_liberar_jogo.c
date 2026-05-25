@@ -269,7 +269,7 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
 
     cabra_fala1->components = criarComp("Subconsciente", "--Você se depara com uma cabra muito estranha, ela tem olhos e um bafo de fogo, não parece amigável.--");
     cabra_fala2->components = criarComp(lenda->nome, "Eu sou a Cabra Cabriola. Que como...");
-    cabra_fala3->components = criarComp(lenda->nome, "...Poxa, um adulto? Pelo visto vou ficar morrendo de fome essa noite.");
+    cabra_fala3->components = criarComp(lenda->nome, "...Poxa, um adulto? Pelo visto vou ficar morrendo de fome esta noite.");
     cabra_fala4->components = criarComp(lenda->nome, "Saia daqui e não me incomode, estou de barriga vazia e sem paciência para falar com um adulto estranho.");
     cabra_fala5->components = criarComp("Subconsciente", "--Pelo visto, essa cabra precisa comer para falar com você.--");
     cabra_fala6->components = criarComp("Subconsciente", "--Obviamente você não vai dar o que ela quer. Tente mudar o paladar dela com uma comida apropriada.--");
@@ -315,7 +315,7 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     figo_fala3->components = criarComp(lenda->nome, "Meu saco de pano... deixei cair em algum canto aqui no Recife Antigo, se você o achar, poderia trazer para mim?");
     figo_fala4->components = criarComp(lenda->nome, "Vou ficar muuuito agradecido, sem ele não posso curar minha doença.");
     figo_fala5->components = criarComp("Subconsciente", "--Você sabe o que ele faz com esse saco de pano. Você não pode simplesmente devolver para ele.--");
-    figo_fala6->components = criarComp("Subconsciente", "--Mas... talvez ele te dê algo em troca, pense numa solução para esse dilema.--");
+    figo_fala6->components = criarComp("Subconsciente", "--Mas... talvez ele te dê algo em troca, pense numa solução.--");
     figo_fala7->components = criarComp(lenda->nome, "Já achou o meu saco de pano? Não devo ter deixado cair tão longe daqui.");
     figo_fala8->components = criarComp(lenda->nome, "E não é que você realmente achou ele? Muuuito obrigado jovem.");
     figo_fala9->components = criarComp(lenda->nome, "Já estava preocupado com minha doença, se eu não comer fígado uma hora ou outra vou me tornar um lobisomem.");
@@ -358,7 +358,7 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
     moca_fala4->components = criarComp(lenda->nome, "Não sei o que me fez vir para cá, mas preciso voltar pro lugar de onde vim.");
     moca_fala5->components = criarComp("Subconsciente", "--Talvez você possa ajudá-la a sair daqui, mas como?--");
     moca_fala6->components = criarComp(lenda->nome, "Quero voltar pro meu mangue...");
-    moca_fala7->components = criarComp(lenda->nome, "Um bilhete prum passeio de catamarã? É, acho que com isso vou poder voltar pro mangue do Pina amanhã, talvez.");
+    moca_fala7->components = criarComp(lenda->nome, "Um bilhete para um passeio de catamarã? É, acho que com isso vou poder voltar pro mangue do Pina amanhã, talvez.");
     moca_fala8->components = criarComp(lenda->nome, "Obrigada viu. Eu até te encantaria pra vir comigo... mas vou deixar passar. Não pense que você vai se safar do meu encanto se passar pelo mangue do Pina algum outro dia.");
     moca_fala9->components = criarComp(lenda->nome, "Mas olha, eu tinha comprado um bolo de rolo mais cedo no café daqui perto. Pode ficar com ele, tinha me esquecido que sou um espectro e não como nada.");
     moca_fala10->components = criarComp("Subconsciente", "--Mais uma comida hein? Talvez ainda tenha alguém por aí que precise comer esse bolo de rolo.--");
@@ -426,6 +426,7 @@ void iniciar_jogo(Vars_structs_inicio_jogo *s){
 
     s->quests_completas = 0;
     s->quests_no_ultimo_sorteio = 0;
+    s->sorteio_pendente = false;
     s->minigame_ja_ocorreu = false;
 
     inserir_lenda(&s->lenda_local, "Cesar", true, (Texture2D){0}, (Texture2D){0}, (Texture2D){0}, (Rectangle){450, 450, 320, 200}, (Vector2){200, 20}, (Texture2D){0}, "Cracha", 430);

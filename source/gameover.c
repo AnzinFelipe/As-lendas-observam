@@ -4,6 +4,7 @@
 
 GameScreen RunGameOver(int motivo) {
     const char *subtitulo = "base";
+    const char *subtitulo2 = "";
     const char *mensagem = "base";
 
     Texture2D fundo_gameover;
@@ -12,7 +13,7 @@ GameScreen RunGameOver(int motivo) {
     int offset = 0;
 
     if (motivo == 0) {
-        subtitulo = "Horas se passaram mas o dia nunca chegou... voce se encontra preso no Marco Zero";
+        subtitulo = "Horas se passaram, mas o dia nunca chegou... você se encontra preso no Marco Zero";
         mensagem = "FIM DE JOGO";
         fundo_gameover = LoadTexture("assets/images/telas/Perdido1.png");
         fim_de_jogo = DARKBLUE;
@@ -20,7 +21,7 @@ GameScreen RunGameOver(int motivo) {
         offset = 0;
     } 
     else if (motivo == 1){
-        subtitulo = "O isqueiro se apagou e seu destino se sela no Recife Antigo para sempre...";
+        subtitulo = "Você não achou o isqueiro e não há como fugir do Boca de Ouro.";
         mensagem = "FIM DE JOGO";
         fundo_gameover = LoadTexture("assets/images/telas/Gameover2.png");
         fim_de_jogo = RED;
@@ -28,20 +29,21 @@ GameScreen RunGameOver(int motivo) {
         offset = -400;
     }
     else if (motivo == 2){
-        subtitulo = "Voce ajudou o papa figo a atormentar as ruas do Recife";
+        subtitulo = "Você ajudou o papa figo a atormentar as ruas do Recife novamente...";
         mensagem = "FIM DE JOGO";
         fundo_gameover = LoadTexture("assets/images/telas/Gameover1.5.png");
         fim_de_jogo = RED;
         texto = MAROON;
-        offset = -400;
+        offset = -300;
     }
 
     else if (motivo == 3){
-        subtitulo = "Voce encontra abrigo no Cesar e sobrevive essa noite";
-        mensagem = "PARABENS. OBRIGADO POR JOGAR.";
+        subtitulo = "Você encontrou abrigo no CESAR Brum e se encontrou com seu amigo Edgar.";
+        subtitulo2 = "Estava tendo uma festa do pijama lá dentro, vocês puderam aproveitar o resto da noite.";
+        mensagem = "PARABÉNS. OBRIGADO POR JOGAR.";
         fundo_gameover = LoadTexture("assets/images/telas/Brum_dia.png");
-        fim_de_jogo = LIME;
-        texto = GREEN;
+        fim_de_jogo = WHITE;
+        texto = WHITE;
         offset = 0;
     }
 
@@ -100,7 +102,8 @@ GameScreen RunGameOver(int motivo) {
             
             
             DrawText(mensagem, 800 - MeasureText(mensagem, 60) / 2 - offset, 250, 60, fim_de_jogo);
-            DrawText(subtitulo, 800 - MeasureText(subtitulo, 20) / 2 - offset, 320, 20, texto);
+            DrawText(subtitulo, 800 - MeasureText(subtitulo, 25) / 2 - offset, 330, 25, texto);
+            DrawText(subtitulo2, 800 - MeasureText(subtitulo2, 25) / 2 - offset, 360, 25, texto);
 
             if (CheckCollisionPointRec(mouse_novo, Menu)) {
                 DrawText("MENU", 800 - MeasureText("MENU", 40) / 2 - offset, 400, 40, hover);

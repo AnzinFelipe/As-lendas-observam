@@ -9,6 +9,22 @@ GameScreen RunCutscene(void){
     RenderTexture2D tela_cutscene = LoadRenderTexture(1600, 900);
     GameState state = DIALOGO;
     RayDialManager *dialogo;
+    Texture2D tutorial = LoadTexture("assets/images/telas/tutorial.png");
+    GenTextureMipmaps(&tutorial);
+    SetTextureFilter(tutorial, TEXTURE_FILTER_TRILINEAR);
+    Texture2D cutscene1 = LoadTexture("assets/images/telas/cutscene1.png");
+    GenTextureMipmaps(&cutscene1);
+    SetTextureFilter(cutscene1, TEXTURE_FILTER_TRILINEAR);
+    Texture2D cutscene2 = LoadTexture("assets/images/telas/cutscene2.png");
+    GenTextureMipmaps(&cutscene2);
+    SetTextureFilter(cutscene2, TEXTURE_FILTER_TRILINEAR);
+    Texture2D cutscene3 = LoadTexture("assets/images/telas/cutscene3.png");
+    GenTextureMipmaps(&cutscene3);
+    SetTextureFilter(cutscene3, TEXTURE_FILTER_TRILINEAR);
+    Texture2D cutscene4 = LoadTexture("assets/images/telas/cutscene4.png");
+    GenTextureMipmaps(&cutscene4);
+    SetTextureFilter(cutscene4, TEXTURE_FILTER_TRILINEAR);
+    Texture2D imgs[5] = {tutorial, cutscene1, cutscene2, cutscene3, cutscene4};
     float pode_apertar = 0.0, delay = 0.1;
 
     RayDialNode *Cutscene_fala1 = CreateDialogueNode("fala1", "");
@@ -38,7 +54,7 @@ GameScreen RunCutscene(void){
     Cutscene_fala3->components = criarComp("TUTORIAL 3/4", "SOBRE ITENS: Clique em itens para pegá-los. Para entregá-los a personagens, clique, segure e arraste-os para cima da imagem deles e solte.");    
     Cutscene_fala4->components = criarComp("TUTORIAL 4/4", "SOBRE ITENS: Clique, segure e arraste um item para cima de outro no inventário para combiná-los.");
     Cutscene_fala5->components = criarComp("TUTORIAL", "Isso é tudo. Se divirta......... E boa sorte.");
-    Cutscene_fala6->components = criarComp("Telefone", "*TRRRIIMMM TRRRIIIMM TRRRIIIIMMM");
+    Cutscene_fala6->components = criarComp("Telefone", "*TRRRIIIMMM TRRRIIIMMM TRRRIIIMMM");
     Cutscene_fala7->components = criarComp("Diego", "Alô?");
     Cutscene_fala8->components = criarComp("Edgar", "Opa mano, tás livre hoje de noite? Tava pensando em eu e tu sair junto pra um barzinho aqui no antigo, tá ligado?");
     Cutscene_fala9->components = criarComp("Diego", "Pô, vamo vei. Tava no tédio o dia todo também, me salvasse. Não aguentava mais ficar dentro de casa.");
@@ -46,14 +62,14 @@ GameScreen RunCutscene(void){
     Cutscene_fala11->components = criarComp("Diego", "Beleza, irmão. Até mais tarde.");
     Cutscene_fala12->components = criarComp("...", "--HORAS DEPOIS...--");
     Cutscene_fala13->components = criarComp("Motorista de Uber", "Estamos perto. Olha, amigo, se eu fosse você não ficava muito tempo no Recife Antigo hoje.");
-    Cutscene_fala14->components = criarComp("Diego", "Ué? Tá rolando muito assalto ultimamente? Se for isso, pelo menos eu sei como andar por aqui e sei em quais ruas não entrar nesse horário.");
-    Cutscene_fala15->components = criarComp("Motorista de Uber", "Não, não é isso. Muitos motoristas que passaram por aqui agora a pouco relataram ver coisas bizarras...");
-    Cutscene_fala16->components = criarComp("Motorista de Uber", "Vultos e silhuetas nas ruas. Animais de aparência distorcida. assobios distantes, como se algo os chamasse para becos obscuros...");
-    Cutscene_fala17->components = criarComp("Motoristas de Uber", "Eu queria estar brincando só para te botar medo, mas é sério, garoto. O quê quer que tenha vindo fazer aqui, é bom que seja breve.");
+    Cutscene_fala14->components = criarComp("Diego", "Ué, Por que?");
+    Cutscene_fala15->components = criarComp("Motorista de Uber", "Muitos motoristas que passaram por aqui agora a pouco relataram ver coisas bizarras...");
+    Cutscene_fala16->components = criarComp("Motorista de Uber", "Vultos e silhuetas nas ruas. Animais de aparência distorcida. assobios bem altos, como se algo os chamasse para becos obscuros...");
+    Cutscene_fala17->components = criarComp("Motorista de Uber", "Eu queria estar brincando só para te botar medo, mas é sério, garoto. O quê quer que tenha vindo fazer aqui, é bom que seja breve.");
     Cutscene_fala18->components = criarComp("Diego", "... éééé... beleza patrão. Peguei a mensagem. Pode me deixar descer aqui no Marco Zero mesmo.");
-    Cutscene_fala19->components = criarComp("Diego", "(Acho que esse mano num tá batendo bem da cabeça. Enfim, vou ligar pro Edgar, era pra ele tá aqui já.)");
-    Cutscene_fala20->components = criarComp("Diego", "(Ah não. Só pode tá de sacanagem. Sem serviço??? Lascou. Vou ter que andar por aí pra procurar ele... Melhor me ligar para não ser roubado.)");
-    Cutscene_fala21->components = criarComp("Diego", "(Pra ser honesto, olhando agora, aqui tá bem vazio... tem nem carro passando... É perigoso se eu ficar parado aqui sozinho.)");
+    Cutscene_fala19->components = criarComp("Diego", "(Acho que esse moço não tá muito bem da cabeça. Enfim, vou ligar pro Edgar, era pra ele tá aqui já.)");
+    Cutscene_fala20->components = criarComp("Diego", "(Ah não. Só pode tá de sacanagem. Sem serviço??? Lascou. Vou ter que andar por aí pra procurar ele...)");
+    Cutscene_fala21->components = criarComp("Diego", "(Aqui tá bem vazio... tem nem carro passando... É perigoso se eu ficar parado aqui sozinho.)");
 
     AddChoice(Cutscene_fala1, Cutscene_fala2);
     AddChoice(Cutscene_fala2, Cutscene_fala3);
@@ -77,7 +93,9 @@ GameScreen RunCutscene(void){
     AddChoice(Cutscene_fala20, Cutscene_fala21);
 
     dialogo = CreateDialogueManager(Cutscene_fala1);
-    
+    int img_num = 0;
+    int i = 0;
+
     while (!WindowShouldClose()) {
         int largura_tela = GetScreenWidth();
         int altura_tela = GetScreenHeight();
@@ -94,6 +112,10 @@ GameScreen RunCutscene(void){
 
         if ((IsMouseButtonPressed(MOUSE_LEFT_BUTTON) || IsKeyPressed(KEY_SPACE)) && pode_apertar >= delay) {
             pode_apertar = 0.0;
+            i++;
+            if (i == 5 || i == 6 || i == 11 || i == 18) {
+                img_num += 1;
+            }
             AdvanceDialogue(dialogo);
         }
 
@@ -102,6 +124,11 @@ GameScreen RunCutscene(void){
         if (dialogo && !dialogo->isActive) {
             FreeDialogueManager(dialogo);
             dialogo = NULL;
+            UnloadTexture(tutorial);
+            UnloadTexture(cutscene1);
+            UnloadTexture(cutscene2);
+            UnloadTexture(cutscene3);
+            UnloadTexture(cutscene4);
             return JOGO;
         }
     
@@ -109,9 +136,14 @@ GameScreen RunCutscene(void){
             ClearBackground(BLACK);
 
             if (state == DIALOGO) {
+                DrawTexture(imgs[img_num], 0, 0, WHITE);
                 DrawDialogueManager(dialogo);
             }
-               
+
+            if (i == 21) {
+                ClearBackground(BLACK);
+            }
+
         EndTextureMode();
         
         BeginDrawing();
@@ -119,6 +151,6 @@ GameScreen RunCutscene(void){
         DrawTexturePro(tela_cutscene.texture, (Rectangle){0, 0, 1600, -900}, nova_tela, (Vector2){0, 0}, 0.0f, WHITE);
         EndDrawing();
     }
-    
+
     return SAIR;
 }

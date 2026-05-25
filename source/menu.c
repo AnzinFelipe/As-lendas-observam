@@ -3,10 +3,11 @@
 #include <math.h>
 
 GameScreen RunMenu(void) {
-    Rectangle Iniciar = (Rectangle){ 800 - MeasureText("INICIAR JOGO", 40) / 2, 250, 285, 40};
-    Rectangle Sair = (Rectangle){ 800 - MeasureText("SAIR", 40) / 2, 325, 100, 40 };
+    Rectangle Iniciar = (Rectangle){ 800 - MeasureText("INICIAR JOGO", 40) / 2, 300, 285, 40};
+    Rectangle Sair = (Rectangle){ 800 - MeasureText("SAIR", 40) / 2, 390, 100, 40 };
 
     RenderTexture2D tela_menu = LoadRenderTexture(1600, 900);
+    Texture2D enfeite = LoadTexture("assets/images/enfeite2.png");
     
     Color hover = YELLOW;
     Color naohover = WHITE;
@@ -33,6 +34,7 @@ GameScreen RunMenu(void) {
         
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(mouse_novo, Iniciar)) {
             UnloadRenderTexture(tela_menu);
+            UnloadTexture(enfeite);
             SetMouseCursor(MOUSE_CURSOR_DEFAULT);
             return CUTSCENE;
         }
@@ -45,28 +47,30 @@ GameScreen RunMenu(void) {
         
         bool cursor = false;
         BeginTextureMode(tela_menu);
-            ClearBackground(GRAY);
+            ClearBackground(BLACK);
+            DrawTexture(enfeite, 0, 0, WHITE);
+            DrawRectangle(300, 0, 1000, 600, (Color){0, 0, 0, 150});
 
-            DrawText("As Lendas Observam", 800 - MeasureText("As Lendas Observam", 50) / 2, 150, 50, WHITE);
+            DrawText("As Lendas Observam", 800 - MeasureText("As Lendas Observam", 55) / 2, 200, 55, WHITE);
             // DrawText(local->nome, 800 - MeasureText(local->nome, 25) / 2, 15, 25, WHITE);
 
             
             // DrawRectangleRec(Iniciar, BLUE);
             // DrawRectangleRec(Sair, RED); 2
             if (CheckCollisionPointRec(mouse_novo, Iniciar)){
-                DrawText("INICIAR JOGO", 800 - MeasureText("INICIAR JOGO", 40) / 2, 250, 40, hover);
+                DrawText("INICIAR JOGO", 800 - MeasureText("INICIAR JOGO", 40) / 2, 300, 40, hover);
                 cursor = true;
             }
             else {
-                DrawText("INICIAR JOGO", 800 - MeasureText("INICIAR JOGO", 40) / 2, 250, 40, naohover);
+                DrawText("INICIAR JOGO", 800 - MeasureText("INICIAR JOGO", 40) / 2, 300, 40, naohover);
             }
 
             if (CheckCollisionPointRec(mouse_novo, Sair)){
-                DrawText("SAIR", 800 - MeasureText("SAIR", 40) / 2, 325, 40, hover);
+                DrawText("SAIR", 800 - MeasureText("SAIR", 40) / 2, 390, 40, hover);
                 cursor = true;
             }
             else {
-                DrawText("SAIR", 800 - MeasureText("SAIR", 40) / 2, 325, 40, naohover);
+                DrawText("SAIR", 800 - MeasureText("SAIR", 40) / 2, 390, 40, naohover);
             }
             
             if (cursor == true) {
@@ -74,6 +78,11 @@ GameScreen RunMenu(void) {
             } else {
                 SetMouseCursor(MOUSE_CURSOR_DEFAULT);
             }
+
+            DrawText("Créditos:", 100, 690, 20, WHITE);
+            DrawText("Desenhos - Ian Felipe", 100, 720, 20, WHITE);
+            DrawText("Programação - Ian Felipe, Rafael Chiappetta,", 100, 750, 20, WHITE);
+            DrawText("Thiago Neiva, Sofia Pan Yu e Guilherme Rapela", 100, 780, 20, WHITE);
                
         EndTextureMode();
         
@@ -82,6 +91,6 @@ GameScreen RunMenu(void) {
         DrawTexturePro(tela_menu.texture, (Rectangle){0, 0, 1600, -900}, nova_tela, (Vector2){0, 0}, 0.0f, WHITE);
         EndDrawing();
     }
-    
+
     return SAIR;
 }

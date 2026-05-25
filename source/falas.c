@@ -25,7 +25,7 @@ RayDialComponent *criarComp(const char *titulo, const char *texto) {
 
 RayDialComponent *criarComp_ouro(const char *titulo, const char *texto) {
     RayDialComponent *comp = CreatePortraitDialogue(
-        (Rectangle){25, 520, 800, 350},
+        (Rectangle){25, 420, 800, 450},
         titulo,
         texto,
         (Color){0, 0, 0, 0}
