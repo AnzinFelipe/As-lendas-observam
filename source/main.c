@@ -199,8 +199,9 @@ int main() {
 
                         if (state == EXPLORACAO && !novo_jogo->minigame_ja_ocorreu &&
                             novo_jogo->quests_completas > novo_jogo->quests_no_ultimo_sorteio &&
-                            novo_jogo->lenda_atual == NULL) {
+                            novo_jogo->lenda_atual == NULL && novo_jogo->sorteio_pendente) {
 
+                            novo_jogo->sorteio_pendente = false;
                             int chance = novo_jogo->quests_completas * 15;
                             if (chance > 90) chance = 90;
 
@@ -249,21 +250,27 @@ int main() {
                                     if (strcmp(conversa->nome, "Emparedada da Rua Nova") == 0) {
                                         inserir_inventario(&novo_jogo->inventario, "Mingau", "Um mingau quentinho.", conversa->item, 8);
                                         novo_jogo->quests_completas++;
+                                        novo_jogo->sorteio_pendente = true;
                                     } else if (strcmp(conversa->nome, "Comadre Fulozinha") == 0) {
                                         inserir_inventario(&novo_jogo->inventario, "Bilhete de catamarã", "Um bilhete valendo um passeio de catamaran aqui em Recife.", conversa->item, 7);
                                         novo_jogo->quests_completas++;
+                                        novo_jogo->sorteio_pendente = true;
                                     } else if (strcmp(conversa->nome, "Encanta Moça") == 0) {
                                         inserir_inventario(&novo_jogo->inventario, "Bolo de rolo", "Um bolo de rolo bem gostoso.", conversa->item, 6);
                                         novo_jogo->quests_completas++;
+                                        novo_jogo->sorteio_pendente = true;
                                     } else if (strcmp(conversa->nome, "Cabra Cabriola") == 0) {
                                         inserir_inventario(&novo_jogo->inventario, "Tesoura", "Uma tesoura normal.", conversa->item, 5);
                                         novo_jogo->quests_completas++;
+                                        novo_jogo->sorteio_pendente = true;
                                     } else if (strcmp(conversa->nome, "Papa-figo") == 0) {
                                         inserir_inventario(&novo_jogo->inventario, "Barbeador", "Um barbeador.", conversa->item, 4);
                                         novo_jogo->quests_completas++;
+                                        novo_jogo->sorteio_pendente = true;
                                     } else if (strcmp(conversa->nome, "Perna Cabeluda") == 0) {
                                         inserir_inventario(&novo_jogo->inventario, "Crachá", "Um crachá da CESAR School.", conversa->item, 3);
                                         novo_jogo->quests_completas++;
+                                        novo_jogo->sorteio_pendente = true;
                                     }
                                 }
                                 else {

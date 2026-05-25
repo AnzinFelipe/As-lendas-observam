@@ -192,13 +192,13 @@ bool GroqPedirDialogo(GroqContext *ctx, const char *ultima_lenda) {
  
     args->ctx = ctx;
     snprintf(args->prompt, sizeof(args->prompt),
-        "Não seja pejorativo, seja ameaçador e severo. "
         "Voce é o Boca de Ouro, uma lenda urbana do Recife Antigo. "
-        "Voce esta observando uma pessoa que esta perdida a um tempo."
+        "Voce esta observando um homem que esta perdido a um tempo, o nome dele é Diego."
         "Ela encontrou e falou com %s recentemente e você estava vendo de longe."
-        "Fale em 2 frases curtas,"
-        "em portugues do Brasil de forma formal e arcaica,"
-        "tom ameacador e severo, como se voce tivesse seguindo ele desde muito cedo, cite quem ele falou recentemente. "
+        "Fale em 2 frases curtissimas, seja breve"
+        "em portugues do Brasil de forma formal e arcaica, sem nada sugestivo ou degradante, nao fale de tesouro ou coisa parecida,"
+        "com tom ameacador e severo, como se voce tivesse seguindo ele desde que ele chegou no Recife Antigo hoje a noite,"
+        "cite quem ele falou recentemente."
         "Responda APENAS o dialogo em si, sem aspas, sem travessao, sem narracao, sem introducao.",
         ultima_lenda && strlen(ultima_lenda) > 0 ? ultima_lenda : "nenhuma ainda");
  

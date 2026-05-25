@@ -122,6 +122,7 @@ typedef struct Vars_structs_inicio_jogo{
 
     int quests_completas;
     int quests_no_ultimo_sorteio;
+    bool sorteio_pendente;
     char ultima_lenda_nome[64];
 
     GroqContext groq;
