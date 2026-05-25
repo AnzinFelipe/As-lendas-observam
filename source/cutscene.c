@@ -22,19 +22,37 @@ GameScreen RunCutscene(void){
     RayDialNode *Cutscene_fala10 = CreateDialogueNode("fala10", "");
     RayDialNode *Cutscene_fala11 = CreateDialogueNode("fala11", "");
     RayDialNode *Cutscene_fala12 = CreateDialogueNode("fala12", "");
-
-    Cutscene_fala1->components = criarComp("Subconsciente", "--Você se depara com uma cabra muito estranha, ela tem olhos e um bafo de fogo, não parece amigável.--");
-    Cutscene_fala2->components = criarComp("bi", "Eu sou a Cabra Cabriola. Que como...");
-    Cutscene_fala3->components = criarComp("bi", "...Poxa, um adulto? Pelo visto vou ficar morrendo de fome essa noite.");
-    Cutscene_fala4->components = criarComp("bi", "Saia daqui e não me incomode, estou de barriga vazia e sem paciência para falar com um adulto estranho.");
-    Cutscene_fala5->components = criarComp("Subconsciente", "--Pelo visto, essa cabra precisa comer para falar com você.--");
-    Cutscene_fala6->components = criarComp("Subconsciente", "--Obviamente você não vai dar o que ela quer. Tente mudar o paladar dela com uma comida apropriada.--");
-    Cutscene_fala7->components = criarComp("Subconsciente", "--Ache alguma comida, daí então ela vai querer falar com você.--");
-    Cutscene_fala8->components = criarComp("bi", "Hmmmm o que é isso? Até que parece gostoso, acho que posso experimentar...");
-    Cutscene_fala9->components = criarComp("bi", "Tá, isso é bem melhor do que aquilo que ando devorando minha vida inteira...");
-    Cutscene_fala10->components = criarComp("bi", "Toma isso daqui, uma tesoura. Eu costumava roubar do velho feioso que tá por aqui por perto. Não vou precisar mais, já que você ampliou meu paladar.");
-    Cutscene_fala11->components = criarComp("Subconsciente", "--É isso! Com essa tesoura você vai poder fazer um furo no saco de pano daquele velho antes de entregá-lo.--");
-    Cutscene_fala12->components = criarComp("bi", "Por acaso tu não teria mais daquele bolo aí pra mim, né?");
+    RayDialNode *Cutscene_fala13 = CreateDialogueNode("fala13", "");
+    RayDialNode *Cutscene_fala14 = CreateDialogueNode("fala14", "");
+    RayDialNode *Cutscene_fala15 = CreateDialogueNode("fala15", "");
+    RayDialNode *Cutscene_fala16 = CreateDialogueNode("fala16", "");
+    RayDialNode *Cutscene_fala17 = CreateDialogueNode("fala17", "");
+    RayDialNode *Cutscene_fala18 = CreateDialogueNode("fala18", "");
+    RayDialNode *Cutscene_fala19 = CreateDialogueNode("fala19", "");
+    RayDialNode *Cutscene_fala20 = CreateDialogueNode("fala20", "");
+    RayDialNode *Cutscene_fala21 = CreateDialogueNode("fala21", "");
+     
+    Cutscene_fala1->components = criarComp("TUTORIAL", "Clique em personagens para interagir com eles. Clique na tela ou aperte a barra de ESPAÇO para prosseguir nas conversas.");
+    Cutscene_fala2->components = criarComp("TUTORIAL", "Para se movimentar pelos locais, procure e clique em áreas no cenário onde o cursor do mouse mudar de aparência.");
+    Cutscene_fala3->components = criarComp("TUTORIAL", "SOBRE ITENS: Clique em itens para pegá-los. Para entregá-los a personagens, clique, segure e arraste-os para cima da imagem deles e solte.");    
+    Cutscene_fala4->components = criarComp("TUTORIAL", "SOBRE ITENS: Clique, segure e arraste um item para cima de outro no inventário para combiná-los.");
+    Cutscene_fala5->components = criarComp("TUTORIAL", "Isso é tudo. Se divirta......... E boa sorte.");
+    Cutscene_fala6->components = criarComp("Telefone", "*TRRRIIMMM TRRRIIIMM TRRRIIIIMMM");
+    Cutscene_fala7->components = criarComp("Diego", "Alô?");
+    Cutscene_fala8->components = criarComp("Edgar", "Opa mano, tás livre hoje de noite? Tava pensando em eu e tu sair junto pra um barzinho aqui no antigo, tá ligado?");
+    Cutscene_fala9->components = criarComp("Diego", "Pô, vamo vei. Tava no tédio o dia todo também, me salvasse. Não aguentava mais ficar dentro de casa.");
+    Cutscene_fala10->components = criarComp("Edgar", "Massa. A gente se vê às 7 da noite no Marco Zero, Demorô?");
+    Cutscene_fala11->components = criarComp("Diego", "Beleza, irmão. Até mais tarde.");
+    Cutscene_fala12->components = criarComp("...", "--HORAS DEPOIS...--");
+    Cutscene_fala13->components = criarComp("Motorista de Uber", "Estamos perto. Olha, amigo, se eu fosse você não ficava muito tempo no Recife Antigo hoje.");
+    Cutscene_fala14->components = criarComp("Diego", "Ué? Tá rolando muito assalto ultimamente? Se for isso, pelo menos eu sei como andar por aqui e sei em quais ruas não entrar nesse horário.");
+    Cutscene_fala15->components = criarComp("Motorista de Uber", "Não, não é isso. Muitos motoristas que passaram por aqui agora a pouco relataram ver coisas bizarras...");
+    Cutscene_fala16->components = criarComp("Motorista de Uber", "Vultos e silhuetas nas ruas. Animais de aparência distorcida. assobios distantes, como se algo os chamasse para becos obscuros...");
+    Cutscene_fala17->components = criarComp("Motoristas de Uber", "Eu queria estar brincando só para te botar medo, mas é sério garoto. O quê quer que tenha vindo fazer aqui, é bom que seja breve.");
+    Cutscene_fala18->components = criarComp("Diego", "... éééé... beleza patrão. Peguei a mensagem. Pode me deixar descer aqui no Marco Zero mesmo");
+    Cutscene_fala19->components = criarComp("Diego", "(Acho que esse mano num tá batendo bem da cabeça. Enfim, vou ligar pro Edgar, era pra ele tá aqui já.)");
+    Cutscene_fala20->components = criarComp("Diego", "(Ah não. Só pode tá de sacanagem. Sem serviço??? Lascou. Vou ter que andar por aí pra procurar ele... Melhor me ligar para não ser roubado.)");
+    Cutscene_fala21->components = criarComp("Diego", "(Pra ser honesto, olhando agora, aqui tá bem vazio... tem nem carro passando... É perigoso se eu ficar parado aqui sozinho.)");
 
     AddChoice(Cutscene_fala1, Cutscene_fala2);
     AddChoice(Cutscene_fala2, Cutscene_fala3);
@@ -47,6 +65,15 @@ GameScreen RunCutscene(void){
     AddChoice(Cutscene_fala9, Cutscene_fala10);
     AddChoice(Cutscene_fala10, Cutscene_fala11);
     AddChoice(Cutscene_fala11, Cutscene_fala12);
+    AddChoice(Cutscene_fala12, Cutscene_fala13);
+    AddChoice(Cutscene_fala13, Cutscene_fala14);
+    AddChoice(Cutscene_fala14, Cutscene_fala15);
+    AddChoice(Cutscene_fala15, Cutscene_fala16);
+    AddChoice(Cutscene_fala16, Cutscene_fala17);
+    AddChoice(Cutscene_fala17, Cutscene_fala18);
+    AddChoice(Cutscene_fala18, Cutscene_fala19);
+    AddChoice(Cutscene_fala19, Cutscene_fala20);
+    AddChoice(Cutscene_fala20, Cutscene_fala21);
 
     dialogo = CreateDialogueManager(Cutscene_fala1);
     
