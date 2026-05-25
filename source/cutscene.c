@@ -9,6 +9,7 @@ GameScreen RunCutscene(void){
     RenderTexture2D tela_cutscene = LoadRenderTexture(1600, 900);
     GameState state = DIALOGO;
     RayDialManager *dialogo;
+    float pode_apertar = 0.0, delay = 0.1;
 
     RayDialNode *Cutscene_fala1 = CreateDialogueNode("fala1", "");
     RayDialNode *Cutscene_fala2 = CreateDialogueNode("fala2", "");
@@ -32,10 +33,10 @@ GameScreen RunCutscene(void){
     RayDialNode *Cutscene_fala20 = CreateDialogueNode("fala20", "");
     RayDialNode *Cutscene_fala21 = CreateDialogueNode("fala21", "");
      
-    Cutscene_fala1->components = criarComp("TUTORIAL", "Clique em personagens para interagir com eles. Clique na tela ou aperte a barra de ESPAÇO para prosseguir nas conversas.");
-    Cutscene_fala2->components = criarComp("TUTORIAL", "Para se movimentar pelos locais, procure e clique em áreas no cenário onde o cursor do mouse mudar de aparência.");
-    Cutscene_fala3->components = criarComp("TUTORIAL", "SOBRE ITENS: Clique em itens para pegá-los. Para entregá-los a personagens, clique, segure e arraste-os para cima da imagem deles e solte.");    
-    Cutscene_fala4->components = criarComp("TUTORIAL", "SOBRE ITENS: Clique, segure e arraste um item para cima de outro no inventário para combiná-los.");
+    Cutscene_fala1->components = criarComp("TUTORIAL 1/4", "Clique em personagens para interagir com eles. Clique na tela ou aperte a barra de ESPAÇO para prosseguir nas conversas.");
+    Cutscene_fala2->components = criarComp("TUTORIAL 2/4", "Para se movimentar pelos locais, procure e clique em áreas no cenário onde o cursor do mouse mudar de aparência.");
+    Cutscene_fala3->components = criarComp("TUTORIAL 3/4", "SOBRE ITENS: Clique em itens para pegá-los. Para entregá-los a personagens, clique, segure e arraste-os para cima da imagem deles e solte.");    
+    Cutscene_fala4->components = criarComp("TUTORIAL 4/4", "SOBRE ITENS: Clique, segure e arraste um item para cima de outro no inventário para combiná-los.");
     Cutscene_fala5->components = criarComp("TUTORIAL", "Isso é tudo. Se divirta......... E boa sorte.");
     Cutscene_fala6->components = criarComp("Telefone", "*TRRRIIMMM TRRRIIIMM TRRRIIIIMMM");
     Cutscene_fala7->components = criarComp("Diego", "Alô?");
@@ -48,8 +49,8 @@ GameScreen RunCutscene(void){
     Cutscene_fala14->components = criarComp("Diego", "Ué? Tá rolando muito assalto ultimamente? Se for isso, pelo menos eu sei como andar por aqui e sei em quais ruas não entrar nesse horário.");
     Cutscene_fala15->components = criarComp("Motorista de Uber", "Não, não é isso. Muitos motoristas que passaram por aqui agora a pouco relataram ver coisas bizarras...");
     Cutscene_fala16->components = criarComp("Motorista de Uber", "Vultos e silhuetas nas ruas. Animais de aparência distorcida. assobios distantes, como se algo os chamasse para becos obscuros...");
-    Cutscene_fala17->components = criarComp("Motoristas de Uber", "Eu queria estar brincando só para te botar medo, mas é sério garoto. O quê quer que tenha vindo fazer aqui, é bom que seja breve.");
-    Cutscene_fala18->components = criarComp("Diego", "... éééé... beleza patrão. Peguei a mensagem. Pode me deixar descer aqui no Marco Zero mesmo");
+    Cutscene_fala17->components = criarComp("Motoristas de Uber", "Eu queria estar brincando só para te botar medo, mas é sério, garoto. O quê quer que tenha vindo fazer aqui, é bom que seja breve.");
+    Cutscene_fala18->components = criarComp("Diego", "... éééé... beleza patrão. Peguei a mensagem. Pode me deixar descer aqui no Marco Zero mesmo.");
     Cutscene_fala19->components = criarComp("Diego", "(Acho que esse mano num tá batendo bem da cabeça. Enfim, vou ligar pro Edgar, era pra ele tá aqui já.)");
     Cutscene_fala20->components = criarComp("Diego", "(Ah não. Só pode tá de sacanagem. Sem serviço??? Lascou. Vou ter que andar por aí pra procurar ele... Melhor me ligar para não ser roubado.)");
     Cutscene_fala21->components = criarComp("Diego", "(Pra ser honesto, olhando agora, aqui tá bem vazio... tem nem carro passando... É perigoso se eu ficar parado aqui sozinho.)");
@@ -89,7 +90,10 @@ GameScreen RunCutscene(void){
             1600 * escala, 900 * escala
         };
 
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) || IsKeyPressed(KEY_SPACE)) {
+        pode_apertar += GetFrameTime();
+
+        if ((IsMouseButtonPressed(MOUSE_LEFT_BUTTON) || IsKeyPressed(KEY_SPACE)) && pode_apertar >= delay) {
+            pode_apertar = 0.0;
             AdvanceDialogue(dialogo);
         }
 
