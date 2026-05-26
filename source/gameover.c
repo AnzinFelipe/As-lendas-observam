@@ -18,7 +18,7 @@ GameScreen RunGameOver(int motivo) {
         fundo_gameover = LoadTexture("assets/images/telas/Perdido1.png");
         fim_de_jogo = DARKBLUE;
         texto = DARKBLUE;
-        offset = 0;
+        offset = 50;
     } 
     else if (motivo == 1){
         subtitulo = "Você não achou o isqueiro e não há como fugir do Boca de Ouro.";
@@ -44,7 +44,7 @@ GameScreen RunGameOver(int motivo) {
         fundo_gameover = LoadTexture("assets/images/telas/Brum_dia.png");
         fim_de_jogo = WHITE;
         texto = WHITE;
-        offset = 0;
+        offset = 50;
     }
 
     Rectangle Menu = (Rectangle){ 800 - MeasureText("MENU", 40) / 2 - offset, 400, 150, 40 };
